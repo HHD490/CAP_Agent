@@ -1,0 +1,6 @@
+.nuxt
+.output
+node_modules
+.env
+data/*.sqlite*
+.DS_Store
