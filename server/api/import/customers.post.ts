@@ -1,5 +1,9 @@
-import * as XLSX from 'xlsx'
+import { createRequire } from 'node:module'
 import { getDb, demoNow, newId } from '../../utils/db'
+
+// Compatibility-only: xlsx@0.18 exposes CommonJS on Windows Nitro dev.
+// Keep the import behavior identical while avoiding the d:\\ ESM URL loader error.
+const XLSX = createRequire(import.meta.url)('xlsx') as typeof import('xlsx')
 
 export default defineEventHandler(async (event) => {
   const parts = await readMultipartFormData(event)

@@ -95,7 +95,8 @@ const modeLabels: Record<AgentMode, string> = {
 function getConfig(): RuntimeAgentConfig {
   const config = useRuntimeConfig()
   return {
-    provider: String(config.llmProvider || 'openai-compatible'),
+    // Provider names come from .env and may be written as `Minimax`.
+    provider: String(config.llmProvider || 'openai-compatible').trim().toLowerCase(),
     baseURL: String(config.llmBaseUrl || ''),
     apiKey: String(config.llmApiKey || ''),
     model: String(config.llmModel || ''),
@@ -135,8 +136,13 @@ function updateTask(taskId: string, patch: { status?: string, phase?: string, pr
     )
 }
 
-function parseJsonResponse(content: string) {
-  const cleaned = content.trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '')
+function parseJsonResponse(content: unknown) {
+  const raw = typeof content === 'string'
+    ? content
+    : Array.isArray(content)
+      ? content.map((part: any) => typeof part === 'string' ? part : typeof part?.text === 'string' ? part.text : '').join('')
+      : JSON.stringify(content) || ''
+  const cleaned = raw.trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '')
   const first = cleaned.indexOf('{')
   const last = cleaned.lastIndexOf('}')
   if (first < 0 || last < first) throw new Error('模型未返回可解析的 JSON 对象')
