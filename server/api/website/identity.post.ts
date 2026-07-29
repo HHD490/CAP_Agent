@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { getDb, demoNow, newId, addEvent } from '../../utils/db'
+import { getDb, demoNow, newId, addEvent, markNonAcceptedMatchesStale } from '../../utils/db'
 import { createAgentTask } from '../../utils/agent'
 
 const schema = z.object({
@@ -36,7 +36,7 @@ export default defineEventHandler(async (event) => {
     const facts = { ...JSON.parse(customer.facts_json || '{}'), capturedEmail: email, latestInquiryId: inquiry.id }
     db.prepare(`UPDATE customers SET facts_json = ?, profile_version = profile_version + 1, ai_profile_status = 'pending', last_activity_at = ?, updated_at = ? WHERE id = ?`)
       .run(JSON.stringify(facts), now, now, customerId)
-    db.prepare('UPDATE match_results SET stale = 1, updated_at = ? WHERE customer_id = ?').run(now, customerId)
+    markNonAcceptedMatchesStale(customerId, db, now)
     db.prepare(`UPDATE opportunities SET stale_review = 1, updated_at = ? WHERE customer_id = ? AND status IN ('active', 'handed_off')`).run(now, customerId)
   }
   if (!contact) {

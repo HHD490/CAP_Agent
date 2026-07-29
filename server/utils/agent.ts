@@ -1,6 +1,7 @@
 import OpenAI from 'openai'
 import { z } from 'zod'
-import { getDb, demoNow, addEvent, newId } from './db'
+import { getDb, demoNow, addEvent, newId, markNonAcceptedMatchesStale } from './db'
+import { isValidOutreachContact } from './contact'
 import type { AgentMode } from '../../shared/types'
 
 interface RuntimeAgentConfig {
@@ -18,6 +19,21 @@ interface RuntimeAgentConfig {
   temperature: number
 }
 
+const CUSTOMER_TYPES = [
+  'freight_forwarder_partner',
+  'ecommerce_seller',
+  'exporter',
+  'trading_company',
+  'direct_shipper',
+  'unknown'
+] as const
+
+export type AgentCustomerType = typeof CUSTOMER_TYPES[number]
+
+export function getAgentCustomerTypes() {
+  return CUSTOMER_TYPES
+}
+
 const confidenceSchema = z.preprocess((value) => {
   if (typeof value === 'number') return value >= 0.8 ? 'high' : value >= 0.55 ? 'medium' : 'low'
   const text = String(value || '').toLowerCase()
@@ -28,7 +44,7 @@ const confidenceSchema = z.preprocess((value) => {
 }, z.enum(['low', 'medium', 'high']))
 
 const profileSchema = z.object({
-  customer_type: z.string(),
+  customer_type: z.enum(CUSTOMER_TYPES),
   summary: z.string(),
   likely_needs: z.array(z.string()).default([]),
   capabilities: z.array(z.string()).default([]),
@@ -67,10 +83,31 @@ const replySchema = z.object({
   next_action: z.string()
 })
 
+const recommendedProductSchema = z.union([
+  z.object({
+    product_code: z.string().min(1),
+    product_name: z.string().min(1)
+  }),
+  z.string().min(1)
+]).transform((value) => {
+  if (typeof value === 'string') {
+    return {
+      product_code: null as string | null,
+      product_name: value,
+      source: 'legacy_string' as const
+    }
+  }
+  return {
+    product_code: value.product_code,
+    product_name: value.product_name,
+    source: 'provider_object' as const
+  }
+})
+
 const handoffSchema = z.object({
   summary: z.string(),
   customer_need: z.string(),
-  recommended_product: z.string(),
+  recommended_product: recommendedProductSchema,
   evidence: z.array(z.string()).min(1),
   risks: z.array(z.string()).default([]),
   next_steps: z.array(z.string()).min(1)
@@ -90,6 +127,43 @@ const modeLabels: Record<AgentMode, string> = {
   outreach_drafting: '建联内容生成',
   reply_qualification: '客户回复判断',
   handoff_summary: '人工交接摘要'
+}
+
+type TestProvider = (mode: AgentMode, context: unknown) => unknown | Promise<unknown>
+
+let testProvider: TestProvider | null = null
+let deferAgentExecutionForTests = false
+
+/** Test-only: mock Provider JSON (no network). Pass null to clear. */
+export function setAgentProviderForTests(provider: TestProvider | null) {
+  testProvider = provider
+}
+
+/** Test-only: when true, createAgentTask does not auto-run via setTimeout. */
+export function setDeferAgentExecutionForTests(defer: boolean) {
+  deferAgentExecutionForTests = defer
+}
+
+export function resetAgentTestHooks() {
+  testProvider = null
+  deferAgentExecutionForTests = false
+}
+
+export function getAgentSchemas() {
+  return schemaByMode
+}
+
+export function buildTargetContext(mode: AgentMode, targetId: string, input: Record<string, any> = {}) {
+  return targetContext(mode, targetId, input)
+}
+
+export function applyAgentResult(taskId: string, mode: AgentMode, targetId: string, result: any, input: Record<string, any> = {}) {
+  return applyResult(taskId, mode, targetId, result, input)
+}
+
+/** Test-only: run a queued task immediately with the current (possibly mocked) provider. */
+export async function runAgentTaskNow(taskId: string) {
+  await runTask(taskId, getConfig())
 }
 
 function getConfig(): RuntimeAgentConfig {
@@ -225,17 +299,25 @@ function targetContext(mode: AgentMode, targetId: string, input: Record<string, 
 
 function systemPrompt(mode: AgentMode) {
   const common = `你是百运科技跨境物流获客系统的 Acquisition Agent。你只基于给定事实判断，不得虚构客户事实、价格或资质。原始事实与 AI 推断必须分开。输出必须是一个 JSON 对象，不得添加 Markdown、解释或隐藏推理。所有 evidence 必须引用输入中可核验的信息。`
+  const customerTypeList = CUSTOMER_TYPES.join('、')
   const prompts: Record<AgentMode, string> = {
-    customer_profiling: `${common}\n任务：形成结构化客户画像。customer_type 使用 freight_forwarder_partner、ecommerce_seller、exporter、trading_company、direct_shipper 或 unknown。输出字段：customer_type, summary, likely_needs[], capabilities[], target_lanes[], confidence(low|medium|high), evidence[], missing_information[], suggested_next_action。`,
+    customer_profiling: `${common}\n任务：形成结构化客户画像。customer_type 使用 ${customerTypeList}。输出字段：customer_type, summary, likely_needs[], capabilities[], target_lanes[], confidence(low|medium|high), evidence[], missing_information[], suggested_next_action。`,
     product_matching: `${common}\n任务：从已发布产品中选择最多 3 个公司×产品匹配。分数仅用于排序，不是成交概率。先识别硬阻断，再做语义匹配。输出字段：matches[{product_code, fit_score(0-100), confidence(low|medium|high), evidence[], risks[], missing_information[], hard_blockers[]}]。`,
     outreach_drafting: `${common}\n任务：生成建联邮件。默认中文；operator_input.language=en 时生成英文。邮件应专业、克制、个性化，明确匹配依据和单一行动号召，不承诺未确认价格。输出字段：language(zh|en), subject, body, evidence[], call_to_action。`,
     reply_qualification: `${common}\n任务：判断客户回复是否构成明确意向。只有具体询价/货量/路线/时效、要求会议、明确合作或要求负责人跟进才是 explicit；泛泛索要资料是 ambiguous；自动回复是 auto_reply。输出字段：intent(explicit|ambiguous|not_interested|auto_reply), confidence, evidence[], summary, next_action。`,
-    handoff_summary: `${common}\n任务：生成给人工负责人的交接摘要。输出字段：summary, customer_need, recommended_product, evidence[], risks[], next_steps[]。`
+    handoff_summary: `${common}\n任务：生成给人工负责人的交接摘要。recommended_product 优先输出对象 {product_code, product_name}；也可兼容非空产品名字符串。输出字段：summary, customer_need, recommended_product, evidence[], risks[], next_steps[]。`
   }
   return prompts[mode]
 }
 
 async function callModel(config: RuntimeAgentConfig, mode: AgentMode, context: unknown) {
+  if (testProvider) {
+    const raw = await testProvider(mode, context)
+    return {
+      parsed: schemaByMode[mode].parse(typeof raw === 'string' ? parseJsonResponse(raw) : raw),
+      usage: null
+    }
+  }
   if (!config.baseURL || !config.apiKey || !config.model) throw new Error('Model Endpoint 未配置，请设置 LLM_BASE_URL、LLM_API_KEY 和 LLM_MODEL')
   if (config.maxOutputTokens > config.contextWindowTokens) throw new Error('模型最大输出长度不能超过上下文长度')
   if (config.maxOutputTokens > config.modelMaxOutputTokens) throw new Error(`LLM_MAX_OUTPUT_TOKENS 不能超过模型上限 ${config.modelMaxOutputTokens}`)
@@ -298,10 +380,16 @@ function applyResult(taskId: string, mode: AgentMode, targetId: string, result: 
 
   if (mode === 'product_matching') {
     const customer = db.prepare('SELECT * FROM customers WHERE id = ?').get(targetId) as any
-    db.prepare('UPDATE match_results SET stale = 1, updated_at = ? WHERE customer_id = ? AND status <> ?').run(now, targetId, 'accepted')
+    const resolved: Array<{ match: any, product: any }> = []
     for (const match of result.matches) {
       const product = db.prepare('SELECT * FROM products WHERE code = ? AND published = 1').get(match.product_code) as any
-      if (!product) continue
+      if (product) resolved.push({ match, product })
+    }
+    if (resolved.length === 0) {
+      throw new Error('没有可用的已发布产品匹配结果；未发布产品不得落库，也不得标记为有效匹配完成')
+    }
+    markNonAcceptedMatchesStale(targetId, db, now)
+    for (const { match, product } of resolved) {
       db.prepare(`INSERT INTO match_results
         (id, customer_id, product_id, score, confidence, evidence_json, risks_json, missing_json, blockers_json,
          customer_version, product_version, stale, status, created_at, updated_at)
@@ -324,16 +412,29 @@ function applyResult(taskId: string, mode: AgentMode, targetId: string, result: 
 
   if (mode === 'outreach_drafting') {
     const opportunity = db.prepare('SELECT * FROM opportunities WHERE id = ?').get(targetId) as any
-    const version = Number((db.prepare('SELECT COALESCE(MAX(version), 0) + 1 value FROM email_drafts WHERE opportunity_id = ? AND language = ?').get(targetId, result.language) as any).value)
-    const contact = opportunity.contact_id ? db.prepare('SELECT email FROM contacts WHERE id = ?').get(opportunity.contact_id) as any : null
-    db.prepare(`INSERT INTO email_drafts
-      (id, opportunity_id, version, language, subject, body, status, recipient, sent_at, created_at)
-      VALUES (?, ?, ?, ?, ?, ?, 'draft', ?, '', ?)`)
-      .run(newId('draft'), targetId, version, result.language, result.subject, result.body, contact?.email || '', now)
-    if (result.language === 'zh' && opportunity.stage < 5) {
-      db.prepare(`UPDATE opportunities SET stage = 5, next_action = '人工审核并发送建联邮件', blocker = '', updated_at = ? WHERE id = ?`).run(now, targetId)
+    const contact = opportunity.contact_id
+      ? db.prepare('SELECT email, status FROM contacts WHERE id = ?').get(opportunity.contact_id) as any
+      : null
+    const recipient = String(contact?.email || '').trim()
+    if (!opportunity.contact_id || !isValidOutreachContact(contact)) {
+      throw new Error('missing_contact: 缺少状态为可联系(contactable)且含有效收件邮箱的联系人，无法生成建联草稿')
     }
-    addEvent({ opportunityId: targetId, customerId: opportunity.customer_id, type: 'draft_ready', title: result.language === 'en' ? '英文版本已生成' : '建联内容已就绪', description: `Agent 已生成${result.language === 'en' ? '英文' : '中文'}建联邮件，等待人工审核。`, source: 'agent', data: { taskId, evidence: result.evidence } }, db)
+    const version = Number((db.prepare('SELECT COALESCE(MAX(version), 0) + 1 value FROM email_drafts WHERE opportunity_id = ? AND language = ?').get(targetId, result.language) as any).value)
+    db.exec('BEGIN')
+    try {
+      db.prepare(`INSERT INTO email_drafts
+        (id, opportunity_id, version, language, subject, body, status, recipient, sent_at, created_at)
+        VALUES (?, ?, ?, ?, ?, ?, 'draft', ?, '', ?)`)
+        .run(newId('draft'), targetId, version, result.language, result.subject, result.body, recipient, now)
+      if (result.language === 'zh' && opportunity.stage < 5) {
+        db.prepare(`UPDATE opportunities SET stage = 5, next_action = '人工审核并发送建联邮件', blocker = '', updated_at = ? WHERE id = ?`).run(now, targetId)
+      }
+      addEvent({ opportunityId: targetId, customerId: opportunity.customer_id, type: 'draft_ready', title: result.language === 'en' ? '英文版本已生成' : '建联内容已就绪', description: `Agent 已生成${result.language === 'en' ? '英文' : '中文'}建联邮件，等待人工审核。`, source: 'agent', data: { taskId, evidence: result.evidence } }, db)
+      db.exec('COMMIT')
+    } catch (error) {
+      db.exec('ROLLBACK')
+      throw error
+    }
   }
 
   if (mode === 'reply_qualification') {
@@ -349,7 +450,20 @@ function applyResult(taskId: string, mode: AgentMode, targetId: string, result: 
   if (mode === 'handoff_summary') {
     const opportunity = db.prepare('SELECT * FROM opportunities WHERE id = ?').get(targetId) as any
     db.prepare('UPDATE opportunities SET ai_summary = ?, updated_at = ? WHERE id = ?').run(result.summary, now, targetId)
-    addEvent({ opportunityId: targetId, customerId: opportunity.customer_id, type: 'handoff_summary', title: 'Agent 交接摘要已生成', description: result.summary, source: 'agent', data: { taskId, risks: result.risks, nextSteps: result.next_steps } }, db)
+    addEvent({
+      opportunityId: targetId,
+      customerId: opportunity.customer_id,
+      type: 'handoff_summary',
+      title: 'Agent 交接摘要已生成',
+      description: result.summary,
+      source: 'agent',
+      data: {
+        taskId,
+        risks: result.risks,
+        nextSteps: result.next_steps,
+        recommended_product: result.recommended_product
+      }
+    }, db)
   }
 }
 
@@ -405,7 +519,9 @@ export function createAgentTask(mode: AgentMode, targetType: string, targetId: s
     VALUES (?, ?, ?, ?, 'queued', 'requesting', 5, ?, ?, '', ?, '{}', ?, '', '')`)
     .run(id, mode, targetType, targetId, `${modeLabels[mode]}任务已进入队列`, config.model, JSON.stringify(input), now)
   taskStep(id, 'requesting', '已创建 Agent 任务，等待模型处理', { mode, targetType, targetId })
-  setTimeout(() => { void runTask(id, config) }, 40)
+  if (!deferAgentExecutionForTests) {
+    setTimeout(() => { void runTask(id, config) }, 40)
+  }
   return { task: db.prepare('SELECT * FROM agent_tasks WHERE id = ?').get(id), duplicate: false }
 }
 
