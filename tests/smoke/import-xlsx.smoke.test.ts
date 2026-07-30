@@ -5,6 +5,7 @@ import {
   assertNoNuxtLock,
   assertNoXlsxEsmError,
   assertPortClosed,
+  allocateLoopbackPort,
   buildCustomerXlsxBuffer,
   cleanupSmokeRuntime,
   cleanupTempDir,
@@ -30,7 +31,7 @@ afterEach(async () => {
 describe('IMPORT-XLSX / SMOKE-ENTRY Windows Nitro smoke', () => {
   it.skipIf(!isWindows)('SMOKE-ENTRY-002/003 + IMPORT-XLSX-001/002: nuxt dev state+import', async () => {
     const { dir, dbPath } = createTempDbPath()
-    const port = 43000 + Math.floor(Math.random() * 1000)
+    const port = await allocateLoopbackPort()
     const base = `http://127.0.0.1:${port}`
     const memberId = `NITRO-SMOKE-${Date.now()}`
     releaseNuxtLock(root)
@@ -71,7 +72,7 @@ describe('IMPORT-XLSX / SMOKE-ENTRY Windows Nitro smoke', () => {
 
   it.skipIf(!isWindows)('SMOKE-ENTRY-004/005/006 + IMPORT-XLSX-003: build product state+import and cleanup', async () => {
     const { dir, dbPath } = createTempDbPath()
-    const port = 44000 + Math.floor(Math.random() * 1000)
+    const port = await allocateLoopbackPort()
     const base = `http://127.0.0.1:${port}`
     const memberId = `NITRO-BUILD-${Date.now()}`
 

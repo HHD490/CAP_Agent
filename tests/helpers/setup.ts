@@ -37,3 +37,4 @@
 
 ;(globalThis as any).readBody = async (event: any) => event?.__body ?? {}
 ;(globalThis as any).readMultipartFormData = async (event: any) => event?.__parts ?? []
+;(globalThis as any).getRouterParam = (event: any, key: string) => event?.__params?.[key] ?? ''

@@ -17,6 +17,12 @@ export default defineEventHandler(async (event) => {
   const now = demoNow(db)
   const inquiry = db.prepare('SELECT * FROM inquiries WHERE id = ?').get(body.inquiryId) as any
   if (!inquiry) throw createError({ statusCode: 404, statusMessage: 'Visitor Session 或询价记录不存在，请重新提交需求' })
+  const recs = JSON.parse(inquiry.recommendations_json || '[]') as any[]
+  const productId = body.selectedProductId || recs[0]?.productId
+  const isRecommended = recs.some(recommendation => recommendation?.productId === productId)
+  if (!productId || !isRecommended || !db.prepare('SELECT id FROM products WHERE id = ? AND published = 1').get(productId)) {
+    throw createError({ statusCode: 400, statusMessage: '请选择有效的已发布推荐产品' })
+  }
   const email = body.email.trim().toLowerCase()
   const domain = email.split('@')[1] || ''
   let contact = db.prepare('SELECT * FROM contacts WHERE email_normalized = ? ORDER BY created_at LIMIT 1').get(email) as any
@@ -46,9 +52,6 @@ export default defineEventHandler(async (event) => {
       .run(contactId, customerId, body.contactName, email, email, now, now)
     contact = { id: contactId, customer_id: customerId, email, status: 'contactable' }
   }
-  const recs = JSON.parse(inquiry.recommendations_json || '[]') as any[]
-  const productId = body.selectedProductId || recs[0]?.productId
-  if (!productId || !db.prepare('SELECT id FROM products WHERE id = ?').get(productId)) throw createError({ statusCode: 400, statusMessage: '请选择有效的推荐产品' })
   let opportunity = db.prepare(`SELECT * FROM opportunities WHERE customer_id = ? AND product_id = ? AND status IN ('active', 'handed_off') LIMIT 1`).get(customerId, productId) as any
   if (!opportunity) {
     const opportunityId = newId('opp')

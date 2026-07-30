@@ -8,6 +8,8 @@
     "preview": "nuxt preview",
     "typecheck": "nuxt typecheck",
     "test": "vitest run",
+    "test:agent-eval": "node scripts/agent-eval-report.mjs --check",
+    "test:quality": "npm run typecheck && npm test && npm run test:agent-eval",
     "test:smoke": "vitest run --config vitest.smoke.config.ts"
   },
   "dependencies": {

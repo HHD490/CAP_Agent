@@ -3,7 +3,7 @@ import { existsSync, mkdtempSync, rmSync, unlinkSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import { spawn, spawnSync, type ChildProcessWithoutNullStreams } from 'node:child_process'
-import { createConnection } from 'node:net'
+import { createConnection, createServer } from 'node:net'
 
 const XLSX = createRequire(import.meta.url)('xlsx') as typeof import('xlsx')
 
@@ -59,7 +59,14 @@ export function resolveNuxtBin(cwd: string) {
 
 function killPidTree(pid: number) {
   if (process.platform === 'win32') {
-    spawnSync('taskkill', ['/pid', String(pid), '/t', '/f'], { shell: true, windowsHide: true, stdio: 'ignore' })
+    // Invoke taskkill.exe directly. `shell: true` can misquote arguments on
+    // Windows and may report success while leaving Nitro's listener alive.
+    spawnSync('taskkill.exe', ['/PID', String(pid), '/T', '/F'], {
+      shell: false,
+      windowsHide: true,
+      stdio: 'ignore'
+    })
+    try { process.kill(pid, 'SIGKILL') } catch { /* already gone */ }
     return
   }
   try { process.kill(-pid, 'SIGKILL') } catch { /* process group may not exist */ }
@@ -115,10 +122,12 @@ export async function cleanupSmokeRuntime(options: {
 
 export function startProcess(command: string, args: string[], env: Record<string, string>, cwd: string) {
   const needsShell = process.platform === 'win32' && /\.(cmd|bat)$/i.test(command)
-  const child = spawn(command, args, {
+  const executable = needsShell ? (process.env.ComSpec || 'cmd.exe') : command
+  const executableArgs = needsShell ? ['/d', '/s', '/c', command, ...args] : args
+  const child = spawn(executable, executableArgs, {
     cwd,
     env: { ...process.env, ...env },
-    shell: needsShell,
+    shell: false,
     windowsHide: true
   }) as ChildProcessWithoutNullStreams
   let stdout = ''
@@ -192,9 +201,27 @@ export function isPortOpen(port: number, host = '127.0.0.1') {
   })
 }
 
+/** Ask the OS for an unused loopback port instead of guessing a random range. */
+export function allocateLoopbackPort() {
+  return new Promise<number>((resolvePort, rejectPort) => {
+    const server = createServer()
+    server.unref()
+    server.once('error', rejectPort)
+    server.listen(0, '127.0.0.1', () => {
+      const address = server.address()
+      const port = typeof address === 'object' && address ? address.port : 0
+      server.close(error => {
+        if (error) rejectPort(error)
+        else if (!port) rejectPort(new Error('OS did not allocate a loopback port'))
+        else resolvePort(port)
+      })
+    })
+  })
+}
+
 export async function assertPortClosed(port: number) {
   // Retry briefly — Windows may take a moment after taskkill.
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 20; i++) {
     const open = await isPortOpen(port)
     if (!open && pidsListeningOnPort(port).length === 0) return
     killListenersOnPort(port)
