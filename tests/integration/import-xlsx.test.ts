@@ -180,4 +180,77 @@ describe('IMPORT-XLSX integration (handler + isolated DB)', () => {
     expect(customer).toBeTruthy()
     expect(db.prepare('SELECT id FROM contacts WHERE customer_id = ?').get(customer.id)).toBeUndefined()
   })
+
+  it('IMPORT-XLSX-011: a multipart field that is not named file is rejected without writes', async () => {
+    const { db } = useIsolatedDb()
+    const beforeCustomers = Number((db.prepare('SELECT COUNT(*) AS count FROM customers').get() as any).count)
+
+    await expect(importHandler({
+      __parts: [{ name: 'attachment', filename: 'customers.xlsx', data: buildCustomerXlsx() }]
+    } as any)).rejects.toMatchObject({ statusCode: 400 })
+
+    expect(Number((db.prepare('SELECT COUNT(*) AS count FROM customers').get() as any).count)).toBe(beforeCustomers)
+  })
+
+  it('IMPORT-XLSX-012: empty file returns a business error without writes', async () => {
+    const { db } = useIsolatedDb()
+    const beforeCustomers = Number((db.prepare('SELECT COUNT(*) AS count FROM customers').get() as any).count)
+    const beforeContacts = Number((db.prepare('SELECT COUNT(*) AS count FROM contacts').get() as any).count)
+
+    await expect(importHandler({
+      __parts: [{ name: 'file', filename: 'empty.xlsx', data: Buffer.alloc(0) }]
+    } as any)).rejects.toMatchObject({
+      statusCode: 400,
+      statusMessage: expect.stringMatching(/CSV|Excel|为空/)
+    })
+
+    expect(Number((db.prepare('SELECT COUNT(*) AS count FROM customers').get() as any).count)).toBe(beforeCustomers)
+    expect(Number((db.prepare('SELECT COUNT(*) AS count FROM contacts').get() as any).count)).toBe(beforeContacts)
+  })
+
+  it('IMPORT-XLSX-012b: malformed ZIP workbook returns a business error without writes', async () => {
+    const { db } = useIsolatedDb()
+    const beforeCustomers = Number((db.prepare('SELECT COUNT(*) AS count FROM customers').get() as any).count)
+
+    await expect(importHandler({
+      __parts: [{ name: 'file', filename: 'broken.xlsx', data: Buffer.from([0x50, 0x4b, 0x03, 0x04]) }]
+    } as any)).rejects.toMatchObject({
+      statusCode: 400,
+      statusMessage: expect.stringMatching(/CSV|Excel|澶辫触/)
+    })
+
+    expect(Number((db.prepare('SELECT COUNT(*) AS count FROM customers').get() as any).count)).toBe(beforeCustomers)
+  })
+
+  it('IMPORT-XLSX-013: a member id already present in the database is skipped across import batches', async () => {
+    const { db } = useIsolatedDb()
+    const first = buildWorkbook([{ company: 'Original Member', country: '缇庡浗', member_id: 'CROSS-BATCH-001' }])
+    const second = buildWorkbook([{ company: 'Duplicate Member', country: '鑻卞浗', member_id: 'CROSS-BATCH-001' }])
+
+    expect(await importHandler({ __parts: [{ name: 'file', filename: 'first.xlsx', data: first }] } as any))
+      .toMatchObject({ created: 1, skipped: 0 })
+    expect(await importHandler({ __parts: [{ name: 'file', filename: 'second.xlsx', data: second }] } as any))
+      .toMatchObject({ created: 0, skipped: 1 })
+
+    const rows = db.prepare(`SELECT name FROM customers WHERE source_ref = 'CROSS-BATCH-001'`).all() as any[]
+    expect(rows).toEqual([{ name: 'Original Member' }])
+  })
+
+  it('IMPORT-XLSX-014: email domain is the deduplication fallback when website is absent', async () => {
+    const { db } = useIsolatedDb()
+    const buffer = buildWorkbook([
+      { company: 'Email Domain First', country: '寰峰浗', email: ' FIRST@EMAIL-DOMAIN.EXAMPLE ' },
+      { company: 'Email Domain Duplicate', country: '寰峰浗', email: 'second@email-domain.example' }
+    ])
+
+    const result = await importHandler({
+      __parts: [{ name: 'file', filename: 'email-domain.xlsx', data: buffer }]
+    } as any)
+    const customer = db.prepare(`SELECT * FROM customers WHERE domain = 'email-domain.example' AND country = '寰峰浗'`).get() as any
+    const contact = db.prepare('SELECT * FROM contacts WHERE customer_id = ?').get(customer.id) as any
+
+    expect(result).toMatchObject({ created: 1, skipped: 1, total: 2 })
+    expect(customer.name).toBe('Email Domain First')
+    expect(contact.email_normalized).toBe('first@email-domain.example')
+  })
 })

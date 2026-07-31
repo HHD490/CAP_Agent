@@ -9,11 +9,15 @@ export default defineEventHandler(async (event) => {
   const parts = await readMultipartFormData(event)
   const file = parts?.find(part => part.name === 'file' && part.data)
   if (!file) throw createError({ statusCode: 400, statusMessage: '请选择 CSV 或 Excel 文件' })
+  if (file.data.length === 0) throw createError({ statusCode: 400, statusMessage: '文件内容为空，请选择有效的 CSV 或 Excel 文件' })
   if (file.data.length > 5 * 1024 * 1024) throw createError({ statusCode: 400, statusMessage: '文件不得超过 5 MB' })
   let rows: Record<string, any>[]
   try {
     const workbook = XLSX.read(file.data, { type: 'buffer' })
-    const sheet = workbook.Sheets[workbook.SheetNames[0]!]
+    const firstSheetName = workbook.SheetNames[0]
+    if (!firstSheetName) throw new Error('Workbook has no worksheets')
+    const sheet = workbook.Sheets[firstSheetName]
+    if (!sheet) throw new Error('Workbook first worksheet is unavailable')
     rows = XLSX.utils.sheet_to_json(sheet, { defval: '' })
   } catch {
     throw createError({ statusCode: 400, statusMessage: '文件解析失败，请检查 CSV/Excel 格式' })

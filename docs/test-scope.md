@@ -45,19 +45,19 @@
 | advance-time 跟进提醒 | 功能 | 首次/二次/暂停/不触发 | P0 | 单元 | Mavis | `advance-time-reminders.test.ts` (14) |
 | state.get 端点 | 接口 | shape + counts + 排序 | P0 | 单元 | Mavis | `state-endpoint.test.ts` (22) |
 | agent tasks HTTP | 接口 | zod 校验 + dedup + stop | P0 | 集成 | Mavis | `agent-tasks-endpoint.test.ts` (19) |
-| 官网 quote/identity/rematch | 接口/安全 | 主链路 + 会话隔离 + 原子校验 + 注入 | P0 | 集成 | Mavis | `website-journey.test.ts` (25) |
+| 官网 quote/identity/rematch | 接口/安全 | 主链路 + 会话隔离 + 原子校验 + 注入 | P0 | 集成 | Mavis | `website-journey.test.ts` (35) |
 | 官网产品推荐 | 规则/边界 | published + Top3 + 路线/货类/能力/偏好计分 | P0 | 单元 | Mavis | `website-recommendations.test.ts` (5) |
 | Demo 数据重置 | 恢复/幂等 | 标准种子 + 清理 + BY004 安全不变量 | P0 | 单元 | Mavis | `demo-reset.test.ts` (3) |
 | Agent 离线评测 | 非确定性 | 100 用例 / 5 mode / 9 阈值 / 追溯字段 | P0 | JSON+reporter | Mavis | `agent-evaluation.test.ts` (14) + `core-regression.json` |
 | 联系人校验 | 功能 | whitespace / status / 跨入口 | P0 | 单元 | 已有 | `outreach-contact.test.ts` |
 | 匹配 stale 保护 | 功能 | rematch/identity/update_* | P0 | 集成 | 已有 | `rematch-identity-stale.test.ts` |
-| import xlsx/csv | 接口 | 中英表头 / 重复 / 空行 / 200 行上限 / 体积 | P0 | 集成 | 已有 | `import-xlsx.test.ts` (8) + smoke |
+| import xlsx/csv | 接口 | 中英表头 / 重复 / 空行 / 空或损坏文件 / 200 行上限 / 体积 | P0 | 集成 | 已有 | `import-xlsx.test.ts` (13) + smoke |
 | 客户画像类型 | 功能 | 6 枚举 + 非法值 | P0 | 单元 | 已有 | `profile-type.test.ts` |
 | BY004 修正 | 迁移 | 6 路径 + 幂等 | P0 | 单元 | 已有 | `legacy-publish.test.ts` |
 | handoff 契约 | 功能 | object/string 双兼容 | P0 | 单元 | 已有 | `handoff-contract.test.ts` |
 | smoke 入口 | 集成 | Windows Nitro dev/build | P1 | smoke | 已有 | `smoke-entry.test.ts` + `import-xlsx.smoke.test.ts` |
 
-> 数字 = 当前用例数；总计 285 条确定性单元/集成 + 100 条离线评测数据 + 2 条 Windows Nitro smoke。
+> 数字 = 当前用例数；总计 300 条确定性单元/集成 + 100 条离线评测数据 + 2 条 Windows Nitro smoke。
 
 ## 4. 排除项与假设
 
@@ -85,7 +85,7 @@
 
 - **范围清单**：本文档 §3
 - **用例集版本**：
-  - 单元/集成：vitest `tests/unit/**/*.test.ts` + `tests/integration/**/*.test.ts`（21 个文件，285 用例）
+  - 单元/集成：vitest `tests/unit/**/*.test.ts` + `tests/integration/**/*.test.ts`（21 个文件，300 用例）
   - 离线评测：`tests/agent-evaluation/core-regression.json`（v1.0, 100 用例）
 - **测试数据**：每个测试用 `useIsolatedDb()` 临时 SQLite 库，互不影响
 - **环境**：本地 Node 22 + Vitest 3.2 + Windows-native xlsx 兼容

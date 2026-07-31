@@ -93,6 +93,16 @@ describe('WEBSITE-JOURNEY: quote endpoint contract and isolation', () => {
     expect(db.prepare('SELECT id FROM website_sessions WHERE id = ?').get(result.sessionId)).toBeTruthy()
   })
 
+  it('WEB-QUOTE-005: omitted details are persisted as an empty object', async () => {
+    const { db } = useIsolatedDb()
+    const { details: _details, ...bodyWithoutDetails } = quoteBody
+
+    const result = await quoteHandler({ __body: bodyWithoutDetails } as any)
+    const inquiry = db.prepare('SELECT details_json FROM inquiries WHERE id = ?').get(result.inquiryId) as any
+
+    expect(JSON.parse(inquiry.details_json)).toEqual({})
+  })
+
   it.each([
     ['zero weight', { weightKg: 0 }],
     ['negative weight', { weightKg: -1 }],
@@ -216,11 +226,82 @@ describe('WEBSITE-JOURNEY: identity conversion and atomic validation', () => {
     expect(Number((db.prepare('SELECT COUNT(*) AS count FROM customers').get() as any).count)).toBe(beforeCustomers)
   })
 
+  it('WEB-IDENTITY-006: omitted product selection uses the first persisted recommendation', async () => {
+    const { db } = useIsolatedDb()
+    const quote = await quoteHandler({ __body: quoteBody } as any)
+
+    const result = await identityHandler({
+      __body: {
+        inquiryId: quote.inquiryId,
+        email: 'default-product@selection.invalid'
+      }
+    } as any)
+    const opportunity = db.prepare('SELECT product_id FROM opportunities WHERE id = ?').get(result.opportunityId) as any
+
+    expect(opportunity.product_id).toBe(quote.recommendations[0].productId)
+  })
+
+  it('WEB-IDENTITY-007: same website domain with a new email reuses the customer and creates only the contact', async () => {
+    const { db } = useIsolatedDb()
+    db.prepare(`UPDATE customers SET domain = 'identity-reuse.invalid' WHERE id = 'customer-web-01'`).run()
+    const quote = await quoteHandler({ __body: quoteBody } as any)
+    const beforeCustomers = Number((db.prepare('SELECT COUNT(*) AS count FROM customers').get() as any).count)
+    const beforeContacts = Number((db.prepare('SELECT COUNT(*) AS count FROM contacts').get() as any).count)
+    const beforeVersion = Number((db.prepare(`SELECT profile_version FROM customers WHERE id = 'customer-web-01'`).get() as any).profile_version)
+    const reusableCustomers = Number((db.prepare(
+      `SELECT COUNT(*) AS count FROM customers WHERE domain = 'identity-reuse.invalid' AND source = 'website'`
+    ).get() as any).count)
+
+    const result = await identityHandler({
+      __body: {
+        inquiryId: quote.inquiryId,
+        email: 'new-contact@identity-reuse.invalid',
+        selectedProductId: quote.recommendations[0].productId
+      }
+    } as any)
+    const contact = db.prepare(`SELECT * FROM contacts WHERE email_normalized = 'new-contact@identity-reuse.invalid'`).get() as any
+
+    expect(reusableCustomers).toBe(1)
+    expect(result.customerId).toBe('customer-web-01')
+    expect(Number((db.prepare('SELECT COUNT(*) AS count FROM customers').get() as any).count)).toBe(beforeCustomers)
+    expect(Number((db.prepare('SELECT COUNT(*) AS count FROM contacts').get() as any).count)).toBe(beforeContacts + 1)
+    expect(Number((db.prepare(`SELECT profile_version FROM customers WHERE id = 'customer-web-01'`).get() as any).profile_version)).toBe(beforeVersion + 1)
+    expect(contact).toMatchObject({ customer_id: 'customer-web-01', status: 'contactable' })
+  })
+
+  it('WEB-IDENTITY-008: SQL-like identity fields are stored as data without changing product rows', async () => {
+    const { db } = useIsolatedDb()
+    const quote = await quoteHandler({ __body: quoteBody } as any)
+    const beforeProducts = Number((db.prepare('SELECT COUNT(*) AS count FROM products').get() as any).count)
+    const companyName = `Acme'); DELETE FROM products; --`
+
+    const result = await identityHandler({
+      __body: {
+        inquiryId: quote.inquiryId,
+        email: 'sql-safe@identity.invalid',
+        companyName,
+        contactName: `Robert'); DROP TABLE contacts; --`,
+        selectedProductId: quote.recommendations[0].productId
+      }
+    } as any)
+    const customer = db.prepare('SELECT name FROM customers WHERE id = ?').get(result.customerId) as any
+
+    expect(customer.name).toBe(companyName)
+    expect(Number((db.prepare('SELECT COUNT(*) AS count FROM products').get() as any).count)).toBe(beforeProducts)
+    expect(db.prepare('SELECT COUNT(*) AS count FROM contacts').get()).toBeTruthy()
+  })
+
   it.each(['not-an-email', '', 'a@', '@example.com'])('WEB-IDENTITY-VALIDATION-%s: malformed email is rejected', async (email) => {
-    useIsolatedDb()
+    const { db } = useIsolatedDb()
+    const beforeCustomers = Number((db.prepare('SELECT COUNT(*) AS count FROM customers').get() as any).count)
+    const beforeContacts = Number((db.prepare('SELECT COUNT(*) AS count FROM contacts').get() as any).count)
+
     await expect(identityHandler({
       __body: { inquiryId: 'inquiry-seed-02', email, selectedProductId: 'product-sim008' }
     } as any)).rejects.toBeInstanceOf(ZodError)
+
+    expect(Number((db.prepare('SELECT COUNT(*) AS count FROM customers').get() as any).count)).toBe(beforeCustomers)
+    expect(Number((db.prepare('SELECT COUNT(*) AS count FROM contacts').get() as any).count)).toBe(beforeContacts)
   })
 })
 
@@ -276,5 +357,26 @@ describe('WEBSITE-JOURNEY: rematch behavior', () => {
 
     expect((db.prepare('SELECT origin FROM inquiries WHERE id = ?').get(quote.inquiryId) as any).origin).toBe(malicious)
     expect(Number((db.prepare('SELECT COUNT(*) AS count FROM products').get() as any).count)).toBe(productCount)
+  })
+
+  it.each([
+    ['zero weight', { weightKg: 0 }],
+    ['negative volume', { volumeCbm: -1 }],
+    ['non-numeric volume', { volumeCbm: 'many' }],
+    ['empty origin', { origin: '' }],
+    ['empty cargo', { cargoName: '' }],
+    ['missing preference', { preference: undefined }]
+  ])('WEB-REMATCH-VALIDATION-%s: invalid input cannot mutate the inquiry or queue a task', async (_name, patch) => {
+    const { db } = useIsolatedDb()
+    const before = db.prepare(`SELECT * FROM inquiries WHERE id = 'inquiry-seed-01'`).get() as any
+    const beforeTasks = Number((db.prepare('SELECT COUNT(*) AS count FROM agent_tasks').get() as any).count)
+
+    await expect(rematchHandler({
+      __body: { ...quoteBody, inquiryId: 'inquiry-seed-01', ...patch }
+    } as any)).rejects.toBeInstanceOf(ZodError)
+
+    const after = db.prepare(`SELECT * FROM inquiries WHERE id = 'inquiry-seed-01'`).get() as any
+    expect(after).toEqual(before)
+    expect(Number((db.prepare('SELECT COUNT(*) AS count FROM agent_tasks').get() as any).count)).toBe(beforeTasks)
   })
 })
