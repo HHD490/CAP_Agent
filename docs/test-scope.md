@@ -38,9 +38,12 @@
 
 | 对象 | 测试类型 | 深度 | 优先级 | 环境/数据 | 负责人 | 覆盖文件 |
 | --- | --- | --- | --- | --- | --- | --- |
+| DB 工具层 | 数据层 | addEvent 默认值 / `demoNow` 防御 `CURRENT_TIME` 关键字 / `initializeDatabaseConnection` 幂等 / `prepareOpenedDatabase` 重启清理防御 / `runDatabaseMigrations` BY004 幂等 | P0 | 单元 | Mavis | `db-utils.test.ts` (12) |
 | Agent 5 模式 schema | 契约 | 全量边界 | P0 | 单元 | Mavis | `agent-schemas.test.ts` (65) |
 | reply_qualification | 功能 | 全 intent × 边界 | P0 | 单元 | Mavis | `agent-reply-qualification.test.ts` (15) |
 | Agent 任务生命周期 | 功能 | 创建/停止/状态机/留痕/级联 | P0 | 单元 | Mavis | `agent-lifecycle.test.ts` (18) |
+| Agent 任务端点边缘 | 契约/状态 | 同 target 多 mode 互不串 / stop 终态幂等 / stop 后可重建 / task 起步 + stop step 留痕 / HTTP dedup 一致性 | P0 | 单元 | Mavis | `agent-tasks-edge.test.ts` (10) |
+| useDemoState composable | 前端契约 | refresh 防抖/quiet/通知维护/同数据不替换 / runAgent / doAction / resetDemo / advanceTime | P0 | 单元 | Mavis | `use-demo-state.test.ts` (16) |
 | demo action 14 分支 | 功能 | 异常 + 边界 + 业务规则 | P0 | 单元 | Mavis | `demo-actions-workflow.test.ts` (35) |
 | advance-time 跟进提醒 | 功能 | 首次/二次/暂停/不触发 | P0 | 单元 | Mavis | `advance-time-reminders.test.ts` (14) |
 | state.get 端点 | 接口 | shape + counts + 排序 | P0 | 单元 | Mavis | `state-endpoint.test.ts` (22) |
@@ -48,16 +51,21 @@
 | 官网 quote/identity/rematch | 接口/安全 | 主链路 + 会话隔离 + 原子校验 + 注入 | P0 | 集成 | Mavis | `website-journey.test.ts` (35) |
 | 官网产品推荐 | 规则/边界 | published + Top3 + 路线/货类/能力/偏好计分 | P0 | 单元 | Mavis | `website-recommendations.test.ts` (5) |
 | Demo 数据重置 | 恢复/幂等 | 标准种子 + 清理 + BY004 安全不变量 | P0 | 单元 | Mavis | `demo-reset.test.ts` (3) |
+| 产品发布 (BY004 等) | 迁移/状态 | published 过滤 + simulated 排序 | P0 | 单元 | 已有 | `product-publish.test.ts` (3) |
 | Agent 离线评测 | 非确定性 | 100 用例 / 5 mode / 9 阈值 / 追溯字段 | P0 | JSON+reporter | Mavis | `agent-evaluation.test.ts` (14) + `core-regression.json` |
 | 联系人校验 | 功能 | whitespace / status / 跨入口 | P0 | 单元 | 已有 | `outreach-contact.test.ts` |
 | 匹配 stale 保护 | 功能 | rematch/identity/update_* | P0 | 集成 | 已有 | `rematch-identity-stale.test.ts` |
-| import xlsx/csv | 接口 | 中英表头 / 重复 / 空行 / 空或损坏文件 / 200 行上限 / 体积 | P0 | 集成 | 已有 | `import-xlsx.test.ts` (13) + smoke |
+| demo action stale 联动 | 集成 | update_* 触发 stale + accepted 保护 | P0 | 集成 | 已有 | `demo-action-stale.test.ts` |
+| import xlsx/csv | 接口 | 中英表头 / 重复 / 空行 / 空或损坏文件 / 200 行上限 / 体积 / 5MB 精确边界 / member_id 优先级 | P0 | 集成 | 已有 | `import-xlsx.test.ts` (17) + smoke |
 | 客户画像类型 | 功能 | 6 枚举 + 非法值 | P0 | 单元 | 已有 | `profile-type.test.ts` |
 | BY004 修正 | 迁移 | 6 路径 + 幂等 | P0 | 单元 | 已有 | `legacy-publish.test.ts` |
 | handoff 契约 | 功能 | object/string 双兼容 | P0 | 单元 | 已有 | `handoff-contract.test.ts` |
+| handoff 旧字符串路径 | 兼容 | 旧字符串 recommended_product 解析 | P0 | 单元 | 已有 | `handoff-legacy.test.ts` |
 | smoke 入口 | 集成 | Windows Nitro dev/build | P1 | smoke | 已有 | `smoke-entry.test.ts` + `import-xlsx.smoke.test.ts` |
 
-> 数字 = 当前用例数；总计 300 条确定性单元/集成 + 100 条离线评测数据 + 2 条 Windows Nitro smoke。
+> 数字 = 当前用例数；总计 342 条确定性单元/集成 + 100 条离线评测数据 + 2 条 Windows Nitro smoke。
+>
+> **2026-08-04 更新**：按 codex/AHa-testing 分支新加 3 个单元测试文件（`db-utils` / `agent-tasks-edge` / `use-demo-state`）+ import-xlsx 追加 4 条边界，共 +42 条用例（300 → 342）。同步补齐之前 §3 漏列的 3 个旧文件（`product-publish` / `demo-action-stale` / `handoff-legacy`）以让清单与实际 22 文件对齐。
 
 ## 4. 排除项与假设
 

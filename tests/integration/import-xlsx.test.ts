@@ -253,4 +253,94 @@ describe('IMPORT-XLSX integration (handler + isolated DB)', () => {
     expect(customer.name).toBe('Email Domain First')
     expect(contact.email_normalized).toBe('first@email-domain.example')
   })
+
+  it('IMPORT-XLSX-015: 5MB 整与 5MB-1 byte 边界都通过（仅 5MB+1 拒绝）', async () => {
+    const { db } = useIsolatedDb()
+    const before = Number((db.prepare('SELECT COUNT(*) AS count FROM customers').get() as any).count)
+
+    // 5MB - 1 byte
+    const fiveMinus1 = Buffer.alloc(5 * 1024 * 1024 - 1, 0x20)
+    const r1 = await importHandler({
+      __parts: [{ name: 'file', filename: 'almost-5mb.bin', data: fiveMinus1 }]
+    } as any)
+    expect(r1).toMatchObject({ ok: true, created: 0, skipped: 0, total: 0 })
+    expect(Number((db.prepare('SELECT COUNT(*) AS count FROM customers').get() as any).count)).toBe(before)
+
+    // 5MB 整
+    const exact5mb = Buffer.alloc(5 * 1024 * 1024, 0x20)
+    const r2 = await importHandler({
+      __parts: [{ name: 'file', filename: 'exact-5mb.bin', data: exact5mb }]
+    } as any)
+    expect(r2).toMatchObject({ ok: true })
+
+    // 5MB + 1 byte（IMPORT-XLSX-004 已测，这里只确认相对次序）
+    const fivePlus1 = Buffer.alloc(5 * 1024 * 1024 + 1, 0x20)
+    await expect(importHandler({
+      __parts: [{ name: 'file', filename: 'over-5mb.bin', data: fivePlus1 }]
+    } as any)).rejects.toMatchObject({
+      statusCode: 400,
+      statusMessage: expect.stringMatching(/5 MB|不得超过/)
+    })
+  })
+
+  it('IMPORT-XLSX-016: 200 行精确边界通过，201 行第 201 个被截断', async () => {
+    const { db } = useIsolatedDb()
+    const rows = Array.from({ length: 201 }, (_, index) => ({
+      company: `Edge Customer ${index + 1}`,
+      country: '边界国',
+      member_id: `EDGE-${String(index + 1).padStart(3, '0')}`
+    }))
+    const buffer = buildWorkbook(rows)
+
+    const result = await importHandler({
+      __parts: [{ name: 'file', filename: 'edge-201.xlsx', data: buffer }]
+    } as any)
+
+    expect(result).toMatchObject({ created: 200, skipped: 0, total: 201 })
+    expect(db.prepare(`SELECT id FROM customers WHERE source_ref = 'EDGE-200'`).get()).toBeTruthy()
+    expect(db.prepare(`SELECT id FROM customers WHERE source_ref = 'EDGE-201'`).get()).toBeUndefined()
+    expect(Number((db.prepare(`SELECT COUNT(*) AS count FROM customers WHERE source_ref LIKE 'EDGE-%'`).get() as any).count)).toBe(200)
+  })
+
+  it('IMPORT-XLSX-017: member_id 重复优先于 domain+country 重复（显式优先级）', async () => {
+    // 第一行：member_id=PRIO-001，domain=prio.example，country=美国
+    // 第二行：member_id=PRIO-002，domain=prio.example，country=美国（不同 member_id → 应创建第二行）
+    // 第三行：member_id=PRIO-001（与第一行同 member_id → 跳过；虽然 domain/country 也匹配）
+    // 第四行：domain=prio.example，country=美国，无 member_id（与第一/二行 domain+country 匹配 → 跳过）
+    const { db } = useIsolatedDb()
+    const buffer = buildWorkbook([
+      { company: 'Priority One', country: '美国', website: 'https://prio.example', email: 'one@prio.example', member_id: 'PRIO-001' },
+      { company: 'Priority Two', country: '美国', website: 'https://prio.example/path', email: 'two@prio.example', member_id: 'PRIO-002' },
+      { company: 'Duplicate Member', country: '美国', website: 'https://prio.example/x', member_id: 'PRIO-001' },
+      { company: 'Duplicate Domain Country', country: '美国', website: 'https://prio.example/y' }
+    ])
+
+    const result = await importHandler({
+      __parts: [{ name: 'file', filename: 'priority.xlsx', data: buffer }]
+    } as any)
+
+    expect(result).toMatchObject({ created: 2, skipped: 2, total: 4 })
+    const names = (db.prepare(`SELECT name, source_ref FROM customers WHERE domain = 'prio.example' ORDER BY name`).all() as any[]).map(r => r.name)
+    expect(names).toEqual(['Priority One', 'Priority Two'])
+  })
+
+  it('IMPORT-XLSX-018: 同一公司名 + 不同 member_id 视为不同客户（不去重 company 自身）', async () => {
+    const { db } = useIsolatedDb()
+    const buffer = buildWorkbook([
+      { company: 'Same Name Co', country: '泰国', member_id: 'SAME-001', website: 'https://same-1.example' },
+      { company: 'Same Name Co', country: '泰国', member_id: 'SAME-002', website: 'https://same-2.example' },
+      { company: '   Same Name Co   ', country: '泰国', member_id: 'SAME-003' }
+    ])
+
+    const result = await importHandler({
+      __parts: [{ name: 'file', filename: 'same-name.xlsx', data: buffer }]
+    } as any)
+
+    expect(result).toMatchObject({ created: 3, skipped: 0, total: 3 })
+    const names = (db.prepare(`SELECT name FROM customers WHERE country = '泰国' AND name LIKE '%Same Name Co%' ORDER BY source_ref`).all() as any[]).map(r => r.name)
+    expect(names).toEqual(['Same Name Co', 'Same Name Co', 'Same Name Co'])
+    // 第三行的 name 应该是 trim 后的（write 前已 String().trim()）
+    const trimmed = (db.prepare(`SELECT name FROM customers WHERE source_ref = 'SAME-003'`).get() as any).name
+    expect(trimmed).toBe('Same Name Co')
+  })
 })
