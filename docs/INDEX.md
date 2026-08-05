@@ -41,6 +41,8 @@
   - [missed-bug-repair-report-2026-07-29.md](./history/2026-07-29-repair/missed-bug-repair-report-2026-07-29.md)（4.6KB）— 修复汇报（第一轮，4 项 pass）
   - [missed-bug-repair-round2-2026-07-29.md](./history/2026-07-29-repair/missed-bug-repair-round2-2026-07-29.md)（3.3KB）— 第二轮修复汇报（smoke 进程/锁清理 + 联系人共享校验）
   - [final-repair-summary-2026-07-29.md](./history/2026-07-29-repair/final-repair-summary-2026-07-29.md)（3.7KB）— 最终汇总（`Approve with notes`）
+- `history/2026-08-05-scope-supplement/` — 2026-08-05 测试范围补充活动
+  - [scope-supplement-decision-2026-08-05.md](./history/2026-08-05-scope-supplement/scope-supplement-decision-2026-08-05.md)（12.5KB）— 3 处覆盖缺口补 32 用例的正式范围交付决定（含覆盖矩阵 / CP0 标签 / 选型决策 / 评审状态）
 
 ## 5. 命名与放置规范
 

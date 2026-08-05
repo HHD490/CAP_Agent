@@ -91,6 +91,7 @@ PoC 涉及 5 个 Agent 模式，必须先完成确定性功能测试，再进入
 - **测试报告**：`docs/reports/<version>/report.md`，含范围、执行结果、缺陷、结论
 - **Agent 评测报告**：`docs/agent-evaluation/<date>.md`，由 `scripts/agent-eval-report.mjs` 生成
 - **基线归档**：`tests/agent-evaluation/baselines/<version>.json`（接入真实模型后启用）
+- **活动过程报告**（范围补充 / 修复 / 评审 / 重大事件）：`docs/history/<event>/<name>-<YYYY-MM-DD>.md`，依 `INDEX.md` §5 命名规范；范围补充活动需按 `test-scope-case-designer` §"范围交付模板"出正式决定记录
 
 ## 8. 复盘节奏
 
