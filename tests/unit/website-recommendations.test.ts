@@ -125,4 +125,96 @@ describe('WEBSITE-RECOMMEND: deterministic recommendation rules', () => {
       transitTime: 'TEST ETA'
     })
   })
+
+  it('WEB-REC-006: empty products table → returns [] (no crash, no fallback)', () => {
+    const { db } = useIsolatedDb(false)
+    // 不插入任何 product
+    const result = recommendProducts(baseInput)
+    expect(result).toEqual([])
+  })
+
+  it('WEB-REC-007: no published products → returns [] (only published are visible)', () => {
+    const { db } = useIsolatedDb(false)
+    insertProduct(db, { id: 'p-hidden-1', routes: ['中国-美国'], published: 0 })
+    insertProduct(db, { id: 'p-hidden-2', cargoTypes: ['服装'], published: 0 })
+    insertProduct(db, { id: 'p-hidden-3', published: 0 })
+
+    const result = recommendProducts(baseInput)
+    expect(result).toEqual([])
+  })
+
+  it('WEB-REC-008: all 5 bonus paths stacking on one product → score capped at 98', () => {
+    // 单个产品同时命中：route(28) + cargo(12) + battery(10) + time(6) + sea(8) + large(7)
+    // 算术和 = 52 + 28 + 12 + 10 + 6 + 8 + 7 = 123 → 断言 Math.min(98, 123) === 98
+    // evidence 合同：只有 route / cargo / battery 三档会写入 evidence；
+    // time / sea / large 只加分、不写 evidence（与代码一致）。
+    const { db } = useIsolatedDb(false)
+    insertProduct(db, {
+      id: 'p-everything',
+      name: '美国特快海运大客户大票线',         // 同时满足：name 含"特快"（time） + "大客户|大票"（large）
+      transportMode: '海运拼箱',                 // 含"海运"（sea 体积加分）
+      routes: ['中国-美国'],
+      cargoTypes: ['蓝牙音箱'],                  // cargoName='蓝牙音箱（带电）' 时命中
+      capabilities: ['可承接带电货物']           // cargo 含"蓝牙/带电"时命中
+    })
+
+    const [result] = recommendProducts({
+      ...baseInput,
+      cargoName: '蓝牙音箱（带电）',
+      preference: '优先时效',
+      volumeCbm: 5,                              // >= 3 触发 sea 加分
+      weightKg: 800                              // >= 500 触发 large 加分
+    })
+
+    expect(result).toMatchObject({ productId: 'p-everything', score: 98 })
+    expect(result?.score).toBeLessThanOrEqual(98)
+    // evidence 只来自前 3 档；锁定长度与具体文案
+    expect(result?.evidence).toEqual([
+      '覆盖 洛杉矶（美国）方向',
+      '适配 蓝牙音箱（带电） 品类',
+      '具备带电货物承接能力'
+    ])
+  })
+
+  it('WEB-REC-009: destination outside cityCountryMap and no route match → only base 52', () => {
+    // '火星' 不在 cityCountryMap 中，没有 'route' 能命中它
+    // → 不应该 +28，只剩 base 52
+    const { db } = useIsolatedDb(false)
+    insertProduct(db, { id: 'p-default', routes: ['中国-日本'] })
+
+    const [result] = recommendProducts({ ...baseInput, destination: '火星' })
+    expect(result).toMatchObject({ productId: 'p-default', score: 52 })
+    expect(result?.evidence).toEqual(['已发布产品，可进一步人工询价确认'])
+  })
+
+  it('WEB-REC-010: identical scores preserve insertion order (stable sort)', () => {
+    // 两个产品分数完全相同（都没 route/cargo 命中 → 52）
+    // 期望：保持插入顺序返回（依靠 Array.prototype.sort 的稳定特性）
+    const { db } = useIsolatedDb(false)
+    insertProduct(db, { id: 'p-a' })
+    insertProduct(db, { id: 'p-b' })
+    insertProduct(db, { id: 'p-c' })
+
+    const result = recommendProducts({ ...baseInput, destination: '火星' })
+    expect(result.map(item => item.productId)).toEqual(['p-a', 'p-b', 'p-c'])
+    expect(result.every(item => item.score === 52)).toBe(true)
+  })
+
+  it('WEB-REC-011: weight/volume boundary at exactly 500 kg / 3 cbm still triggers the bonus', () => {
+    // 大件（>=500 kg）和海运体积（>=3 cbm）加分在边界值上必须仍然命中
+    // 这是 off-by-one 防御：>= 而非 >
+    const { db } = useIsolatedDb(false)
+    insertProduct(db, { id: 'p-edge-large', name: '大客户大票线' })
+    insertProduct(db, { id: 'p-edge-sea', name: '海运基础线', transportMode: '海运拼箱' })
+
+    const result = recommendProducts({
+      ...baseInput,
+      weightKg: 500,
+      volumeCbm: 3
+    })
+    const scoreById = Object.fromEntries(result.map(item => [item.productId, item.score]))
+
+    // base 52 + large(7) = 59, base 52 + sea(8) = 60
+    expect(scoreById).toEqual({ 'p-edge-sea': 60, 'p-edge-large': 59 })
+  })
 })

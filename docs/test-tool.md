@@ -46,7 +46,7 @@
 
 | 目录 | 数量 | 类型 | 治理要求 |
 | --- | ---: | --- | --- |
-| `tests/unit/` | 16 文件 | 纯函数 + schema + 业务规则 | 必须 ≤100ms 级别；不允许起服务 |
+| `tests/unit/` | 18 文件 | 纯函数 + schema + 业务规则 | 必须 ≤100ms 级别；不允许起服务 |
 | `tests/integration/` | 5 文件 | Nitro endpoint + SQLite | 允许 `useIsolatedDb`；不允许占用 3100 端口 |
 | `tests/smoke/` | 1 文件 | Windows Nitro `nuxt dev` + `nuxt build` 实进程 | 随机 loopback 端口 + 严格进程清理；`npm run test:smoke` 单独入口 |
 | `tests/agent-evaluation/` | 1 JSON（72KB） | 离线评测数据集 | 见 `docs/agent-evaluation.md` |
@@ -96,7 +96,7 @@
 ```bash
 # CI 必须通过的护栏（与 docs/release-regression.md §9 对齐）
 npm run typecheck                              # 类型门禁
-npm test                                       # 44+ 确定性测试（unit + integration + agent-eval 结构护栏）
+npm test                                       # 374 条确定性测试（unit + integration + agent-eval 结构护栏）
 npm run test:agent-eval                        # 评测集结构 + 9 阈值 + 用例数量 + ID 唯一
 npm run test:smoke                             # Windows Nitro dev/build 实进程（长耗时）
 ```

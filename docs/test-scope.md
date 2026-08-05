@@ -49,7 +49,9 @@
 | state.get 端点 | 接口 | shape + counts + 排序 | P0 | 单元 | Mavis | `state-endpoint.test.ts` (22) |
 | agent tasks HTTP | 接口 | zod 校验 + dedup + stop | P0 | 集成 | Mavis | `agent-tasks-endpoint.test.ts` (19) |
 | 官网 quote/identity/rematch | 接口/安全 | 主链路 + 会话隔离 + 原子校验 + 注入 | P0 | 集成 | Mavis | `website-journey.test.ts` (35) |
-| 官网产品推荐 | 规则/边界 | published + Top3 + 路线/货类/能力/偏好计分 | P0 | 单元 | Mavis | `website-recommendations.test.ts` (5) |
+| 官网产品推荐 | 规则/边界 | published + Top3 + 路线/货类/能力/偏好计分 + 空表/无 published/全 bonus 98 上限/无 cityCountryMap/并列稳定排序/阈值边界 | P0 | 单元 | Mavis | `website-recommendations.test.ts` (11) |
+| Opportunity 9 阶段常量 | 合同 | 长度/顺序/关键索引（5/6/8）/as-const tuple | P0 | 单元 | Mavis | `opportunity-stages.test.ts` (6) |
+| 有效建联联系人 | 合同 | null 防御 / status 枚举 + 大小写 / email whitespace + 真值表 | P0 | 单元 | Mavis | `is-valid-outreach-contact.test.ts` (20) |
 | Demo 数据重置 | 恢复/幂等 | 标准种子 + 清理 + BY004 安全不变量 | P0 | 单元 | Mavis | `demo-reset.test.ts` (3) |
 | 产品发布 (BY004 等) | 迁移/状态 | published 过滤 + simulated 排序 | P0 | 单元 | 已有 | `product-publish.test.ts` (3) |
 | Agent 离线评测 | 非确定性 | 100 用例 / 5 mode / 9 阈值 / 追溯字段 | P0 | JSON+reporter | Mavis | `agent-evaluation.test.ts` (14) + `core-regression.json` |
@@ -63,7 +65,9 @@
 | handoff 旧字符串路径 | 兼容 | 旧字符串 recommended_product 解析 | P0 | 单元 | 已有 | `handoff-legacy.test.ts` |
 | smoke 入口 | 集成 | Windows Nitro dev/build | P1 | smoke | 已有 | `smoke-entry.test.ts` + `import-xlsx.smoke.test.ts` |
 
-> 数字 = 当前用例数；总计 342 条确定性单元/集成 + 100 条离线评测数据 + 2 条 Windows Nitro smoke。
+> 数字 = 当前用例数；总计 374 条确定性单元/集成 + 100 条离线评测数据 + 2 条 Windows Nitro smoke。
+>
+> **2026-08-05 更新**：按 5 skills 流水线 + GitHub `codex/AHa-testing` 分支比对，补 2 个新单元文件（`opportunity-stages` / `is-valid-outreach-contact`）+ `website-recommendations` 扩 6 条边界用例，共 +32 条（342 → 374），单测文件 16 → 18。补的是 9 阶段常量合同、纯函数聚焦单测、推荐引擎空表/全 bonus 98 上限/阈值边界等高价值覆盖。
 >
 > **2026-08-04 更新**：按 codex/AHa-testing 分支新加 3 个单元测试文件（`db-utils` / `agent-tasks-edge` / `use-demo-state`）+ import-xlsx 追加 4 条边界，共 +42 条用例（300 → 342）。同步补齐之前 §3 漏列的 3 个旧文件（`product-publish` / `demo-action-stale` / `handoff-legacy`）以让清单与实际 22 文件对齐。
 
