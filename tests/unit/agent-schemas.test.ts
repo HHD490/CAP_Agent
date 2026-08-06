@@ -304,4 +304,186 @@ describe('AGENT-SCHEMAS: 5 个 Agent 模式的 schema 契约', () => {
       expect(parsed.risks).toEqual([])
     })
   })
+
+  describe('customer_profiling customer_type 6 枚举全量通过', () => {
+    // 与 profile-type.test.ts PROFILE-TYPE-001 的"全量落库"互补：
+    // 本组只测 schema 层的纯函数合同，不依赖 DB / runAgentTaskNow
+    const allTypes = [
+      'freight_forwarder_partner',
+      'ecommerce_seller',
+      'exporter',
+      'trading_company',
+      'direct_shipper',
+      'unknown'
+    ] as const
+
+    for (const t of allTypes) {
+      it(`AGENT-SCHEMAS-PROFILE-ENUM-${t}: ${t} 通过 schema 校验`, () => {
+        const payload = {
+          customer_type: t,
+          summary: '枚举测试',
+          likely_needs: [],
+          capabilities: [],
+          target_lanes: [],
+          confidence: 'high',
+          evidence: ['单测'],
+          missing_information: [],
+          suggested_next_action: 'noop'
+        }
+        const parsed = schemas.customer_profiling.parse(payload) as any
+        expect(parsed.customer_type).toBe(t)
+      })
+    }
+
+    it('AGENT-SCHEMAS-PROFILE-ENUM-COUNT: 6 个枚举值与 getAgentCustomerTypes() 同步', async () => {
+      const { getAgentCustomerTypes } = await import('../../server/utils/agent')
+      expect(getAgentCustomerTypes()).toEqual(allTypes)
+    })
+
+    it('AGENT-SCHEMAS-PROFILE-ENUM-MATRIX: 6 类型 × 3 置信度 全部合法组合通过', () => {
+      const confidences = ['low', 'medium', 'high'] as const
+      for (const t of allTypes) {
+        for (const c of confidences) {
+          const payload = {
+            customer_type: t,
+            summary: 'matrix',
+            likely_needs: [],
+            capabilities: [],
+            target_lanes: [],
+            confidence: c,
+            evidence: ['m'],
+            suggested_next_action: 'noop'
+          }
+          const parsed = schemas.customer_profiling.parse(payload) as any
+          expect(parsed.customer_type).toBe(t)
+          expect(parsed.confidence).toBe(c)
+        }
+      }
+    })
+  })
+
+  describe('product_matching fit_score 边界（强 schema 合同）', () => {
+    const base = {
+      matches: [{
+        product_code: 'BY001',
+        fit_score: 0,
+        confidence: 'high' as const,
+        evidence: ['e'],
+        risks: [],
+        missing_information: [],
+        hard_blockers: []
+      }]
+    }
+
+    it('AGENT-SCHEMAS-MATCH-007: fit_score=0 / 100 边界合法', () => {
+      expect(() => schemas.product_matching.parse({ matches: [{ ...base.matches[0], fit_score: 0 }] })).not.toThrow()
+      expect(() => schemas.product_matching.parse({ matches: [{ ...base.matches[0], fit_score: 100 }] })).not.toThrow()
+    })
+
+    it('AGENT-SCHEMAS-MATCH-008: fit_score 接受数字字符串 ("85") 而非数字 → coerce 走通', () => {
+      const parsed = schemas.product_matching.parse({ matches: [{ ...base.matches[0], fit_score: '85' as any }] }) as any
+      expect(parsed.matches[0].fit_score).toBe(85)
+    })
+
+    it('AGENT-SCHEMAS-MATCH-009: fit_score 接受浮点 ("85.7") → coerce 后是 85.7', () => {
+      const parsed = schemas.product_matching.parse({ matches: [{ ...base.matches[0], fit_score: '85.7' as any }] }) as any
+      expect(parsed.matches[0].fit_score).toBe(85.7)
+    })
+
+    it('AGENT-SCHEMAS-MATCH-010: fit_score 非法字符串 ("abc") 抛错（coerce 不放过非数字）', () => {
+      expect(() => schemas.product_matching.parse({ matches: [{ ...base.matches[0], fit_score: 'abc' as any }] })).toThrow()
+    })
+
+    it('AGENT-SCHEMAS-MATCH-011: matches=3 上限合法', () => {
+      const three = { matches: [
+        { ...base.matches[0] },
+        { ...base.matches[0] },
+        { ...base.matches[0] }
+      ] }
+      expect(() => schemas.product_matching.parse(three)).not.toThrow()
+    })
+
+    it('AGENT-SCHEMAS-MATCH-012: 3 条 matches 时 product_code 不必唯一（不同产品可同分）', () => {
+      const three = { matches: [
+        { ...base.matches[0], product_code: 'BY001' },
+        { ...base.matches[0], product_code: 'BY002' },
+        { ...base.matches[0], product_code: 'BY003' }
+      ] }
+      const parsed = schemas.product_matching.parse(three) as any
+      expect(parsed.matches.map((m: any) => m.product_code)).toEqual(['BY001', 'BY002', 'BY003'])
+    })
+  })
+
+  describe('outreach_drafting 默认值与边界', () => {
+    const base = {
+      language: 'zh' as const,
+      subject: '主题',
+      body: '正文',
+      evidence: ['e'],
+      call_to_action: 'CTA'
+    }
+
+    it('AGENT-SCHEMAS-DRAFT-004: 缺 language 时默认 zh（preprocess 走 else 分支）', () => {
+      const { language: _lang, ...rest } = base
+      const parsed = schemas.outreach_drafting.parse(rest) as any
+      expect(parsed.language).toBe('zh')
+    })
+
+    it('AGENT-SCHEMAS-DRAFT-005: language=null / 0 走 default 路径（preprocess 判定 falsy → "null"/"0" → zh）', () => {
+      // 行为锁定：非字符串类型在 preprocess 阶段被 String() 强制转换
+      expect(schemas.outreach_drafting.shape.language.parse(null as any)).toBe('zh')
+      expect(schemas.outreach_drafting.shape.language.parse(0 as any)).toBe('zh')
+    })
+
+    it('AGENT-SCHEMAS-DRAFT-006: evidence 缺省时默认 []（违反 .min(1) 必被 schema 拒绝）', () => {
+      const { evidence: _e, ...rest } = base
+      expect(() => schemas.outreach_drafting.parse(rest)).toThrow()
+    })
+
+    it('AGENT-SCHEMAS-DRAFT-007: subject / body 接受非空任意字符串（含中文 / emoji / 换行）', () => {
+      const payload = { ...base, subject: '合作🇨🇳', body: '第一行\n第二行' }
+      const parsed = schemas.outreach_drafting.parse(payload) as any
+      expect(parsed.subject).toBe('合作🇨🇳')
+      expect(parsed.body).toBe('第一行\n第二行')
+    })
+  })
+
+  describe('reply_qualification 必填 + intent 阻断文本', () => {
+    const base = {
+      intent: 'explicit' as const,
+      confidence: 'high' as const,
+      evidence: ['客户明确要求报价'],
+      summary: '明确意向',
+      next_action: '分配负责人'
+    }
+
+    it('AGENT-SCHEMAS-REPLY-001: 4 个合法 intent 全部通过', () => {
+      for (const intent of ['explicit', 'ambiguous', 'not_interested', 'auto_reply'] as const) {
+        const parsed = schemas.reply_qualification.parse({ ...base, intent }) as any
+        expect(parsed.intent).toBe(intent)
+      }
+    })
+
+    it('AGENT-SCHEMAS-REPLY-002: intent 缺省抛错', () => {
+      const { intent: _i, ...rest } = base
+      expect(() => schemas.reply_qualification.parse(rest)).toThrow()
+    })
+
+    it('AGENT-SCHEMAS-REPLY-003: confidence 与 intent 独立校验（任意 intent 配 3 档 confidence 都通过）', () => {
+      const intents = ['explicit', 'ambiguous', 'not_interested', 'auto_reply'] as const
+      const confidences = ['low', 'medium', 'high'] as const
+      for (const intent of intents) {
+        for (const confidence of confidences) {
+          const parsed = schemas.reply_qualification.parse({ ...base, intent, confidence }) as any
+          expect(parsed.intent).toBe(intent)
+          expect(parsed.confidence).toBe(confidence)
+        }
+      }
+    })
+
+    it('AGENT-SCHEMAS-REPLY-004: 缺 evidence 抛错（每条判断必须可核验）', () => {
+      const { evidence: _e, ...rest } = base
+      expect(() => schemas.reply_qualification.parse(rest)).toThrow()
+    })
+  })
 })

@@ -280,3 +280,75 @@ describe('STATE-ENDPOINT: /api/state.get', () => {
     expect(state.counts.totalCustomers).toBe(33)
   })
 })
+
+/**
+ * emailAllowlist 边界补充：
+ * 已有 STATE-009 覆盖了 "a, b, , c" 这种带空段、含空格的常规 trim 场景。
+ * 下面补真正容易翻车的边界：空字符串 / undefined / 全逗号 / 仅空白。
+ * 这些是 system prompt 里 PoC 部署方经常配错的状态。
+ */
+describe('STATE-ENDPOINT: emailAllowlist 解析边界', () => {
+  function withAllowlist(value: any) {
+    useIsolatedDb()
+    ;(globalThis as any).useRuntimeConfig = () => ({
+      databasePath: './data/test.sqlite',
+      emailAllowlist: value
+    })
+  }
+
+  it('STATE-023: emailAllowlist=undefined → []', async () => {
+    withAllowlist(undefined)
+    const state = await stateHandler({} as any) as any
+    expect(state.emailAllowlist).toEqual([])
+  })
+
+  it('STATE-024: emailAllowlist=""（空串）→ []', async () => {
+    withAllowlist('')
+    const state = await stateHandler({} as any) as any
+    expect(state.emailAllowlist).toEqual([])
+  })
+
+  it('STATE-025: emailAllowlist="   "（仅空白）→ []（trim 后过滤）', async () => {
+    withAllowlist('   ')
+    const state = await stateHandler({} as any) as any
+    expect(state.emailAllowlist).toEqual([])
+  })
+
+  it('STATE-026: emailAllowlist=",,,"（仅分隔符）→ []', async () => {
+    withAllowlist(',,,')
+    const state = await stateHandler({} as any) as any
+    expect(state.emailAllowlist).toEqual([])
+  })
+
+  it('STATE-027: emailAllowlist=单个 email "only@x.com" → ["only@x.com"]', async () => {
+    withAllowlist('only@x.com')
+    const state = await stateHandler({} as any) as any
+    expect(state.emailAllowlist).toEqual(['only@x.com'])
+  })
+
+  it('STATE-028: emailAllowlist 含尾随逗号 "a@x.com," → 仅 ["a@x.com"]', async () => {
+    // split("a@x.com,") = ["a@x.com", ""]；filter(Boolean) 过滤空串
+    withAllowlist('a@x.com,')
+    const state = await stateHandler({} as any) as any
+    expect(state.emailAllowlist).toEqual(['a@x.com'])
+  })
+
+  it('STATE-029: emailAllowlist 含 tab/换行分隔 + 邮箱内部大小写', async () => {
+    // 注意：当前实现是 split(',') 不处理 \t / \n / ；
+    // 所以"a@x.com\tb@x.com"会被当成一个整段（含 \t），不会拆开
+    withAllowlist('A@X.com,b@x.com')
+    const state = await stateHandler({} as any) as any
+    // 不做 case normalization（这是当前行为锁定）
+    expect(state.emailAllowlist).toEqual(['A@X.com', 'b@x.com'])
+  })
+
+  it('STATE-030: getDemoState() 工具函数的 emailAllowlist 解析与 state 端点一致', () => {
+    useIsolatedDb()
+    ;(globalThis as any).useRuntimeConfig = () => ({
+      databasePath: './data/test.sqlite',
+      emailAllowlist: ' x@y.com , , ,z@w.com'
+    })
+    const state = getDemoState() as any
+    expect(state.emailAllowlist).toEqual(['x@y.com', 'z@w.com'])
+  })
+})

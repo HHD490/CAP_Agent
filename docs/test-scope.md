@@ -39,11 +39,13 @@
 | 对象 | 测试类型 | 深度 | 优先级 | 环境/数据 | 负责人 | 覆盖文件 |
 | --- | --- | --- | --- | --- | --- | --- |
 | DB 工具层 | 数据层 | addEvent 默认值 / `demoNow` 防御 `CURRENT_TIME` 关键字 / `initializeDatabaseConnection` 幂等 / `prepareOpenedDatabase` 重启清理防御 / `runDatabaseMigrations` BY004 幂等 | P0 | 单元 | Mavis | `db-utils.test.ts` (12) |
-| Agent 5 模式 schema | 契约 | 全量边界 | P0 | 单元 | Mavis | `agent-schemas.test.ts` (65) |
+| Agent 5 模式 schema | 契约 | 全量边界 + 6 枚举全量通过 + fit_score coerce + intent×confidence 矩阵 | P0 | 单元 | Mavis | `agent-schemas.test.ts` (87) |
+| 模型输出 JSON 解析层 | 合同 | Markdown 包裹 / 前置废话 / 数组拼接 / 缺 JSON / 大小写不敏感 / dead branch 锁定 | P0 | 单元 | Mavis | `parse-json-response.test.ts` (16) |
 | reply_qualification | 功能 | 全 intent × 边界 | P0 | 单元 | Mavis | `agent-reply-qualification.test.ts` (15) |
 | Agent 任务生命周期 | 功能 | 创建/停止/状态机/留痕/级联 | P0 | 单元 | Mavis | `agent-lifecycle.test.ts` (18) |
 | Agent 任务端点边缘 | 契约/状态 | 同 target 多 mode 互不串 / stop 终态幂等 / stop 后可重建 / task 起步 + stop step 留痕 / HTTP dedup 一致性 | P0 | 单元 | Mavis | `agent-tasks-edge.test.ts` (10) |
-| useDemoState composable | 前端契约 | refresh 防抖/quiet/通知维护/同数据不替换 / runAgent / doAction / resetDemo / advanceTime | P0 | 单元 | Mavis | `use-demo-state.test.ts` (16) |
+| useDemoState composable | 前端契约 | refresh 防抖/quiet/通知维护/同数据不替换 / state 替换 / 错误退化链 / task 状态多分支 | P0 | 单元 | Mavis | `use-demo-state.test.ts` (31) |
+| state.get 端点 | 接口 | shape + counts + 排序 + emailAllowlist 解析边界 | P0 | 单元 | Mavis | `state-endpoint.test.ts` (30) |
 | demo action 14 分支 | 功能 | 异常 + 边界 + 业务规则 | P0 | 单元 | Mavis | `demo-actions-workflow.test.ts` (35) |
 | advance-time 跟进提醒 | 功能 | 首次/二次/暂停/不触发 | P0 | 单元 | Mavis | `advance-time-reminders.test.ts` (14) |
 | state.get 端点 | 接口 | shape + counts + 排序 | P0 | 单元 | Mavis | `state-endpoint.test.ts` (22) |
@@ -65,7 +67,13 @@
 | handoff 旧字符串路径 | 兼容 | 旧字符串 recommended_product 解析 | P0 | 单元 | 已有 | `handoff-legacy.test.ts` |
 | smoke 入口 | 集成 | Windows Nitro dev/build | P1 | smoke | 已有 | `smoke-entry.test.ts` + `import-xlsx.smoke.test.ts` |
 
-> 数字 = 当前用例数；总计 374 条确定性单元/集成 + 100 条离线评测数据 + 2 条 Windows Nitro smoke。
+> 数字 = 当前用例数；总计 435 条确定性单元/集成 + 100 条离线评测数据 + 2 条 Windows Nitro smoke。
+>
+> **2026-08-06 更新**：按 5 skills 流水线对高价值纯函数/边界补 +61 条（374 → 435），单测文件 18 → 19：
+> - 新建 `parse-json-response.test.ts`（16）：模型输出 JSON 解析层（`parseJsonResponse`）的间接契约——Markdown 包裹 / 前置废话 / 数组拼接（call site dead branch 锁定）/ 缺 JSON / 大小写不敏感 / 数字/null/数组不走 parseJsonResponse 而被 schema 拒绝
+> - `agent-schemas.test.ts`（65 → 87，+22）：6 个 customer_type 枚举全量通过 + 6×3 矩阵 + `fit_score` coerce（数字/字符串数字/浮点/非数字）+ outreach_drafting language 默认值/falsy 退化 + reply_qualification 4 intent × 3 confidence 矩阵
+> - `use-demo-state.test.ts`（16 → 31，+15）：state 替换 vs 保留（避免浮层重渲染）/ 错误退化链 data.statusMessage→statusMessage→默认 / task 出现不触发 Notification / completed↔running 不会触发
+> - `state-endpoint.test.ts`（22 → 30，+8）：emailAllowlist undefined/空串/仅空白/仅逗号/尾随逗号/无 case 归一 边界
 >
 > **2026-08-05 更新**：按 5 skills 流水线 + GitHub `codex/AHa-testing` 分支比对，补 2 个新单元文件（`opportunity-stages` / `is-valid-outreach-contact`）+ `website-recommendations` 扩 6 条边界用例，共 +32 条（342 → 374），单测文件 16 → 18。补的是 9 阶段常量合同、纯函数聚焦单测、推荐引擎空表/全 bonus 98 上限/阈值边界等高价值覆盖。
 >

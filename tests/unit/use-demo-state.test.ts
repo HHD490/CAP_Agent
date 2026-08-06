@@ -252,4 +252,193 @@ describe('USE-DEMO-STATE: resetDemo() / advanceTime()', () => {
       body: { days: 3 }
     }))
   })
+
+  it('UDS-033: advanceTime 失败时 error.message 作 fallback（无 data.statusMessage 时）', async () => {
+    fetchMock.mockRejectedValueOnce(new Error('网络断开'))
+    const { advanceTime } = useDemoState()
+    await expect(advanceTime(5)).rejects.toBeTruthy()
+    expect(Message.success).not.toHaveBeenCalled()
+  })
+})
+
+describe('USE-DEMO-STATE: state 替换 vs 保留（避免浮层重渲染）', () => {
+  it('UDS-040: 数据变化时 state 被替换（避免读到陈旧 UI）', async () => {
+    const v1 = makeState({ counts: { totalCustomers: 30 } })
+    const v2 = makeState({ counts: { totalCustomers: 35 } }) // 不同 data
+    fetchMock.mockResolvedValueOnce(v1)
+    fetchMock.mockResolvedValueOnce(v2)
+    const { state, refresh } = useDemoState()
+    await refresh()
+    const firstRef = state.value
+    await refresh()
+    const secondRef = state.value
+    expect(secondRef).not.toBe(firstRef)
+    expect(secondRef?.counts?.totalCustomers).toBe(35)
+  })
+
+  it('UDS-041: JSON.stringify 完全相等时 state 引用不替换（避开浮层重渲染）', async () => {
+    const same = makeState({ tasks: [{ id: 't1', status: 'running', currentStep: 'x', error: '' }] })
+    fetchMock.mockResolvedValue(same)
+    const { state, refresh } = useDemoState()
+    await refresh()
+    const first = state.value
+    await refresh()
+    const second = state.value
+    expect(second).toBe(first)
+  })
+
+  it('UDS-042: 嵌套对象属性不同（counts.customers）→ state 替换', async () => {
+    const v1 = makeState({ counts: { totalCustomers: 30, wcaCustomers: 20 } })
+    const v2 = makeState({ counts: { totalCustomers: 30, wcaCustomers: 25 } }) // 内部差
+    fetchMock.mockResolvedValueOnce(v1)
+    fetchMock.mockResolvedValueOnce(v2)
+    const { state, refresh } = useDemoState()
+    await refresh()
+    const first = state.value
+    await refresh()
+    const second = state.value
+    expect(second).not.toBe(first)
+  })
+})
+
+describe('USE-DEMO-STATE: 错误信息退化（data.statusMessage → statusMessage → 默认）', () => {
+  it('UDS-050: refresh 错误含 data.statusMessage → 不弹（import.meta.client=false 守卫）', async () => {
+    // 真实浏览器中：Message.error 会被 import.meta.client 守卫
+    // node 测试环境：import.meta.client=false，所以 Message.error 不会弹出
+    // 测试锁定：error 始终被 rethrow
+    fetchMock.mockRejectedValueOnce({ data: { statusMessage: '服务不可用' } })
+    const { refresh } = useDemoState()
+    await expect(refresh()).rejects.toMatchObject({ data: { statusMessage: '服务不可用' } })
+    expect(Message.error).not.toHaveBeenCalled()
+  })
+
+  it('UDS-051: refresh 错误没有 data 字段 → 仍 rethrow（防御性 fallback 路径）', async () => {
+    fetchMock.mockRejectedValueOnce(new Error('network down'))
+    const { refresh } = useDemoState()
+    await expect(refresh()).rejects.toThrow(/network down/)
+    expect(Message.error).not.toHaveBeenCalled()
+  })
+
+  it('UDS-052: runAgent 错误无 data 字段 → Message.error 用默认 fallback "Agent 启动失败"', async () => {
+    // runAgent 的 catch 块没有 import.meta.client 守卫（与 refresh 不同），
+    // 任何环境下都调 Message.error；测试锁定 rethrow + Message.error 两条路径
+    fetchMock.mockRejectedValueOnce(new Error('timeout'))
+    const { runAgent } = useDemoState()
+    await expect(runAgent('customer_profiling', 'customer', 'c1')).rejects.toThrow(/timeout/)
+    expect(Message.error).toHaveBeenCalledWith('Agent 启动失败，请稍后重试')
+  })
+
+  it('UDS-053: doAction 错误无 data.statusMessage 但有顶层 statusMessage → Message.error 退化到 statusMessage', async () => {
+    // doAction 的 fallback 链是：data.statusMessage → statusMessage → '操作失败，请稍后重试'
+    // 这里没有 data 字段，但有顶层 statusMessage，所以用 '网络异常'
+    fetchMock.mockRejectedValueOnce({ statusMessage: '网络异常' })
+    const { doAction } = useDemoState()
+    await expect(doAction('accept_match', 'match-1', {})).rejects.toMatchObject({ statusMessage: '网络异常' })
+    expect(Message.error).toHaveBeenCalledWith('网络异常')
+  })
+
+  it('UDS-054: doAction 错误什么都没有 → Message.error 退化到默认 "操作失败，请稍后重试"', async () => {
+    fetchMock.mockRejectedValueOnce({}) // 啥都没有
+    const { doAction } = useDemoState()
+    await expect(doAction('accept_match', 'match-1', {})).rejects.toBeTruthy()
+    expect(Message.error).toHaveBeenCalledWith('操作失败，请稍后重试')
+  })
+
+  it('UDS-055: doAction 错误带 data.statusMessage → Message.error 用 data.statusMessage（最优先）', async () => {
+    fetchMock.mockRejectedValueOnce({ data: { statusMessage: '存在硬阻断项，请确认后再接受匹配' } })
+    const { doAction } = useDemoState()
+    await expect(doAction('accept_match', 'match-1', {})).rejects.toBeTruthy()
+    expect(Message.error).toHaveBeenCalledWith('存在硬阻断项，请确认后再接受匹配')
+  })
+
+  it('UDS-056: doAction 错误时 失败路径不刷新 state → 保留上一次成功数据', async () => {
+    fetchMock.mockResolvedValueOnce(makeState({ counts: { totalCustomers: 30 } })) // 第一次成功
+    fetchMock.mockRejectedValueOnce({ data: { statusMessage: 'fail' } }) // 第二次失败
+    const { doAction, state, refresh } = useDemoState()
+    await refresh()
+    const firstState = state.value
+    await expect(doAction('accept_match', 'match-1', {})).rejects.toBeTruthy()
+    // 失败路径不替换 state（refresh 没被调用，doAction 失败直接 rethrow）
+    expect(state.value).toBe(firstState)
+    expect(state.value?.counts?.totalCustomers).toBe(30)
+  })
+})
+
+describe('USE-DEMO-STATE: 任务状态变化的 known-task-status 维护', () => {
+  it('UDS-060: task 出现（之前不存在）→ 不触发 Notification（initialized 后新增不算状态变化）', async () => {
+    // 第一次 refresh：known-task-status = {}
+    // 第二次 refresh：tasks 中多了 task-1 (status=running) → 之前没记录，before=undefined，
+    //   `if (before && before !== task.status && ...)` 守卫 before=undefined → 不触发
+    fetchMock.mockResolvedValueOnce(makeState())
+    const { refresh } = useDemoState()
+    await refresh()
+    expect(stateMap.get('known-task-status').value).toEqual({})
+
+    fetchMock.mockResolvedValueOnce(makeState({ tasks: [
+      { id: 'task-new', status: 'running', currentStep: '处理中', error: '' }
+    ]}))
+    await refresh()
+    expect(Notification.success).not.toHaveBeenCalled()
+    expect(Notification.error).not.toHaveBeenCalled()
+    expect(stateMap.get('known-task-status').value['task-new']).toBe('running')
+  })
+
+  it('UDS-061: task 从 queued → completed → knownTaskStatus 记录最新状态', async () => {
+    fetchMock.mockResolvedValueOnce(makeState({ tasks: [
+      { id: 'task-queued', status: 'queued', currentStep: '排队', error: '' }
+    ]}))
+    const { refresh } = useDemoState()
+    await refresh()
+    expect(stateMap.get('known-task-status').value['task-queued']).toBe('queued')
+
+    fetchMock.mockResolvedValueOnce(makeState({ tasks: [
+      { id: 'task-queued', status: 'completed', currentStep: '完成', error: '' }
+    ]}))
+    await refresh()
+    expect(stateMap.get('known-task-status').value['task-queued']).toBe('completed')
+  })
+
+  it('UDS-062: 多 task 混合：completed + failed + 仍在 running → 各自维护', async () => {
+    fetchMock.mockResolvedValueOnce(makeState({ tasks: [
+      { id: 'task-A', status: 'running', currentStep: 'A', error: '' },
+      { id: 'task-B', status: 'running', currentStep: 'B', error: '' },
+      { id: 'task-C', status: 'running', currentStep: 'C', error: '' }
+    ]}))
+    const { refresh } = useDemoState()
+    await refresh()
+    expect(stateMap.get('known-task-status').value).toMatchObject({
+      'task-A': 'running',
+      'task-B': 'running',
+      'task-C': 'running'
+    })
+
+    fetchMock.mockResolvedValueOnce(makeState({ tasks: [
+      { id: 'task-A', status: 'completed', currentStep: 'A done', error: '' },
+      { id: 'task-B', status: 'failed', currentStep: 'B fail', error: 'model error' },
+      { id: 'task-C', status: 'running', currentStep: 'C 还在跑', error: '' }
+    ]}))
+    await refresh()
+    expect(stateMap.get('known-task-status').value).toMatchObject({
+      'task-A': 'completed',
+      'task-B': 'failed',
+      'task-C': 'running'
+    })
+  })
+
+  it('UDS-063: task 从 completed 变回 running（极少见，重启场景）→ 不会触发 Notification（只 completed / failed 触发）', async () => {
+    fetchMock.mockResolvedValueOnce(makeState({ tasks: [
+      { id: 'task-rev', status: 'completed', currentStep: 'done', error: '' }
+    ]}))
+    const { refresh } = useDemoState()
+    await refresh()
+
+    fetchMock.mockResolvedValueOnce(makeState({ tasks: [
+      { id: 'task-rev', status: 'running', currentStep: 'rerun', error: '' }
+    ]}))
+    await refresh()
+    // Notification 仅在 task 变为 completed 或 failed 时触发
+    expect(Notification.success).not.toHaveBeenCalled()
+    expect(Notification.error).not.toHaveBeenCalled()
+    expect(stateMap.get('known-task-status').value['task-rev']).toBe('running')
+  })
 })

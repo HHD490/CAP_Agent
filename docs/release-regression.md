@@ -165,7 +165,7 @@ npx vitest run --config vitest.smoke.config.ts  # Windows Nitro smoke
 本项目可直接使用：
 
 ```bash
-npm run test:quality      # typecheck + 374 条确定性测试 + Agent 评测集门禁
+npm run test:quality      # typecheck + 435 条确定性测试 + Agent 评测集门禁
 npm run test:smoke        # 2 条 Windows Nitro dev/build 真实进程冒烟
 ```
 
