@@ -46,7 +46,11 @@
 | Agent 任务端点边缘 | 契约/状态 | 同 target 多 mode 互不串 / stop 终态幂等 / stop 后可重建 / task 起步 + stop step 留痕 / HTTP dedup 一致性 | P0 | 单元 | Mavis | `agent-tasks-edge.test.ts` (10) |
 | useDemoState composable | 前端契约 | refresh 防抖/quiet/通知维护/同数据不替换 / state 替换 / 错误退化链 / task 状态多分支 | P0 | 单元 | Mavis | `use-demo-state.test.ts` (31) |
 | state.get 端点 | 接口 | shape + counts + 排序 + emailAllowlist 解析边界 | P0 | 单元 | Mavis | `state-endpoint.test.ts` (30) |
-| demo action 14 分支 | 功能 | 异常 + 边界 + 业务规则 | P0 | 单元 | Mavis | `demo-actions-workflow.test.ts` (35) |
+| demo action 14 分支 | 功能 | 异常 + 边界 + 业务规则 | P0 | 单元 | Mavis | `demo-actions-workflow.test.ts` (41) |
+| Agent 上下文构造 5 mode | 合同 | 不存在客户/不存在机会/contact_id 缺失退化/operator_input 透传/timeline 30 截断/published 过滤/全未发布空数组 | P0 | 单元 | Mavis | `agent-context-and-result.test.ts` (10) |
+| Agent 结果落库 5 mode | 副作用 | customer_type 写回/stage 推进与不降级/events/BY004 不落库/accepted 保护/未发布抛错/missing_contact/英文不升 stage/事务/4 intent × blocker/legacy 字符串/事件含 recommended_product | P0 | 单元 | Mavis | `agent-context-and-result.test.ts` (19) |
+| Agent registry 合同 | 合同 | 5 mode key 完整 / 6 类型与 schema enum 同步 | P0 | 单元 | Mavis | `agent-context-and-result.test.ts` (2) |
+| markNonAcceptedMatchesStale 边界 | 合同 | 无 match noop / 全 accepted 保护 / 非 accepted 全 stale / 自定义 now / 默认 demoNow / 多次幂等 / 不传 db / 不存在客户 noop | P0 | 单元 | Mavis | `mark-non-accepted-matches-stale.test.ts` (8) |
 | advance-time 跟进提醒 | 功能 | 首次/二次/暂停/不触发 | P0 | 单元 | Mavis | `advance-time-reminders.test.ts` (14) |
 | state.get 端点 | 接口 | shape + counts + 排序 | P0 | 单元 | Mavis | `state-endpoint.test.ts` (22) |
 | agent tasks HTTP | 接口 | zod 校验 + dedup + stop | P0 | 集成 | Mavis | `agent-tasks-endpoint.test.ts` (19) |
@@ -67,7 +71,12 @@
 | handoff 旧字符串路径 | 兼容 | 旧字符串 recommended_product 解析 | P0 | 单元 | 已有 | `handoff-legacy.test.ts` |
 | smoke 入口 | 集成 | Windows Nitro dev/build | P1 | smoke | 已有 | `smoke-entry.test.ts` + `import-xlsx.smoke.test.ts` |
 
-> 数字 = 当前用例数；总计 435 条确定性单元/集成 + 100 条离线评测数据 + 2 条 Windows Nitro smoke。
+> 数字 = 当前用例数；总计 482 条确定性单元/集成 + 100 条离线评测数据 + 2 条 Windows Nitro smoke。
+>
+> **2026-08-07 更新**：按 5 skills 流水线 + grill-me 5 候选全留的判定，补 2 个新文件 + 扩 1 个文件，共 +47 条（435 → 482），单测文件 22 → 24（按 `Get-ChildItem tests/unit` 实际计数；前 8/4-8/6 累计链与目录差 3 文件未追溯，下一次评审核对）：
+> - 新建 `tests/unit/agent-context-and-result.test.ts`（31）：`buildTargetContext` 5 mode 合同级（不存在客户/不存机会/contact_id 缺失退化/operator_input 透传/timeline 30 截断/published 过滤/全未发布空数组）+ `applyAgentResult` 5 mode 副作用（customer_type 写回/stage 推进与不降级/profile_completed 事件/BY004 不落库/accepted 保护/未发布抛错/missing_contact/英文不升 stage/事务/4 intent × blocker/legacy 字符串透传/事件含 risks·nextSteps·recommended_product）+ `getAgentSchemas` & `getAgentCustomerTypes` registry 合同（5 mode key 完整 / 6 类型与 schema enum 同步）
+> - 新建 `tests/unit/mark-non-accepted-matches-stale.test.ts`（8）：直击 `markNonAcceptedMatchesStale` 边界（无 match noop / 全 accepted 保护 / 非 accepted 全 stale / 自定义 now / 默认 demoNow / 多次调用幂等 / 不传 db / 不存在客户 noop）
+> - 扩 `tests/unit/demo-actions-workflow.test.ts`（28 → 34，+6）：补 `set_contact` 5 个分支（opp 不存在 404 / contact 不存在 404 / 跨客户 404 / 非 contactable 400 / 成功路径含 event 与 outreach_drafting 任务触发）+ `confirm_next_action` 部分更新语义（只传 nextAction 时 due_at/owner/blocker 保持原值）
 >
 > **2026-08-06 更新**：按 5 skills 流水线对高价值纯函数/边界补 +61 条（374 → 435），单测文件 18 → 19：
 > - 新建 `parse-json-response.test.ts`（16）：模型输出 JSON 解析层（`parseJsonResponse`）的间接契约——Markdown 包裹 / 前置废话 / 数组拼接（call site dead branch 锁定）/ 缺 JSON / 大小写不敏感 / 数字/null/数组不走 parseJsonResponse 而被 schema 拒绝

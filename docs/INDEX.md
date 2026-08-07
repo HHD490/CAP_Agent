@@ -43,6 +43,8 @@
   - [final-repair-summary-2026-07-29.md](./history/2026-07-29-repair/final-repair-summary-2026-07-29.md)（3.7KB）— 最终汇总（`Approve with notes`）
 - `history/2026-08-05-scope-supplement/` — 2026-08-05 测试范围补充活动
   - [scope-supplement-decision-2026-08-05.md](./history/2026-08-05-scope-supplement/scope-supplement-decision-2026-08-05.md)（12.5KB）— 3 处覆盖缺口补 32 用例的正式范围交付决定（含覆盖矩阵 / CP0 标签 / 选型决策 / 评审状态）
+- `history/2026-08-07-scope-supplement/` — 2026-08-07 测试范围补充活动
+  - [scope-supplement-decision-2026-08-07.md](./history/2026-08-07-scope-supplement/scope-supplement-decision-2026-08-07.md)（15.7KB）— 5 候选全留（grill-me 决策）补 47 用例（buildTargetContext 5 mode 合同 / applyAgentResult 5 mode 副作用 / markNonAcceptedMatchesStale 8 边界 / set_contact 5 分支 / registry 合同 / confirm_next_action 部分更新）
 
 ## 5. 命名与放置规范
 

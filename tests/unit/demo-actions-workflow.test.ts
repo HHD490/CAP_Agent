@@ -461,3 +461,87 @@ describe('DEMO-ACTION: 未知 action / body 校验', () => {
     await expect(actionHandler({ __body: {} } as any)).rejects.toBeInstanceOf(ZodError)
   })
 })
+
+/**
+ * 本块补 set_contact / confirm_next_action 边缘分支（2026-08-07 范围补充）。
+ *
+ * 已有覆盖：set_contact 0 条（仅在文件头注释中提到）；confirm_next_action 1 条（全量更新）。
+ *
+ * 风险：
+ *   - set_contact 校验缺位会让人工选了一个未验证的联系人 → 邮件发错或发不出去
+ *   - confirm_next_action 部分更新语义漂移会让 due_at / owner / blocker 静默丢
+ */
+describe('DEMO-ACTION: set_contact 选联系人 + 触发建联', () => {
+  it('DEMO-SETCONT-001: opportunity 不存在 → 404', async () => {
+    useIsolatedDb()
+    await expect(actionHandler({ __body: { action: 'set_contact', id: 'opp-nope', data: { contactId: 'contact-wca-01' } } } as any))
+      .rejects.toMatchObject({ statusCode: 404, statusMessage: expect.stringMatching(/机会|联系人|不存在/) })
+  })
+
+  it('DEMO-SETCONT-002: contact 不存在 → 404（机会在但 contact_id 错）', async () => {
+    const { db } = useIsolatedDb()
+    await expect(actionHandler({ __body: { action: 'set_contact', id: 'opp-01', data: { contactId: 'contact-does-not-exist' } } } as any))
+      .rejects.toMatchObject({ statusCode: 404 })
+    // 防御性确认：opp 状态未变
+    const opp = db.prepare(`SELECT contact_id FROM opportunities WHERE id = 'opp-01'`).get() as any
+    expect(opp.contact_id).not.toBe('contact-does-not-exist')
+  })
+
+  it('DEMO-SETCONT-003: contact 属于其它 customer → 404（防止跨客户错绑联系人）', async () => {
+    const { db } = useIsolatedDb()
+    // contact-wca-02 属于 customer-wca-02，绑到 opp-01 (customer-wca-01) 应该被拒
+    await expect(actionHandler({ __body: { action: 'set_contact', id: 'opp-01', data: { contactId: 'contact-wca-02' } } } as any))
+      .rejects.toMatchObject({ statusCode: 404 })
+  })
+
+  it('DEMO-SETCONT-004: contact 状态非 contactable（verify）→ 400（共享 isValidOutreachContact）', async () => {
+    const { db } = useIsolatedDb()
+    const opp = db.prepare(`SELECT contact_id FROM opportunities WHERE id = 'opp-01'`).get() as any
+    const contactId = opp.contact_id
+    db.prepare(`UPDATE contacts SET status = 'verify' WHERE id = ?`).run(contactId)
+    await expect(actionHandler({ __body: { action: 'set_contact', id: 'opp-01', data: { contactId } } } as any))
+      .rejects.toMatchObject({ statusCode: 400, statusMessage: expect.stringMatching(/可联系|contactable|邮箱/) })
+  })
+
+  it('DEMO-SETCONT-005: 成功 → contact_id 已写 + blocker 清空 + 触发 outreach_drafting 任务 + event 已发', async () => {
+    const { db } = useIsolatedDb()
+    // 先清空 contact_id
+    db.prepare(`UPDATE opportunities SET contact_id = '' WHERE id = 'opp-01'`).run()
+    const contact = db.prepare(`SELECT id, name, email FROM contacts WHERE customer_id = 'customer-wca-01' AND status = 'contactable' LIMIT 1`).get() as any
+    expect(contact, 'seed must have at least one contactable contact').toBeTruthy()
+
+    const result = await actionHandler({ __body: { action: 'set_contact', id: 'opp-01', data: { contactId: contact.id } } } as any)
+    expect(result.ok).toBe(true)
+    expect(result.task).toBeTruthy() // outreach_drafting 任务被触发
+
+    const opp = db.prepare(`SELECT contact_id, blocker, next_action FROM opportunities WHERE id = 'opp-01'`).get() as any
+    expect(opp.contact_id).toBe(contact.id)
+    expect(opp.blocker).toBe('')
+    expect(String(opp.next_action)).toMatch(/等待 Agent/)
+
+    const evt = db.prepare(`SELECT * FROM opportunity_events WHERE opportunity_id = 'opp-01' AND type = 'contact_selected'`).get() as any
+    expect(evt).toBeTruthy()
+    expect(evt.source).toBe('human')
+    expect(String(evt.description)).toMatch(new RegExp(contact.name))
+  })
+})
+
+describe('DEMO-ACTION: confirm_next_action 部分更新语义', () => {
+  it('DEMO-CONFIRM-NEXT-002: 只传 nextAction → due_at / owner / blocker 保持原值', async () => {
+    const { db } = useIsolatedDb()
+    // opp-06 种子：next_action='补充有效联系人', owner='', blocker='缺少可用于建联的有效联系人'
+    const before = db.prepare(`SELECT * FROM opportunities WHERE id = 'opp-06'`).get() as any
+    expect(before.owner).toBe('')
+    expect(String(before.blocker)).toMatch(/联系人/)
+
+    const result = await actionHandler({ __body: { action: 'confirm_next_action', id: 'opp-06', data: { nextAction: '已联系客户，等待回复' } } } as any)
+    expect(result.ok).toBe(true)
+
+    const after = db.prepare(`SELECT * FROM opportunities WHERE id = 'opp-06'`).get() as any
+    expect(after.next_action).toBe('已联系客户，等待回复')
+    // 关键合同：未传的字段保持原值（不能被改空）
+    expect(after.owner).toBe(before.owner)
+    expect(after.blocker).toBe(before.blocker)
+    expect(after.due_at).toBe(before.due_at)
+  })
+})
