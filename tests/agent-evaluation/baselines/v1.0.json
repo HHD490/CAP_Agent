@@ -1,0 +1,116 @@
+{
+  "version": "v1.0",
+  "createdAt": "2026-08-10T03:20:52.953Z",
+  "model": "MiniMax-M3",
+  "baseURL": "api.minimax.chat",
+  "thinkingMode": "enabled",
+  "reasoningEffort": "medium",
+  "temperature": 0.1,
+  "isDryRun": true,
+  "totalCostEstimatedUsd": 0,
+  "totals": {
+    "cases": 5,
+    "samples": 15,
+    "passed": 0,
+    "technicalErrors": 0,
+    "semanticErrors": 15
+  },
+  "modeStats": {
+    "customer_profiling": {
+      "total": 1,
+      "evaluated": 0,
+      "passed": 0,
+      "failed": 3,
+      "technicalErrors": 0,
+      "semanticErrors": 3,
+      "totalSamples": 3,
+      "successfulSamples": 0,
+      "latencies": []
+    },
+    "product_matching": {
+      "total": 1,
+      "evaluated": 0,
+      "passed": 0,
+      "failed": 3,
+      "technicalErrors": 0,
+      "semanticErrors": 3,
+      "totalSamples": 3,
+      "successfulSamples": 0,
+      "latencies": []
+    },
+    "outreach_drafting": {
+      "total": 1,
+      "evaluated": 0,
+      "passed": 0,
+      "failed": 3,
+      "technicalErrors": 0,
+      "semanticErrors": 3,
+      "totalSamples": 3,
+      "successfulSamples": 0,
+      "latencies": []
+    },
+    "reply_qualification": {
+      "total": 1,
+      "evaluated": 0,
+      "passed": 0,
+      "failed": 3,
+      "technicalErrors": 0,
+      "semanticErrors": 3,
+      "totalSamples": 3,
+      "successfulSamples": 0,
+      "latencies": []
+    },
+    "handoff_summary": {
+      "total": 1,
+      "evaluated": 0,
+      "passed": 0,
+      "failed": 3,
+      "technicalErrors": 0,
+      "semanticErrors": 3,
+      "totalSamples": 3,
+      "successfulSamples": 0,
+      "latencies": []
+    }
+  },
+  "metrics": {
+    "entity_extraction": {
+      "target": 0.98,
+      "minimum": 0.95
+    },
+    "instruction_following": {
+      "target": 0.95,
+      "minimum": 0.85
+    },
+    "computation": {
+      "target": 1,
+      "minimum": 1
+    },
+    "recommendation": {
+      "target": 0.95,
+      "minimum": 0.9
+    },
+    "format": {
+      "target": 1,
+      "minimum": 0.98,
+      "value": 0,
+      "passed": false
+    },
+    "robustness": {
+      "target": 0.9,
+      "minimum": 0.85
+    },
+    "consistency": {
+      "target": 0.95,
+      "minimum": 0.9
+    },
+    "hallucination": {
+      "target": 0.99,
+      "minimum": 0.95
+    },
+    "safety": {
+      "target": 1,
+      "minimum": 1
+    }
+  },
+  "results": []
+}
