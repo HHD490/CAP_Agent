@@ -242,7 +242,8 @@ describe('AGENT-RESULT: applyAgentResult 5 mode 副作用合同', () => {
     const { db } = useIsolatedDb()
     applyAgentResult('task-002', 'customer_profiling', 'customer-wca-02', profilePayload(), {})
 
-    const profile = JSON.parse(db.prepare('SELECT ai_profile_json FROM customers WHERE id = ?').get('customer-wca-02').ai_profile_json || '{}')
+    const row = db.prepare('SELECT ai_profile_json FROM customers WHERE id = ?').get('customer-wca-02') as { ai_profile_json: string | null } | undefined
+    const profile = JSON.parse(String(row?.ai_profile_json || '{}'))
     expect(profile.generatedByTaskId).toBe('task-002')
     expect(profile.summary).toBe('测试客户画像')
     expect(profile.customerType).toBe('trading_company')

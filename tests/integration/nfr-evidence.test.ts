@@ -182,11 +182,12 @@ describe('NFR-SECURITY: 安全 / 隐私（输入边界、SQL 注入防御、状�
     const payload = { name: "Robert'); DROP TABLE customers;--", country: '中国' }
     const result = await actionHandler({ __body: { action: 'manual_customer', data: payload } } as any)
     expect(result.ok).toBe(true)
+    expect(result.customerId, 'manual_customer 应返回 customerId').toBeTruthy()
     // 表还存在
     const cnt = Number((db.prepare(`SELECT COUNT(*) c FROM customers`).get() as any).c)
     expect(cnt).toBeGreaterThan(0)
     // 字符串原样保存
-    const customer = db.prepare(`SELECT name FROM customers WHERE id = ?`).get(result.customerId) as any
+    const customer = db.prepare(`SELECT name FROM customers WHERE id = ?`).get(result.customerId!) as any
     expect(customer.name).toBe("Robert'); DROP TABLE customers;--")
   })
 
@@ -230,8 +231,9 @@ describe('NFR-SECURITY: 安全 / 隐私（输入边界、SQL 注入防御、状�
     const now = '2026-07-17T02:00:00.000Z'
     // 把一个 contactable 改成 verify
     const opp = db.prepare(`SELECT contact_id FROM opportunities WHERE id = 'opp-01'`).get() as any
-    db.prepare(`UPDATE contacts SET status = 'verify' WHERE id = ?`).run(opp.contact_id)
-    const contactId = opp.contact_id
+    const contactId: string = opp.contact_id
+    expect(contactId, 'seed opp-01 必须有 contact_id').toBeTruthy()
+    db.prepare(`UPDATE contacts SET status = 'verify' WHERE id = ?`).run(contactId)
 
     // set_contact 拒绝
     await expect(actionHandler({ __body: { action: 'set_contact', id: 'opp-01', data: { contactId } } } as any))

@@ -1,0 +1,51 @@
+name: test-quality
+
+# 测试质量门禁 CI（依据 release-regression-gatekeeper）：
+#   1) typecheck：tsc / nuxt typecheck 必过（防止类型漂移）
+#   2) vitest 全部单测 / 集成测 必过（核心功能合同）
+#   3) agent-eval --check 必过（测试集结构 / 阈值 / 数量三重护栏）
+#
+# 触发：push 到 main、codex/* 分支；PR 目标 main。
+# 退出码非 0 即阻断；不通过则 PR 不能合。
+
+on:
+  push:
+    branches: [main, 'codex/**']
+  pull_request:
+    branches: [main]
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: typecheck（nuxt typecheck）
+        run: npm run typecheck
+
+      - name: vitest 全部用例
+        run: npm test
+
+      - name: agent-eval 结构 / 阈值 / 数量护栏
+        run: npm run test:agent-eval
+        # scripts/agent-eval-report.mjs --check：结构 / 9 项阈值 / 5 模式 ≥20 用例 / 高风险 ≥3 samples 失败即 exit 1
+
+      - name: 上传 coverage 报告（archive）
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
+          retention-days: 7
+          if-no-files-found: ignore

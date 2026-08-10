@@ -1,0 +1,14 @@
+# 占位目录：Agent 真实 LLM 离线评测的 baseline 产物。
+#
+# 何时启用：
+#   - 接入 OpenAI（或 DeepSeek / MiniMax 等 OpenAI 兼容服务）后
+#   - 由 scripts/agent-eval-runner.mjs（待补）按 version 写入
+#   - 文件名：<version>.json（如 v1.0.json、v1.1.json）
+#
+# 用途：
+#   - 候选 vs 基线对比，核心指标相对退化 >10% 触发 REVIEW_REQUIRED
+#   - 与 9 项 spec_default 阈值配合，做版本间漂移监测
+#
+# 在此之前：
+#   - npm run test:agent-eval 只校验测试集结构 + 阈值表，不读取 baseline
+#   - 通过即视为可发布（spec_hard_gate + spec_default 已守住硬下限）

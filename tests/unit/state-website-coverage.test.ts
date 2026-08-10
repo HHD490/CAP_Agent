@@ -97,7 +97,7 @@ describe('WEBSITE-COVERAGE: recommendProducts 评分矩阵', () => {
     // 至少一条应含 '覆盖 洛杉矶' evidence
     const matched = result.find(r => r.evidence.some(e => /覆盖.*洛杉矶/.test(e)))
     expect(matched).toBeTruthy()
-    expect(matched.score).toBeGreaterThanOrEqual(52 + 28) // base + 路线
+    expect(matched!.score).toBeGreaterThanOrEqual(52 + 28) // base + 路线
   })
 
   it('WP-002: cargo 匹配产品 cargo_types（双向包含）→ score += 12', () => {
