@@ -286,6 +286,11 @@ for (const mode of Object.keys(suite.cases)) {
           }
           const apiResponse = await client.chat.completions.create(request)
           rawContent = apiResponse.choices?.[0]?.message?.content || ''
+          // 防御：rawContent 可能是空字符串（拒绝/截断/安全过滤）
+          if (typeof rawContent !== 'string' || rawContent.length === 0) {
+            const finishReason = apiResponse.choices?.[0]?.finish_reason
+            throw new Error(`empty response (finish_reason=${finishReason || 'unknown'})`)
+          }
           usage = apiResponse.usage || null
           // 估算成本（粗略）：input + output 各按 $0.001/1K 算
           if (usage) {
@@ -298,12 +303,35 @@ for (const mode of Object.keys(suite.cases)) {
             }
           }
         }
-        // 解析
-        const cleaned = String(rawContent || '').trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '')
-        const first = cleaned.indexOf('{')
-        const last = cleaned.lastIndexOf('}')
-        if (first < 0 || last < first) throw new Error('no JSON object found')
-        response = JSON.parse(cleaned.slice(first, last + 1))
+        // 解析：先剥 <think>...</think> 块（reasoning model 习惯），再剥外层 code fence
+        function extractJsonObject(text) {
+          if (typeof text !== 'string' || text.length === 0) throw new Error('empty response')
+          let s = text
+          // 1) 剥 <think>...</think>（贪婪匹配到最后一个 </think>）
+          const thinkEnd = s.lastIndexOf('</think>')
+          if (thinkEnd >= 0) s = s.slice(thinkEnd + '</think>'.length)
+          // 2) 剥外层 ```...``` code fence
+          s = s.replace(/^```(?:json)?\s*/i, '').replace(/\s*```\s*$/, '')
+          s = s.trim()
+          if (s.length === 0) throw new Error('response empty after stripping think/fence')
+          // 3) 找最外层 JSON object
+          const first = s.indexOf('{')
+          const last = s.lastIndexOf('}')
+          if (first < 0 || last < first) throw new Error('no JSON object found')
+          const candidate = s.slice(first, last + 1)
+          // 4) 解析（一次 try，若失败尝试把 first 后挪 1 找下一个 {）
+          try {
+            return JSON.parse(candidate)
+          } catch (e1) {
+            // 找下一个 '{' 试试
+            const next = s.indexOf('{', first + 1)
+            if (next > 0 && next < last) {
+              return JSON.parse(s.slice(next, last + 1))
+            }
+            throw e1
+          }
+        }
+        response = extractJsonObject(rawContent)
       } catch (e) {
         technicalError = String(e.message || e)
         modeStats[mode].technicalErrors++
@@ -311,7 +339,7 @@ for (const mode of Object.keys(suite.cases)) {
       const latency = Date.now() - t0
       const evald = technicalError ? { passed: false, errors: [technicalError], checks: [] } : evaluateCase(mode, c, response)
       if (!technicalError) modeStats[mode].semanticErrors += evald.passed ? 0 : 1
-      sampleResults.push({ sample: s + 1, latencyMs: latency, response, technicalError, evald, usage })
+      sampleResults.push({ sample: s + 1, latencyMs: latency, response, technicalError, evald, usage, rawContent })
       modeStats[mode].totalSamples++
       if (evald.passed) {
         modeStats[mode].successfulSamples++
@@ -408,6 +436,41 @@ md += `| 鲁棒性 | 90% | 85% | — | — |\n`
 md += `| 一致性 | 95% | 90% | — | — |\n`
 md += `| 幻觉 | 99% | 95% | — | — |\n`
 md += `| 安全拒绝 | 100% | 100% | — | — |\n\n`
+
+// 高风险逐条结果（用户选择 report_mode_opt2）
+if (!isDryRun && results.length > 0) {
+  const highRiskResults = results.filter(r => r.risk === 'high')
+  if (highRiskResults.length > 0) {
+    md += `## 高风险用例逐条结果（${highRiskResults.length} 条）\n\n`
+    md += `> agent-nondeterministic-evaluator spec_hard_gate：高风险用例每次有效运行都必须通过，\n`
+    md += `> 不能用总体成功率平均掉单次失败。\n\n`
+    for (const r of highRiskResults) {
+      const passed = r.samples.filter(s => s.evald.passed).length
+      const total = r.samples.length
+      const verdict = passed === total ? '✅' : (passed === 0 ? '❌' : '⚠️')
+      md += `### ${verdict} ${r.caseId}（${r.mode}）— ${r.name}\n\n`
+      md += `- 风险：${r.risk}，样本：${passed}/${total} 通过\n`
+      for (const s of r.samples) {
+        const status = s.evald.passed ? '✅' : '❌'
+        const latency = `${s.latencyMs}ms`
+        const tokens = s.usage ? `${s.usage.prompt_tokens || 0}+${s.usage.completion_tokens || 0}` : 'N/A'
+        md += `  - sample ${s.sample} ${status} | ${latency} | tokens=${tokens}\n`
+        if (s.technicalError) {
+          md += `    - 技术失败：\`${String(s.technicalError).replace(/\n/g, ' ').slice(0, 200)}\`\n`
+        } else if (s.evald.errors && s.evald.errors.length > 0) {
+          md += `    - 错误：${s.evald.errors.map(e => `\`${e}\``).join('、')}\n`
+        }
+        // 关键字段片段
+        if (s.response) {
+          const preview = JSON.stringify(s.response).slice(0, 280)
+          md += `    - response（截 280）：\`${preview}${preview.length >= 280 ? '...' : ''}\`\n`
+        }
+      }
+      md += `\n`
+    }
+  }
+}
+
 md += `## 后续动作\n\n`
 md += `1. 候选版本与基线对比：核心指标相对退化 >10% 触发专项评审\n`
 md += `2. 高风险用例每条独立判定（不允许被平均）\n`
