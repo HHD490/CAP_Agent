@@ -4,3 +4,14 @@ node_modules
 .env
 data/*.sqlite*
 .DS_Store
+
+# IDE / tool 产物（不入仓）
+.cursor/
+.codex_spreadsheet_analysis/
+
+# 测试 / 烟囱 / 临时产物
+coverage/
+.tmp_wharttest/
+
+# 一次性问题定位报告（不入仓）
+/CAP_Agent_问题定位报告_*.html
