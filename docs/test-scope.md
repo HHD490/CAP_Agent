@@ -70,8 +70,10 @@
 | handoff 契约 | 功能 | object/string 双兼容 | P0 | 单元 | 已有 | `handoff-contract.test.ts` |
 | handoff 旧字符串路径 | 兼容 | 旧字符串 recommended_product 解析 | P0 | 单元 | 已有 | `handoff-legacy.test.ts` |
 | smoke 入口 | 集成 | Windows Nitro dev/build | P1 | smoke | 已有 | `smoke-entry.test.ts` + `import-xlsx.smoke.test.ts` |
+| NFR 域补缺（representative 落地，**已实现 2026-08-11**） | 性能/可用性/安全/韧性/可观测/数据完整性/成本/流程 7 域 31 条 | 见 history/2026-08-11-nfr-scope/representative-cases-2026-08-11.md | P0 | nfr-evidence 扩 / nfr-resilience / nfr-security / nfr-observ / nfr-data / nfr-cost / doc-contracts（6 新 + 1 扩） | DRAFT（待 PR review） | `tests/integration/nfr-{evidence,resilience,security,observ,data,cost}.test.ts` + `tests/unit/doc-contracts.test.ts`；31 条已实跑（实际 53 个 it，含 it.each 展开） |
 
-> 数字 = 当前用例数；总计 482 条确定性单元/集成 + 100 条离线评测数据 + 2 条 Windows Nitro smoke。
+> 数字 = 当前用例数；总计 609 条确定性单元/集成（2026-08-07 → 2026-08-11 +127）+ 100 条离线评测数据 + 2 条 Windows Nitro smoke。
+> 2026-08-11 实现：6 个新 NFR 文件 + 1 个扩；测试文件 33 → 39；NFR 域覆盖 4 → 7。
 >
 > **2026-08-07 更新**：按 5 skills 流水线 + grill-me 5 候选全留的判定，补 2 个新文件 + 扩 1 个文件，共 +47 条（435 → 482），单测文件 22 → 24（按 `Get-ChildItem tests/unit` 实际计数；前 8/4-8/6 累计链与目录差 3 文件未追溯，下一次评审核对）：
 > - 新建 `tests/unit/agent-context-and-result.test.ts`（31）：`buildTargetContext` 5 mode 合同级（不存在客户/不存机会/contact_id 缺失退化/operator_input 透传/timeline 30 截断/published 过滤/全未发布空数组）+ `applyAgentResult` 5 mode 副作用（customer_type 写回/stage 推进与不降级/profile_completed 事件/BY004 不落库/accepted 保护/未发布抛错/missing_contact/英文不升 stage/事务/4 intent × blocker/legacy 字符串透传/事件含 risks·nextSteps·recommended_product）+ `getAgentSchemas` & `getAgentCustomerTypes` registry 合同（5 mode key 完整 / 6 类型与 schema enum 同步）
@@ -89,6 +91,8 @@
 > **2026-08-04 更新**：按 codex/AHa-testing 分支新加 3 个单元测试文件（`db-utils` / `agent-tasks-edge` / `use-demo-state`）+ import-xlsx 追加 4 条边界，共 +42 条用例（300 → 342）。同步补齐之前 §3 漏列的 3 个旧文件（`product-publish` / `demo-action-stale` / `handoff-legacy`）以让清单与实际 22 文件对齐。
 
 ## 4. 排除项与假设
+
+> **2026-08-11 更新**：NFR 域补缺盘点已立项为 `history/2026-08-11-nfr-scope/scope-decision-2026-08-11.md`（scope_only 模式，DRAFT 状态）；§1.3 列 6 项待决策（性能基线 / 韧性降级是否纳入 PoC / 安全纵深优先级 / 用户旅程级性能范围 / 真实模型接入前 NFR 准备 / 排除项重新评估 owner）。本节既有排除项与"重新评估条件"列保持不变；NFR 域未关闭的缺口见该决定 §3 / §5。
 
 | 排除项 | 原因 | 责任人 | 重新评估条件 |
 | --- | --- | --- | --- |
