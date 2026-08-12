@@ -9,7 +9,6 @@
 | --- | --- | --- | --- | --- |
 | 需求评审 | 需求文档 / 原型 | 识别风险、歧义、不可测点、依赖 | 评审纪要 + 风险清单 | 重大歧义已关闭或登记 |
 | 测试设计 | 评审纪要 | 编写覆盖正常/异常/边界/兼容性/规则的用例 | 用例集 + 评审记录 | 三方评审通过 |
-| **spec-vs-actual 抽样验证**（v1.1 新增） | representative_cases 文档（test-scope-case-designer 产物） | 1. 抽样 3-5 条用例（覆盖 it.each + 单 it）→ 2. `npm test` 抽 it 数 vs 报告 §1.2/§1.3 闭环 → 3. 抽样回核 spec 字段（用例名称 / 测试步骤 / 分步预期 / 测试数据）与对应 `.test.ts` 的 `it(` 行 | spec-vs-actual 抽样验证记录 | it 总数闭环（§1.1=§1.2=§1.3）+ 抽样 3-5 条全部一致；不一致项 = **BLOCKED**（必须回炉 representative_cases，不能进开发提测） |
 | 开发提测 | 编码 + 自测 | 自测报告 + 变更说明 | 提测包 | 准入检查通过 |
 | 冒烟测试 | 提测包 | 验证启动、登录、核心业务 | 冒烟结论 | 通过才能系统测试 |
 | 系统测试 | 冒烟通过的包 | 全量执行 + 缺陷管理 + 回归 | 测试报告 | P0/P1 100% 修复并回归 |
@@ -43,14 +42,9 @@ PoC 涉及 5 个 Agent 模式，必须先完成确定性功能测试，再进入
 
 ### 阶段衔接顺序
 
-1. `test-scope-case-designer` 界定范围 + 风险（产出 representative_cases）
+1. `test-scope-case-designer` 界定范围 + 风险
 2. `test-tool-governor` 确认工具 + 环境 + 权限
 3. **本流程（test-process-governor）治理阶段 + 门禁**
-   - 3.0 **spec-vs-actual 抽样验证**（v1.1 新增；作用于 representative_cases → 实际 `.test.ts` 落地之间，详见 §1）
-   - 3.1 准入检查（需求评审 + 范围清单 + 排除项确认）
-   - 3.2 冒烟（启动 + 核心链路 + 关键 API 必 100% 通）
-   - 3.3 系统测试 + 缺陷管理 + 回归
-   - 3.4 准出（用例执行率 100% + P0/P1 零遗留 + 报告归档）
 4. `agent-nondeterministic-evaluator` 离线评测 + 基线对比
 5. `release-regression-gatekeeper` 决定发布方式
 
@@ -98,7 +92,6 @@ PoC 涉及 5 个 Agent 模式，必须先完成确定性功能测试，再进入
 - **Agent 评测报告**：`docs/agent-evaluation/<date>.md`，由 `scripts/agent-eval-report.mjs` 生成
 - **基线归档**：`tests/agent-evaluation/baselines/<version>.json`（接入真实模型后启用）
 - **活动过程报告**（范围补充 / 修复 / 评审 / 重大事件）：`docs/history/<event>/<name>-<YYYY-MM-DD>.md`，依 `INDEX.md` §5 命名规范；范围补充活动需按 `test-scope-case-designer` §"范围交付模板"出正式决定记录
-- **spec-vs-actual 抽样验证记录**（v1.1 新增）：嵌入 implementation-report 的 §X "Spec-vs-Actual 抽样验证" 章节（参见 2026-08-11 implementation-report §9 模板）；或在独立提交时输出 `docs/history/<event>/spec-vs-actual-<YYYY-MM-DD>.md`；记录抽样条数、不一致清单、修复方向。**触发条件**：任何 `representative_cases` / `baseline_ready` 阶段提交前必出。**目的**：把"自审全 ✅"从字面信任降为"抽样 3-5 条 + it 总数闭环"的可验证证据；治理背景见 2026-08-11 implementation-report §9.3
 
 ## 8. 复盘节奏
 

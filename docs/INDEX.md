@@ -7,7 +7,7 @@
 
 | 文档 | 对应 skill | 职责 |
 | --- | --- | --- |
-| [test-process.md](./test-process.md) | `test-process-governor` | 阶段台账、准入准出、暂停条件、角色职责、报告归档（v1.1 +spec-vs-actual 抽样验证为新阶段） |
+| [test-process.md](./test-process.md) | `test-process-governor` | 阶段台账、准入准出、暂停条件、角色职责、报告归档 |
 | [test-scope.md](./test-scope.md) | `test-scope-case-designer` | 风险矩阵、范围清单、排除项、用例设计方法 |
 | [test-tool.md](./test-tool.md) | `test-tool-governor` | 工具栈、配置、凭据/权限、资产生命周期、CI 接入 |
 | [agent-evaluation.md](./agent-evaluation.md) | `agent-nondeterministic-evaluator` | 评测集、9 阈值、采样、14 条结构护栏、基线 |
@@ -48,9 +48,7 @@
 - `history/2026-08-11-nfr-scope/` — 2026-08-11 NFR 范围补充活动（**scope_only** + **representative_cases** + **implementation**）
   - [scope-decision-2026-08-11.md](./history/2026-08-11-nfr-scope/scope-decision-2026-08-11.md)（28KB）— NFR 域（性能/可用性/安全/韧性/可观测/数据完整性/成本）补缺盘点；§1.3 列 6 项待决策（性能基线 / 韧性降级是否纳入 PoC / 安全纵深优先级 / 用户旅程级性能范围 / 真实模型接入前 NFR 准备 / 排除项重新评估 owner）；§3 9 域覆盖盘点 + §6.1 占位用例 ID；DRAFT 状态等三方评审
   - [representative-cases-2026-08-11.md](./history/2026-08-11-nfr-scope/representative-cases-2026-08-11.md)（50KB）— representative_cases 模式落地：覆盖骨架 7 域 + 31 条代表用例（CP0=23 / CP1=6 / CP2=2；spec_default 草案 + UNAPPROVED）；§3 字段定义完整（data_id / 来源 / 期望 / 风险 / 版本 v1.0-NFR）；§4.3 与现有 16 条 NFR 用例不重叠；§4.5 handoff_packet 移交；DRAFT 状态等三方评审
-  - [implementation-report-2026-08-11.md](./history/2026-08-11-nfr-scope/implementation-report-2026-08-11.md)（15KB）— representative 31 条落地实现：6 新 + 1 扩测试文件（nfr-evidence/resilience/security/observ/data/cost + doc-contracts）；53 it 实跑全过；39 文件 / 609 测试 / 0 失败 / 0 跳过；§2.2 记录 9 类问题与修复；§3 全量回归 + typecheck + agent-eval 三门禁通过；DRAFT 状态等 PR review
-    - **v1.1 patch (2026-08-12)**：自审 §7 13 条"全 ✅"回核时漏做 spec-vs-actual 抽样，新增 §9 cross-check 记录 3 处不一致修复 —— (a) RESILIENCE 24→25、合计 52→53；(b) PERF-002 抽样 30→10 + mock Provider 阻塞理由；(c) PERF-003 抽样 30→5 + 双 Agent 串行超时理由。同时建议把"spec-vs-actual 抽样验证"作为新阶段加入 test-process.md 阶段台账
-- **`推送完成 2026-08-11 12:15`（hotfix 行为）**：2 个 commit 已推到 `HHD490/CAP_Agent` 远端 — `main` = `2fcf3c7` (ahead 20, 含 2 hotfix: 前缀) / `codex/AHa-testing` = `5845570` (ahead 2, 原 commit)。本次推送用 `gh CLI auth token` + URL embed 模式（见 agent memory `GitHub push: gh CLI token 走 URL embed` 条目），未走 PR review 流程，按 hotfix 行为处理。提交者：Mavis；推送账户：`JJ704sd` (collaborator)。后续 PR review 需产品/研发/SRE/安全四方签字
+  - [implementation-report-2026-08-11.md](./history/2026-08-11-nfr-scope/implementation-report-2026-08-11.md)（15KB）— representative 31 条落地实现：6 新 + 1 扩测试文件（nfr-evidence/resilience/security/observ/data/cost + doc-contracts）；52 it 实跑全过；39 文件 / 609 测试 / 0 失败 / 0 跳过；§2.2 记录 9 类问题与修复；§3 全量回归 + typecheck + agent-eval 三门禁通过；DRAFT 状态等 PR review
 
 ## 5. 命名与放置规范
 
