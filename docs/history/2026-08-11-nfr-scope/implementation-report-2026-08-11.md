@@ -30,28 +30,28 @@
 | # | 文件 | 大小 | 新/扩 | it 数 | 域 |
 | ---: | --- | ---: | --- | ---: | --- |
 | 1 | `tests/integration/nfr-evidence.test.ts` | 25,950B | **扩**（+170 行） | +5 (16 → 21) | A 性能 |
-| 2 | `tests/integration/nfr-resilience.test.ts` | 12,118B | **新** | 24（含 5+5+5+5 it.each） | B 韧性 |
+| 2 | `tests/integration/nfr-resilience.test.ts` | 12,118B | **新** | 25（it.each 展开 4 个 × 5 mode = 20 + 5 单 it 004/005/006/007/009） | B 韧性 |
 | 3 | `tests/integration/nfr-security.test.ts` | 12,608B | **新** | 14（含 5+3 it.each） | C 安全 |
 | 4 | `tests/integration/nfr-observ.test.ts` | 5,013B | **新** | 3 | D 可观测 |
 | 5 | `tests/integration/nfr-data.test.ts` | 4,964B | **新** | 3 | E 数据完整性 |
 | 6 | `tests/integration/nfr-cost.test.ts` | 4,453B | **新** | 2 | F 成本 |
 | 7 | `tests/unit/doc-contracts.test.ts` | 1,896B | **新** | 1 | G 流程 |
-| **合计** | — | **67,002B (66KB)** | 6 新 + 1 扩 | **+52** it | — |
+| **合计** | — | **67,002B (66KB)** | 6 新 + 1 扩 | **+53** it | — |
 
-> it 数 52 vs 决定 31：因 it.each 展开（如 SECURITY-001 5 mode → 5 个独立 it；RESILIENCE-001/002/003/008 各 5 mode → 20 个）
+> it 数 53 vs 决定 31：因 it.each 展开（SECURITY-001 5 mode → 5；SECURITY-004 XSS 3 入口 → 3；RESILIENCE-001/002/003/008 各 5 mode → 20；外加 RESILIENCE 5 个单 it 004/005/006/007/009 和 SECURITY 6 个单 it 共 11）。**v1.1 patch**：先前误算为 52（漏数 RESILIENCE-007 单 it），实测回核后修正。
 
 ### 1.3 实际 it 数 vs 计划 31
 
 | 决定 ID | 计划 | 实际 | 说明 |
 | --- | ---: | ---: | --- |
 | PERF-001~005 | 5 | 5 | 1:1 |
-| RESILIENCE-001~009 | 9 | 24 | it.each 展开 5+5+5+5 = 20 + 4 单 it |
+| RESILIENCE-001~009 | 9 | 25 | it.each 展开 4 个（001/002/003/008） × 5 mode = 20 + 5 单 it（004/005/006/007/009）= 25 |
 | SECURITY-001~008 | 8 | 14 | it.each 展开 5（SEC-001）+ 3（SEC-004 XSS 入口）= 8 + 6 单 it |
 | OBSERV-005~007 | 3 | 3 | 1:1 |
 | DATA-INT-001~003 | 3 | 3 | 1:1 |
 | COST-001~002 | 2 | 2 | 1:1 |
 | PROCESS-001 | 1 | 1 | 1:1 |
-| **合计** | **31** | **52** | — |
+| **合计** | **31** | **53** | — |
 
 ---
 
@@ -62,7 +62,7 @@
 | 批 | 文件 | it 数 | 跑测试 | 结果 |
 | --- | --- | ---: | --- | --- |
 | 1 | 扩 nfr-evidence.test.ts（PERF-001~005） | 5 | ✅ | 21/21 |
-| 2 | 新建 nfr-resilience.test.ts（RESILIENCE-001~009） | 24 | ✅ | 25/25 |
+| 2 | 新建 nfr-resilience.test.ts（RESILIENCE-001~009） | 25 | ✅ | 25/25 |
 | 3 | 新建 nfr-security.test.ts + nfr-observ.test.ts | 17 | ✅ | 17/17 |
 | 4 | 新建 nfr-data + nfr-cost + doc-contracts | 6 | ✅ | 6/6 |
 | **全量回归** | — | — | ✅ | **39/39 files / 609/609 tests** |
@@ -190,7 +190,7 @@ EXIT=0
 | 全量耗时 | 28.58s | +14.44s | **69.26s** |
 
 > 39 vs 35/36/37：含 nfr-evidence.test.ts（已存在但被扩）和 helper 文件。
-> 用例数 609 = 482 + 53（representative 31 条展开为 52 it + 之前累计未计的 it.each 展开）
+> 用例数 609 = 482 + 127；其中本轮 representative 31 条展开为 **53 it**（v1.1 patch：先前误算 52，漏数 RESILIENCE-007 单 it，详见 §9），其余 +74 it 来自 8-05/8-07 范围补充的实际落子
 
 ---
 
@@ -250,10 +250,10 @@ handoff_packet:
   reused_scope: []
   changed_scope:
     - 6 个新 NFR 测试文件 + 1 个扩 nfr-evidence.test.ts
-    - 31 条代表用例实现落地（实际 52 个 it）
+    - 31 条代表用例实现落地（实际 **53 个 it**，v1.1 patch 修正先前 52）
   artifact_refs:
     - tests/integration/nfr-evidence.test.ts (扩 +170 行)
-    - tests/integration/nfr-resilience.test.ts (新 12KB / 24 it)
+    - tests/integration/nfr-resilience.test.ts (新 12KB / **25 it**，v1.1 patch 修正先前 24)
     - tests/integration/nfr-security.test.ts (新 12KB / 14 it)
     - tests/integration/nfr-observ.test.ts (新 5KB / 3 it)
     - tests/integration/nfr-data.test.ts (新 5KB / 3 it)
@@ -286,9 +286,10 @@ handoff_packet:
 | 不动业务代码 / 演示库 / .env / nuxt.config.ts | ✅ 仅测试代码 |
 | 用例 ID 全局唯一 | ✅ 31 条 ID 前缀分域（PERF-/RESILIENCE-/SECURITY-/OBSERV-/DATA-INT-/COST-/PROCESS-） |
 | 每条用例都被他人无隐含知识可执行 | ✅ 步骤 / 分步预期 / 测试数据 / 前置 4 字段齐全 |
-| 数字实测 | ✅ 609 来自 `vitest run` 实跑；6 文件大小来自 `Get-ChildItem` 实际计数 |
+| 数字实测（vitest 跑分） | ✅ 609 来自 `vitest run` 实跑；6 文件大小来自 `Get-ChildItem` 实际计数 |
 | UNIQUE / 并发 / 类型错误 | ✅ 全程修复 9 类问题（详见 §2.2） |
 | 评审状态 DRAFT | ✅ 三方未签字；不冒充 APPROVED |
+| **spec-vs-actual 抽样验证**（v1.1 patch 新增） | ⚠️ v1.0 漏做；v1.1 回核发现 3 处不一致（§9 详）—— 抽样次数（PERF-002 30→10、PERF-003 30→5）+ it 总数（52→53）+ 自分项不全 |
 
 ---
 
@@ -311,4 +312,46 @@ handoff_packet:
 
 ---
 
-**维护**：Mavis · **审核**：产品 / 研发 / SRE / 安全（PR review 触发） · **下次复盘**：PR review 关闭 §1.2 默认决策时
+## 9. Spec-vs-Actual 抽样验证（v1.1 patch 新增）
+
+> 触发：v1.0 自审 §7 13 条"全 ✅"通过 PR 自检，但 `git log` 主体 + `vitest run` 端到端回核时发现 3 处 spec 字段与 `.test.ts` 实际行为不一致。**自审漏做了"spec 字段 vs 实际代码"逐字段抽样**，本节作为治理补丁：
+> 1. 本轮发现的 3 处问题（已修）
+> 2. 抽样的最小验证方法
+> 3. 把这条守则写进 `docs/test-process.md` 阶段台账（治理性补丁，不只本轮适用）
+
+### 9.1 本轮发现的 3 处不一致
+
+| # | spec 字段（representative-cases / scope-decision） | 实际（`.test.ts` / `vitest run`） | 偏差 | 修复方向（v1.1） |
+| --- | --- | --- | --- | --- |
+| 1 | §1.2/§1.3 写 RESILIENCE 实际 it = **24** | `vitest run` 实测 `tests/integration/nfr-resilience.test.ts` = **25 tests** | -1（漏算 RESILIENCE-007 单 it） | §1.2 row 2 24→25、§1.3 24→25、合计 52→53；§1.2 note 加 5 单 it 明示；§2.1 24→25 |
+| 2 | §3.A PERF-002 用例名称 "端到端 **30 次**取 p95" | 实际 `nfr-evidence.test.ts` line 338 "用户旅程 A ... **10 次** p95 < 200ms" | N=30→10 | 改 spec 用例名称 30→10；依赖与备注加 "**v1.1 patch**：实施时为避开 mock Provider fetch 阻塞（§2.2 第 2 行），N 从 30 缩到 10；spec_default p95 < 200ms 不变" |
+| 3 | §3.A PERF-003 用例名称 "**30 次**取 p95" | 实际 `nfr-evidence.test.ts` line 376 "...**5 次** p95 < 500ms" | N=30→5 | 改 spec 用例名称 30→5；依赖与备注加 "**v1.1 patch**：handoff_summary + reply_qualification 双 Agent 串行链路，30 次 > 5s CI 红线，缩到 5 次；p95 < 500ms 不变" |
+
+**根因**：v1.0 写 §1.3 时"4 单 it"是按 `it.each` 反推的（4 × 5 = 20 + 4），没逐行 `grep` 实际 `it(` 数量；写 PERF-002/003 用例名时直接抄了 scope-decision §4.1 行的"30 次"占位，没回核 `nfr-evidence.test.ts` line 338/376 的 for 循环边界。
+
+### 9.2 最小验证方法（每轮 representative_cases 提交前必做）
+
+1. **it 总数对账**：
+   ```powershell
+   npm test 2>&1 | Select-String -Pattern "tests/(unit|integration)/.*\.test\.ts" |
+       ForEach-Object { ($_ -split "test\.ts ")[1] -split " tests" | Select-Object -First 1 }
+   # 期望：每个新文件 it 数 = implementation-report §1.2 写的 it 数（差 ≤ 1）
+   ```
+2. **用例名称 vs 实际描述对账**：从 `representative-cases-2026-08-11.md` §3 抽 3-5 条 PERF/RESILIENCE/SECURITY（覆盖 it.each + 单 it），到对应 `.test.ts` `it(` 行回核"用例名称 / 测试步骤 / 分步预期" 3 字段是否一致。
+3. **§1.1 vs §1.2/§1.3 总数闭环**：§1.1 写"53 it"则 §1.2 合计必须 = 53；§1.3 合计必须 = 53；任一不匹配 = spec vs actual 漂移。
+
+### 9.3 治理性补丁（移交 test-process-governor）
+
+- 建议把本节方法写进 `docs/test-process.md` §1 阶段台账"测试设计 → 开发提测"之间，作为新阶段 **"spec-vs-actual 抽样验证"**（30 分钟人工作业，签 1 个 reviewer 即可）。
+- 不要求每条用例都过——只抽 3-5 条 + it 总数闭环。目的是让"自审全 ✅"不再被字面信任。
+- 触发条件：任何 `representative_cases` / `baseline_ready` 阶段提交前。
+
+### 9.4 仍未关闭的项（不在 v1.1 范围）
+
+- v1.1 patch 仅修文档与 §7 自检 + §9 守则；**未**改动任何 `.test.ts` 业务代码。
+- PERF-002/003 抽样 N 改为 10/5 后，对应 p95 统计意义变薄（10 个采样 p95 = 第 9 个最大值；5 个 = 第 4 个）—— 如要补回 30 次，需在 implementation 时放宽 timeout 或拆 CI job（独立 PR）。
+- §1.2 行的"6 新 + 1 扩"与"39 个测试文件"是数字层一致的，本节不再重复。
+
+---
+
+**维护**：Mavis · **审核**：产品 / 研发 / SRE / 安全（PR review 触发） · **下次复盘**：PR review 关闭 §1.2 默认决策时 / 9.3 治理性补丁被 test-process.md 接纳时
