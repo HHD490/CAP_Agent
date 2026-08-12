@@ -7,7 +7,7 @@
 
 | 文档 | 对应 skill | 职责 |
 | --- | --- | --- |
-| [test-process.md](./test-process.md) | `test-process-governor` | 阶段台账、准入准出、暂停条件、角色职责、报告归档 |
+| [test-process.md](./test-process.md) | `test-process-governor` | 阶段台账、准入准出、暂停条件、角色职责、报告归档（v1.1 +spec-vs-actual 抽样验证为新阶段） |
 | [test-scope.md](./test-scope.md) | `test-scope-case-designer` | 风险矩阵、范围清单、排除项、用例设计方法 |
 | [test-tool.md](./test-tool.md) | `test-tool-governor` | 工具栈、配置、凭据/权限、资产生命周期、CI 接入 |
 | [agent-evaluation.md](./agent-evaluation.md) | `agent-nondeterministic-evaluator` | 评测集、9 阈值、采样、14 条结构护栏、基线 |
