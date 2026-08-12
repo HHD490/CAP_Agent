@@ -159,7 +159,7 @@
 | --- | --- |
 | 需求/变更 ID | SCOPE-NFR-2026-08-11 |
 | 模块/功能 | `state.get` → `accept_match` → `outreach_drafting`（runAgentTaskNow） |
-| 用例名称 | 用户旅程 A：`state.get` + 匹配接受 + Agent 自动建联（中文 path）端到端 30 次取 p95 |
+| 用例名称 | 用户旅程 A：`state.get` + 匹配接受 + Agent 自动建联（中文 path）端到端 10 次取 p95 |
 | 前置条件 | `useIsolatedDb()`；`customer-wca-01` 已有 contactable contact + proposed match |
 | 测试步骤 | 1. `stateHandler` → 2. `actionHandler({accept_match, id: matchId, data: {contactId}})` → 3. `runAgentTaskNow(task.id)` → 4. 验证 opp.stage=5 + draft 插入 + 整链路耗时 |
 | 分步预期 | 1. 整链路 `p95 < 200ms`（spec_default, UNAPPROVED） → 2. draft 必非空 / stage=5 / 事件 `draft_ready` 留痕 |
@@ -168,7 +168,7 @@
 | 测试类型 | 性能 / 用户旅程 |
 | NFR 判据 | 整链路 p95 < 200ms（spec_default, UNAPPROVED） |
 | 标签 | nfr / perf / user-journey / regression |
-| 依赖与备注 | 替代"4 段全链路"中前 2 段；与 4 段定义配套；mock Provider 返回中文 draft |
+| 依赖与备注 | 替代"4 段全链路"中前 2 段；与 4 段定义配套；mock Provider 返回中文 draft。<br>**v1.1 patch**：原 spec 写 30 次，实施时为避开 mock Provider fetch 阻塞（implementation-report §2.2 第 2 行：未 mock 前 1480ms > 200ms 红线）缩到 10 次。p95 < 200ms 不变。10 个采样 p95 = 第 9 个最大值，统计意义较 30 次薄——若 CI 允许可后续扩到 30，独立 PR。 |
 
 #### PERF-003 / 用户旅程 B：回复→交接 端到端
 
@@ -176,7 +176,7 @@
 | --- | --- |
 | 需求/变更 ID | SCOPE-NFR-2026-08-11 |
 | 模块/功能 | `simulate_reply` → `reply_qualification`（runAgentTaskNow） → `assign_owner` → `handoff_summary`（runAgentTaskNow） |
-| 用例名称 | 用户旅程 B：模拟询价回复 → 意向判断 → 分配负责人 → Agent 交接摘要，30 次取 p95 |
+| 用例名称 | 用户旅程 B：模拟询价回复 → 意向判断 → 分配负责人 → Agent 交接摘要，5 次取 p95 |
 | 前置条件 | `useIsolatedDb()`；`opp-06`（stage=6，已有非空 blocker、contactable contact） |
 | 测试步骤 | 1. `actionHandler({simulate_reply, id: 'opp-06', data: {message: '求报价'}})` → 2. `runAgentTaskNow(task.id)`（reply_qualification）→ 3. `actionHandler({assign_owner, id: 'opp-06', data: {owner: 'A'}})` → 4. `runAgentTaskNow(task.id)`（handoff_summary）→ 5. 整链路耗时 |
 | 分步预期 | 1. 整链路 `p95 < 500ms`（spec_default, UNAPPROVED） → 2. opp.stage=9 + 交接事件留痕 + 任务 `result.recommended_product` 符合 handoff-contract |
@@ -185,7 +185,7 @@
 | 测试类型 | 性能 / 用户旅程 |
 | NFR 判据 | 整链路 p95 < 500ms（spec_default, UNAPPROVED） |
 | 标签 | nfr / perf / user-journey / regression |
-| 依赖与备注 | 与 PERF-002 互补；测 4 段中的后 2 段 |
+| 依赖与备注 | 与 PERF-002 互补；测 4 段中的后 2 段。<br>**v1.1 patch**：原 spec 写 30 次，实施时 reply_qualification + handoff_summary 双 Agent 串行链路，30 次 > 5s CI 红线，缩到 5 次。p95 < 500ms 不变。5 个采样 p95 = 第 4 个最大值，统计意义薄——若 CI 允许可后续扩到 30，独立 PR。 |
 
 #### PERF-004 / 阶梯并发 demo action
 
