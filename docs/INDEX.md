@@ -50,7 +50,10 @@
   - [representative-cases-2026-08-11.md](./history/2026-08-11-nfr-scope/representative-cases-2026-08-11.md)（50KB）— representative_cases 模式落地：覆盖骨架 7 域 + 31 条代表用例（CP0=23 / CP1=6 / CP2=2；spec_default 草案 + UNAPPROVED）；§3 字段定义完整（data_id / 来源 / 期望 / 风险 / 版本 v1.0-NFR）；§4.3 与现有 16 条 NFR 用例不重叠；§4.5 handoff_packet 移交；DRAFT 状态等三方评审
   - [implementation-report-2026-08-11.md](./history/2026-08-11-nfr-scope/implementation-report-2026-08-11.md)（15KB）— representative 31 条落地实现：6 新 + 1 扩测试文件（nfr-evidence/resilience/security/observ/data/cost + doc-contracts）；53 it 实跑全过；39 文件 / 609 测试 / 0 失败 / 0 跳过；§2.2 记录 9 类问题与修复；§3 全量回归 + typecheck + agent-eval 三门禁通过；DRAFT 状态等 PR review
     - **v1.1 patch (2026-08-12)**：自审 §7 13 条"全 ✅"回核时漏做 spec-vs-actual 抽样，新增 §9 cross-check 记录 3 处不一致修复 —— (a) RESILIENCE 24→25、合计 52→53；(b) PERF-002 抽样 30→10 + mock Provider 阻塞理由；(c) PERF-003 抽样 30→5 + 双 Agent 串行超时理由。同时建议把"spec-vs-actual 抽样验证"作为新阶段加入 test-process.md 阶段台账
-- **`推送完成 2026-08-11 12:15`（hotfix 行为）**：2 个 commit 已推到 `HHD490/CAP_Agent` 远端 — `main` = `2fcf3c7` (ahead 20, 含 2 hotfix: 前缀) / `codex/AHa-testing` = `5845570` (ahead 2, 原 commit)。本次推送用 `gh CLI auth token` + URL embed 模式（见 agent memory `GitHub push: gh CLI token 走 URL embed` 条目），未走 PR review 流程，按 hotfix 行为处理。提交者：Mavis；推送账户：`JJ704sd` (collaborator)。后续 PR review 需产品/研发/SRE/安全四方签字
+- `history/2026-08-13-exclusion-review/` — 2026-08-13 NFR 排除项重新评估机制活动（**scope_only** + 文档一致性小修）
+  - [scope-exclusion-review-2026-08-13.md](./history/2026-08-13-exclusion-review/scope-exclusion-review-2026-08-13.md)（19KB）— §1.3 第 6 项 / scope-decision-2026-08-11 §8.1 第 5 项落地：19 项总排除统一登记（6 既有 + 11 新加 + **2 真缺口** = 性能基线数字 + 排除项机制本身）；§1.2-1.3 3 要素（触发器 / 时间窗 / 责任人）+ 1 级别 + 3 类触发器 + 3 级时间窗（即时 ≤ 7 天 / 周期 ≤ 30 天 / 战略 ≤ 90 天）；§3 推荐 6 类 owner 草案（**待用户指定**）；§4 19 项 8 列登记表（含"时间窗"列草案）；§7 5 skill 移交；§10 11 项质量自检全过；DRAFT 状态等用户指定 owner + 三方评审
+  - **文档一致性小修**：docs/test-scope.md §1 "5 段式" → "6 段式"（与 scope-decision-2026-08-11 §1.1/§6.1 + 业务旅程定义对齐；representative-cases §3 第 4 行 "4 段" 是实现落地段数，不修）
+- **`推送完成 2026-08-13 HH:MM`（hotfix 行为，待 push 后回填实际 hash）**：本轮 2 个 commit 推到 `HHD490/CAP_Agent` 远端 `codex/AHa-testing`（按 AGENTS.md §1.1 工作分支约定）。本次推送用 `gh CLI auth token` + URL embed 模式（见 agent memory `GitHub push: gh CLI token 走 URL embed` 条目），未走 PR review 流程，按 hotfix 行为处理。提交者：Mavis；推送账户：`JJ704sd` (collaborator)。后续 PR review 需产品/研发/SRE/安全四方签字
 
 ## 5. 命名与放置规范
 
