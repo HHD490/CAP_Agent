@@ -53,7 +53,7 @@
 - `history/2026-08-13-exclusion-review/` — 2026-08-13 NFR 排除项重新评估机制活动（**scope_only** + 文档一致性小修）
   - [scope-exclusion-review-2026-08-13.md](./history/2026-08-13-exclusion-review/scope-exclusion-review-2026-08-13.md)（19KB）— §1.3 第 6 项 / scope-decision-2026-08-11 §8.1 第 5 项落地：19 项总排除统一登记（6 既有 + 11 新加 + **2 真缺口** = 性能基线数字 + 排除项机制本身）；§1.2-1.3 3 要素（触发器 / 时间窗 / 责任人）+ 1 级别 + 3 类触发器 + 3 级时间窗（即时 ≤ 7 天 / 周期 ≤ 30 天 / 战略 ≤ 90 天）；§3 推荐 6 类 owner 草案（**待用户指定**）；§4 19 项 8 列登记表（含"时间窗"列草案）；§7 5 skill 移交；§10 11 项质量自检全过；DRAFT 状态等用户指定 owner + 三方评审
   - **文档一致性小修**：docs/test-scope.md §1 "5 段式" → "6 段式"（与 scope-decision-2026-08-11 §1.1/§6.1 + 业务旅程定义对齐；representative-cases §3 第 4 行 "4 段" 是实现落地段数，不修）
-- **`推送完成 2026-08-13 HH:MM`（hotfix 行为，待 push 后回填实际 hash）**：本轮 2 个 commit 推到 `HHD490/CAP_Agent` 远端 `codex/AHa-testing`（按 AGENTS.md §1.1 工作分支约定）。本次推送用 `gh CLI auth token` + URL embed 模式（见 agent memory `GitHub push: gh CLI token 走 URL embed` 条目），未走 PR review 流程，按 hotfix 行为处理。提交者：Mavis；推送账户：`JJ704sd` (collaborator)。后续 PR review 需产品/研发/SRE/安全四方签字
+- **`推送完成 2026-08-13 10:05`（hotfix 行为）**：1 个 commit 已推到 `HHD490/CAP_Agent` 远端 — `codex/AHa-testing` = `fd216c7` (447ceed→fd216c7，+1 commit)。本次推送用 `gh CLI auth token` + URL embed 模式（见 agent memory `GitHub push: gh CLI token 走 URL embed` 条目），未走 PR review 流程，按 hotfix 行为处理。提交者：Mavis；推送账户：`JJ704sd` (collaborator)。后续 PR review 需产品/研发/SRE/安全四方签字
 
 ## 5. 命名与放置规范
 
