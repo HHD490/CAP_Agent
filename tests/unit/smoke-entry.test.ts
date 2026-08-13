@@ -8,7 +8,7 @@ const isWindows = process.platform === 'win32'
 const npxCmd = isWindows ? 'npx.cmd' : 'npx'
 
 describe('SMOKE-ENTRY: discoverable Windows Nitro smoke commands', () => {
-  it('SMOKE-ENTRY-001: vitest.smoke.config.ts discovers at least two smoke tests', () => {
+  it.skipIf(!isWindows)('SMOKE-ENTRY-001: vitest.smoke.config.ts discovers at least two smoke tests', () => {
     const result = spawnSync(
       npxCmd,
       ['vitest', 'list', '--config', 'vitest.smoke.config.ts'],
