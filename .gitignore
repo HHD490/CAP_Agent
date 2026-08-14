@@ -15,6 +15,8 @@ coverage/
 # 一次性调试烟囱（推送/npm/任意命令的 stdout/stderr 旁路输出）
 .tmp_*.out
 .tmp_*.err
+# 一次性分析/审计（Mavis 跑 coverage 解析、脚本调试的目录）
+.tmp_audit/
 
 # 一次性问题定位报告（不入仓）
 /CAP_Agent_问题定位报告_*.html

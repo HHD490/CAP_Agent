@@ -173,4 +173,31 @@ describe('AGENT-CALLMODEL-REAL: callModel 真 API 路径（mock openai）', () =
     expect(row.status).toBe('failed')
     expect(String(row.error)).toMatch(/没有返回业务结果/)
   })
+
+  it('REAL-005: deepseek + thinking=disabled → request 含 temperature，无 thinking/reasoning_effort/response_format', async () => {
+    // 真不变量（fresh coverage 10:28 实测 L336 为 0 覆盖）：
+    // 之前 REAL-002 只测了 deepseek + thinking=enabled 路径。
+    // REAL-005 锁住 deepseek + thinking=disabled 路径：应回退到 temperature
+    // （不应加 thinking / reasoning_effort / response_format）。
+    createMock.mockResolvedValue({
+      choices: [{ message: { content: validProfileContent() }, finish_reason: 'stop' }],
+      usage: { prompt_tokens: 200, completion_tokens: 100, total_tokens: 300 }
+    })
+    ;(globalThis as any).useRuntimeConfig = () => baseConfig({
+      llmProvider: 'deepseek',
+      llmThinkingMode: 'disabled',
+      llmTemperature: 0.3
+    })
+
+    const { task } = createAgentTask('customer_profiling', 'customer', 'customer-wca-01', { autoMatch: false })
+    await runAgentTaskNow(task.id)
+
+    expect(createMock).toHaveBeenCalledTimes(1)
+    const request = createMock.mock.calls[0][0] as any
+    // deepseek + thinking=disabled 走 L335-336 else 分支
+    expect(request.thinking).toEqual({ type: 'disabled' })
+    expect(request.reasoning_effort).toBeUndefined()
+    expect(request.temperature).toBe(0.3)
+    expect(request.response_format).toBeUndefined()
+  })
 })

@@ -343,4 +343,24 @@ describe('IMPORT-XLSX integration (handler + isolated DB)', () => {
     const trimmed = (db.prepare(`SELECT name FROM customers WHERE source_ref = 'SAME-003'`).get() as any).name
     expect(trimmed).toBe('Same Name Co')
   })
+
+  it('IMPORT-XLSX-020: 缺 domain/country 的行 → 跳过去重并正常创建（覆盖 customers.post L40 `domain && country ? : null` 兜底）', async () => {
+    // 真不变量（fresh coverage 10:28 实测 customers.post.ts L40 branch 为 0 覆盖）：
+    // 当 sourceRef 空 且 (domain 为空 或 country 为空) → 不查去重 → 正常 create。
+    // 业务期望："无标识就不去重"，避免误判漏建。
+    const { db } = useIsolatedDb()
+    const buffer = buildWorkbook([
+      { company: 'No Identifiers Co' } // 无 member_id / website / email / country → domain='', country=''
+    ])
+
+    const result = await importHandler({
+      __parts: [{ name: 'file', filename: 'no-identifiers.xlsx', data: buffer }]
+    } as any)
+
+    expect(result).toMatchObject({ created: 1, skipped: 0, total: 1 })
+    const customer = db.prepare(`SELECT * FROM customers WHERE name = 'No Identifiers Co'`).get() as any
+    expect(customer).toBeTruthy()
+    expect(customer.domain).toBe('')
+    expect(customer.country).toBe('')
+  })
 })
