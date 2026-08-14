@@ -71,8 +71,10 @@
 | handoff 旧字符串路径 | 兼容 | 旧字符串 recommended_product 解析 | P0 | 单元 | 已有 | `handoff-legacy.test.ts` |
 | smoke 入口 | 集成 | Windows Nitro dev/build | P1 | smoke | 已有 | `smoke-entry.test.ts` + `import-xlsx.smoke.test.ts` |
 | NFR 域补缺（representative 落地，**已实现 2026-08-11**） | 性能/可用性/安全/韧性/可观测/数据完整性/成本/流程 7 域 31 条 | 见 history/2026-08-11-nfr-scope/representative-cases-2026-08-11.md | P0 | nfr-evidence 扩 / nfr-resilience / nfr-security / nfr-observ / nfr-data / nfr-cost / doc-contracts（6 新 + 1 扩） | DRAFT（待 PR review） | `tests/integration/nfr-{evidence,resilience,security,observ,data,cost}.test.ts` + `tests/unit/doc-contracts.test.ts`；31 条已实跑（实际 53 个 it，含 it.each 展开） |
+| callModel 真 API 路径契约（**2026-08-14**） | API 合同 | openai-compatible mode → `response_format=json_object` + `temperature`；deepseek + thinking=enabled → `thinking` 字段 + `reasoning_effort`、**不**发 `response_format`；`finish_reason="length"` → task=failed + 错误提示 "模型输出达到长度上限"；空 content → task=failed + 错误提示 "没有返回业务结果" | P0 | 单元（mock `openai`） | Mavis | `tests/unit/agent-callmodel-real.test.ts` (4) |
 
-> 数字 = 当前用例数；总计 609 条确定性单元/集成（2026-08-07 → 2026-08-11 +127）+ 100 条离线评测数据 + 2 条 Windows Nitro smoke。
+> 数字 = 当前用例数；总计 613 条确定性单元/集成（2026-08-07 → 2026-08-11 +127 → 2026-08-14 +4）+ 100 条离线评测数据 + 2 条 Windows Nitro smoke。
+> 2026-08-14 实现：1 个新单测文件 `agent-callmodel-real.test.ts`（4）锁住 callModel 真 API 路径契约（openai-compatible vs deepseek 请求体差异 + finish_reason=length 错误处理 + 空 content 错误处理）；测试文件 39 → 40；新增 1 行 scope_policy 排除项记录 + 5 行未覆盖代码依据。
 > 2026-08-11 实现：6 个新 NFR 文件 + 1 个扩；测试文件 33 → 39；NFR 域覆盖 4 → 7。
 >
 > **2026-08-07 更新**：按 5 skills 流水线 + grill-me 5 候选全留的判定，补 2 个新文件 + 扩 1 个文件，共 +47 条（435 → 482），单测文件 22 → 24（按 `Get-ChildItem tests/unit` 实际计数；前 8/4-8/6 累计链与目录差 3 文件未追溯，下一次评审核对）：
@@ -102,6 +104,11 @@
 | 真实 WCA 抓取 | 项目明文"不抓取真实 WCA 目录" | Mavis | 永远排除 |
 | 国际化 i18n | 文案以中文为主，英文邮件由 Agent 生成 | Mavis | 多语种支持立项 |
 | 跨浏览器兼容 | 仅 Chrome 演示 | Mavis | 客户端版本立项 |
+| 前端 Vue SFC（components / layouts / pages） | vitest config 不 include `.vue`；PoC 演示由人工操作员，UI 行为不是 PoC 关键不变量 | Mavis | 客户端版本立项或增加 e2e 框架时纳入 |
+| `useDemoState` 客户端副作用（L17-26 Notification / L81-104 setInterval 轮询） | 浏览器 only（`import.meta.client` / `document.*` / `window.setInterval`）；`use-demo-state.test.ts` 用 `import.meta.client=false` + stub 隔离；业务契约由 `state-endpoint` / `agent-tasks-endpoint` 间接锁 | Mavis | 增加 jsdom / happy-dom 集成测试或 Playwright 时纳入 |
+| `agent.ts` L300-311 `systemPrompt`（5 mode prompt 字符串模板） | 纯字符串拼接，不是 logic；prompt 行为由 `agent-evaluation/core-regression.json` 100 用例锁定 | Mavis | 引入 prompt 单元化模板或 prompt version 概念时纳入 |
+| `agent.ts` L523-524 `setTimeout(() => runTask(id, config), 40)` 调度 | `setDeferAgentExecutionForTests(true)` 完全绕过；`runAgentTaskNow` 替代测试入口 | Mavis | 调度策略变更（如改 setImmediate / queue）时纳入 |
+| `parseJsonResponse` Array 分支（L216-218） | `parse-json-response.test.ts` PJR-014 显式锁定为 dead branch（callModel 当前只对 string 调 parseJsonResponse） | Mavis | callModel 改为对数组也调 parseJsonResponse 时重新评估 |
 
 ## 5. 用例设计方法
 
