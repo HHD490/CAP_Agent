@@ -12,6 +12,9 @@ data/*.sqlite*
 # 测试 / 烟囱 / 临时产物
 coverage/
 .tmp_wharttest/
+# 一次性调试烟囱（推送/npm/任意命令的 stdout/stderr 旁路输出）
+.tmp_*.out
+.tmp_*.err
 
 # 一次性问题定位报告（不入仓）
 /CAP_Agent_问题定位报告_*.html
