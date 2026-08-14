@@ -51,6 +51,9 @@
 | Agent 结果落库 5 mode | 副作用 | customer_type 写回/stage 推进与不降级/events/BY004 不落库/accepted 保护/未发布抛错/missing_contact/英文不升 stage/事务/4 intent × blocker/legacy 字符串/事件含 recommended_product | P0 | 单元 | Mavis | `agent-context-and-result.test.ts` (19) |
 | Agent registry 合同 | 合同 | 5 mode key 完整 / 6 类型与 schema enum 同步 | P0 | 单元 | Mavis | `agent-context-and-result.test.ts` (2) |
 | markNonAcceptedMatchesStale 边界 | 合同 | 无 match noop / 全 accepted 保护 / 非 accepted 全 stale / 自定义 now / 默认 demoNow / 多次幂等 / 不传 db / 不存在客户 noop | P0 | 单元 | Mavis | `mark-non-accepted-matches-stale.test.ts` (8) |
+| agent 边角分支合同（**2026-08-10 漏登记**） | 合同 | agent.ts 16 条边角分支（AGENT-RUNTASK / AGENT-CALLMODEL / AGENT-CTX-EDGE / AGENT-APPLY-EDGE） | P0 | 单元 | Mavis | `tests/unit/agent-edge-cases.test.ts` (16) |
+| demo action 残留分支（**2026-08-10 漏登记**） | 集成 | action.post.ts 17 条残留分支（404 路径 4 / bodySchema 边界 5 / accept_match 跨客户防御 1 / send_email 成功路径 4 / 兜底 3） | P0 | 集成 | Mavis | `tests/integration/demo-action-residual-branches.test.ts` (17) |
+| state-website 残留分支（**2026-08-10 漏登记**） | 单元 | state.ts 6 + website.ts 10 + action.post.ts 9 残留分支补测 | P0 | 单元 | Mavis | `tests/unit/state-website-coverage.test.ts` (25) |
 | advance-time 跟进提醒 | 功能 | 首次/二次/暂停/不触发 | P0 | 单元 | Mavis | `advance-time-reminders.test.ts` (14) |
 | state.get 端点 | 接口 | shape + counts + 排序 | P0 | 单元 | Mavis | `state-endpoint.test.ts` (22) |
 | agent tasks HTTP | 接口 | zod 校验 + dedup + stop | P0 | 集成 | Mavis | `agent-tasks-endpoint.test.ts` (19) |
@@ -141,7 +144,7 @@
 
 - **范围清单**：本文档 §3
 - **用例集版本**：
-  - 单元/集成：vitest `tests/unit/**/*.test.ts` + `tests/integration/**/*.test.ts`（21 个文件，300 用例）
+  - 单元/集成：vitest `tests/unit/**/*.test.ts` + `tests/integration/**/*.test.ts`（40 个文件，615 用例）
   - 离线评测：`tests/agent-evaluation/core-regression.json`（v1.0, 100 用例）
 - **测试数据**：每个测试用 `useIsolatedDb()` 临时 SQLite 库，互不影响
 - **环境**：本地 Node 22 + Vitest 3.2 + Windows-native xlsx 兼容
