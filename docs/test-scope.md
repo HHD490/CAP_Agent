@@ -71,10 +71,12 @@
 | handoff 旧字符串路径 | 兼容 | 旧字符串 recommended_product 解析 | P0 | 单元 | 已有 | `handoff-legacy.test.ts` |
 | smoke 入口 | 集成 | Windows Nitro dev/build | P1 | smoke | 已有 | `smoke-entry.test.ts` + `import-xlsx.smoke.test.ts` |
 | NFR 域补缺（representative 落地，**已实现 2026-08-11**） | 性能/可用性/安全/韧性/可观测/数据完整性/成本/流程 7 域 31 条 | 见 history/2026-08-11-nfr-scope/representative-cases-2026-08-11.md | P0 | nfr-evidence 扩 / nfr-resilience / nfr-security / nfr-observ / nfr-data / nfr-cost / doc-contracts（6 新 + 1 扩） | DRAFT（待 PR review） | `tests/integration/nfr-{evidence,resilience,security,observ,data,cost}.test.ts` + `tests/unit/doc-contracts.test.ts`；31 条已实跑（实际 53 个 it，含 it.each 展开） |
-| callModel 真 API 路径契约（**2026-08-14**） | API 合同 | openai-compatible mode → `response_format=json_object` + `temperature`；deepseek + thinking=enabled → `thinking` 字段 + `reasoning_effort`、**不**发 `response_format`；`finish_reason="length"` → task=failed + 错误提示 "模型输出达到长度上限"；空 content → task=failed + 错误提示 "没有返回业务结果" | P0 | 单元（mock `openai`） | Mavis | `tests/unit/agent-callmodel-real.test.ts` (4) |
+| callModel 真 API 路径契约（**2026-08-14**） | API 合同 | openai-compatible mode → `response_format=json_object` + `temperature`；deepseek + thinking=enabled → `thinking` 字段 + `reasoning_effort`、**不**发 `response_format`；deepseek + thinking=disabled → `temperature`、无 `thinking` / 无 `response_format`；`finish_reason="length"` → task=failed + 错误提示 "模型输出达到长度上限"；空 content → task=failed + 错误提示 "没有返回业务结果" | P0 | 单元（mock `openai`） | Mavis | `tests/unit/agent-callmodel-real.test.ts` (5) |
+| import-xlsx 错误/兜底路径（**2026-08-14**） | 边界 | 缺 domain/country 的行 → 跳过去重并正常创建 | P0 | 集成 | Mavis | `tests/integration/import-xlsx.test.ts` (+1: IMPORT-XLSX-020) |
 
-> 数字 = 当前用例数；总计 613 条确定性单元/集成（2026-08-07 → 2026-08-11 +127 → 2026-08-14 +4）+ 100 条离线评测数据 + 2 条 Windows Nitro smoke。
-> 2026-08-14 实现：1 个新单测文件 `agent-callmodel-real.test.ts`（4）锁住 callModel 真 API 路径契约（openai-compatible vs deepseek 请求体差异 + finish_reason=length 错误处理 + 空 content 错误处理）；测试文件 39 → 40；新增 1 行 scope_policy 排除项记录 + 5 行未覆盖代码依据。
+> 数字 = 当前用例数；总计 615 条确定性单元/集成（2026-08-07 → 2026-08-11 +127 → 2026-08-14 +4 → 2026-08-14 +2 REAL-005 + XLSX-020）+ 100 条离线评测数据 + 2 条 Windows Nitro smoke。
+> 2026-08-14 二次全量审计（10:32）：基于 fresh `coverage-final.json`（10:28 跑），发现 L336 / L40 是真 gap；L18/L20 经实测是 **dead-by-library**（xlsx.write 自带 check_wb 拒绝 0-sheet workbook，xlsx.read 的 SheetNames/Sheets 一一对应），转入 §4 排除项；REAL-005 + IMPORT-XLSX-020 落地，agent.ts branch → 100%（除 §4 排除项）、customers.post.ts branch 提升；§4 补 12 行次级排除（防御性 ?? 兜底 / v8 instrument artifact / 错误路径 / dead-by-library），测试文件 40 → 40（沿用现有文件）。
+> 2026-08-14 首次实现：1 个新单测文件 `agent-callmodel-real.test.ts`（4）锁住 callModel 真 API 路径契约（openai-compatible vs deepseek 请求体差异 + finish_reason=length 错误处理 + 空 content 错误处理）；测试文件 39 → 40；新增 1 行 scope_policy 排除项记录 + 5 行未覆盖代码依据。
 > 2026-08-11 实现：6 个新 NFR 文件 + 1 个扩；测试文件 33 → 39；NFR 域覆盖 4 → 7。
 >
 > **2026-08-07 更新**：按 5 skills 流水线 + grill-me 5 候选全留的判定，补 2 个新文件 + 扩 1 个文件，共 +47 条（435 → 482），单测文件 22 → 24（按 `Get-ChildItem tests/unit` 实际计数；前 8/4-8/6 累计链与目录差 3 文件未追溯，下一次评审核对）：
@@ -107,8 +109,18 @@
 | 前端 Vue SFC（components / layouts / pages） | vitest config 不 include `.vue`；PoC 演示由人工操作员，UI 行为不是 PoC 关键不变量 | Mavis | 客户端版本立项或增加 e2e 框架时纳入 |
 | `useDemoState` 客户端副作用（L17-26 Notification / L81-104 setInterval 轮询） | 浏览器 only（`import.meta.client` / `document.*` / `window.setInterval`）；`use-demo-state.test.ts` 用 `import.meta.client=false` + stub 隔离；业务契约由 `state-endpoint` / `agent-tasks-endpoint` 间接锁 | Mavis | 增加 jsdom / happy-dom 集成测试或 Playwright 时纳入 |
 | `agent.ts` L300-311 `systemPrompt`（5 mode prompt 字符串模板） | 纯字符串拼接，不是 logic；prompt 行为由 `agent-evaluation/core-regression.json` 100 用例锁定 | Mavis | 引入 prompt 单元化模板或 prompt version 概念时纳入 |
+| `agent.ts` L348-350 `response.usage` 三字段 / L347/L351 ternary | v8 instrument 对行内对象属性 reporting 偏差（REAL-001 mock 显式传了 `prompt_tokens/completion_tokens/total_tokens` 已走过两条 arm） | Mavis | v8 升级或换 istanbul 时重新评估 |
 | `agent.ts` L523-524 `setTimeout(() => runTask(id, config), 40)` 调度 | `setDeferAgentExecutionForTests(true)` 完全绕过；`runAgentTaskNow` 替代测试入口 | Mavis | 调度策略变更（如改 setImmediate / queue）时纳入 |
 | `parseJsonResponse` Array 分支（L216-218） | `parse-json-response.test.ts` PJR-014 显式锁定为 dead branch（callModel 当前只对 string 调 parseJsonResponse） | Mavis | callModel 改为对数组也调 parseJsonResponse 时重新评估 |
+| `agent.ts` 防御性 `??` 兜底（L199/203/205/240-242/253-255/279-280/285-287/291/475 / L215 string-arm / L335/L347/L351/L502 / L322-323 LLM endpoint 配置守卫） | DB / JSON.parse / 字段填充 / error instanceof Error / LLM endpoint config 防御性分支；happy path + 现有大量业务测试间接锁 | Mavis | DB schema 改 NOT NULL + 默认值 / OpenAI SDK 升级 / error 抛出规范统一时重评 |
+| `action.post.ts` 防御性 `JSON.parse(x / '{}')` / `String(x / '')` 兜底（L21/22/31/49/50/60/79/93/116） | 同上模式：业务契约由 happy path + `demo-actions-workflow.test.ts` (41) 间接锁 | Mavis | 同上 |
+| `state.ts` L5 `parseJson` falsy 兜底 / L98 `product ? : undefined` 防御性 guard | `state.ts` parseJson 在所有 `*_json` 列上调用；fallback 路径仅在列 NULL 时触发 | Mavis | DB schema 改 NOT NULL 时重评 |
+| `identity.post.ts` L20/42 `JSON.parse(x / '{}')` 兜底 / L27 `email.split('@')[1] / ''`（zod `.email()` 已保证有 `@`） | 防御性分支；L27 实际不可达 | Mavis | 去掉 zod email 校验或允许非标准邮箱时重评 |
+| `rematch.post.ts` L31 `JSON.parse(customer.facts_json  /  '{}')` 兜底 | 防御性分支 | Mavis | 同上 |
+| `website.ts` L16-18 `JSON.parse(product.x_json  /  '[]')` 兜底 / L23 OR 第二段 `destination.includes(tail)` | 防御性 nullish；L23 因 seed 路线 `normalized.includes(destination)` 总为 true 而被 OR 短路未求值（v8 artifact，行为正确） | Mavis | seed 路线改为无 `-` 分隔 / v8 升级时重评 |
+| `db.ts` L193 WAL fail catch / L206 `databasePath  /  default` / L246 `JSON.parse(pms_snapshot) catch` / L295-298 resetDemoDatabase rollback | 环境/配置错误路径；需 host WAL reject / 空 config / 损坏 snapshot / seed 步骤抛错才能触发；副作用大于价值 | Mavis | 增加故障注入框架（chaos / DB mock）时纳入 |
+| `customers.post.ts` L18 `Workbook has no worksheets` / L20 `worksheet unavailable` xlsx 错误路径 | **dead-by-library**：`XLSX.write` 自带 `check_wb` 拒绝写 0-sheet workbook（throw "Workbook is empty"），`XLSX.read` 返回的 SheetNames/Sheets 一一对应；L18/L20 在合法 xlsx 输入下不可达。catch 路径由 IMPORT-XLSX-012b（malformed zip）覆盖 | Mavis | xlsx 库大版本升级时重评 |
+| `customers.post.ts` L40 `domain && country ? SELECT : null` 兜底 | 缺 domain/country 时跳过去重（业务期望"无标识就不去重"）；由 IMPORT-XLSX-020 锁定 | Mavis | 业务规则改为"严格去重"时重评 |
 
 ## 5. 用例设计方法
 
