@@ -98,7 +98,7 @@
 
 > **2026-08-11 更新**：NFR 域补缺盘点已立项为 `history/2026-08-11-nfr-scope/scope-decision-2026-08-11.md`（scope_only 模式，DRAFT 状态）；§1.3 列 6 项待决策（性能基线 / 韧性降级是否纳入 PoC / 安全纵深优先级 / 用户旅程级性能范围 / 真实模型接入前 NFR 准备 / 排除项重新评估 owner）。本节既有排除项与"重新评估条件"列保持不变；NFR 域未关闭的缺口见该决定 §3 / §5。
 
-> 本表与 `docs/history/2026-08-13-exclusion-review/scope-exclusion-review-2026-08-13.md` §4 互补登记（**两表不重叠**：本表是代码层 21 项，scope-excl §4 是业务层 19 项）。本表 1-6 沿用 scope-excl §4 1-6；7-21 是 8/14 二次审计代码层新增；#22 #23 跨表引用 scope-excl §4 18-19 真缺口。1-21 行时间窗基于 §1.3 三类分级（**已 approved 2026-08-14**）；#22 #23 仍 DRAFT，待 §1.4 第 1/2 项 owner 指定后回填。
+> 本表与 `docs/history/2026-08-13-exclusion-review/scope-exclusion-review-2026-08-13.md` §4 互补登记（**两表不重叠**：本表是代码层 21 项，scope-excl §4 是业务层 19 项）。本表 1-6 沿用 scope-excl §4 1-6；7-21 是 8/14 二次审计代码层新增；#22 #23 跨表引用 scope-excl §4 18-19 真缺口。1-23 行时间窗全部基于 §1.3 三类分级（**已 approved 2026-08-14**）。#22 责任人 = SRE + 研发 / 时间窗 = 即时 ≤ 7 天；#23 责任人 = 测试治理 owner / 时间窗 = 周期 ≤ 30 天。来源列：行 1-6 沿用 scope-excl §4 1-6；行 7-21 为 8/14 二次审计代码层新增；行 22-23 跨表引用 scope-excl §4 18-19。
 
 | # | 排除项 | 来源 | 原因 | 责任人 | 重新评估条件 | 时间窗（草案）|
 | ---: | --- | --- | --- | --- | --- | --- |
@@ -123,8 +123,8 @@
 | 19 | `db.ts` L193 WAL fail catch / L206 `databasePath  /  default` / L246 `JSON.parse(pms_snapshot) catch` / L295-298 resetDemoDatabase rollback | docs §4 8/14 二次审计新增 | 环境/配置错误路径；需 host WAL reject / 空 config / 损坏 snapshot / seed 步骤抛错才能触发；副作用大于价值 | Mavis | 增加故障注入框架（chaos / DB mock）时纳入 | 战略 ≤ 90 天|
 | 20 | `customers.post.ts` L18 `Workbook has no worksheets` / L20 `worksheet unavailable` xlsx 错误路径 | docs §4 8/14 二次审计新增 | **dead-by-library**：`XLSX.write` 自带 `check_wb` 拒绝写 0-sheet workbook（throw "Workbook is empty"），`XLSX.read` 返回的 SheetNames/Sheets 一一对应；L18/L20 在合法 xlsx 输入下不可达。catch 路径由 IMPORT-XLSX-012b（malformed zip）覆盖 | Mavis | xlsx 库大版本升级时重评 | 战略 ≤ 90 天|
 | 21 | `customers.post.ts` L40 `domain && country ? SELECT : null` 兜底 | docs §4 8/14 二次审计新增 | 缺 domain/country 时跳过去重（业务期望"无标识就不去重"）；由 IMPORT-XLSX-020 锁定 | Mavis | 业务规则改为"严格去重"时重评 | 战略 ≤ 90 天|
-| 22 | **性能基线数字（CP0 对象）** | scope-excl §4 行 18 真缺口（待 owner）| 无 project_approved 阈值；任何阈值都需产品 / 研发 / SRE 联合签字 | 待指定（推荐 SRE + 研发）| 产品 + 研发 + SRE 联合评审后启用 | 待 owner 指定 |
-| 23 | **NFR 排除项重新评估机制本身** | scope-excl §4 行 19 真缺口（待 owner）| 文档写"每月 review 一次"无 owner；长期遗漏 | 待指定（推荐 测试治理 owner）| 用户对 §1.4 第 2 项决策后启动 | 待 owner 指定 |
+| 22 | **性能基线数字（CP0 对象）** | scope-excl §4 行 18（已 approved 2026-08-14）| 无 project_approved 阈值；任何阈值都需产品 / 研发 / SRE 联合签字 | SRE + 研发 | 产品 + 研发 + SRE 联合评审后启用 | 即时 ≤ 7 天 |
+| 23 | **NFR 排除项重新评估机制本身** | scope-excl §4 行 19（已 approved 2026-08-14）| 文档写"每月 review 一次"无 owner；长期遗漏 | 测试治理 owner | 用户对 §1.4 第 2 项决策后启动 | 周期 ≤ 30 天 |
 
 ## 5. 用例设计方法
 
