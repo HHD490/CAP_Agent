@@ -215,4 +215,22 @@ describe('DB-UTILS: server/utils/db.ts', () => {
     const afterReset = Number((db.prepare('SELECT COUNT(*) AS c FROM customers').get() as any).c)
     expect(afterReset).toBe(33)
   })
+
+  it('DB-013: resetDemoDatabase 在 COMMIT 失败时 ROLLBACK（不留脏数据，db.ts L295-298 容错）', () => {
+    // 触发路径：mock db.exec 让 COMMIT 抛错（模拟磁盘满 / 锁竞争 / 写盘失败）。
+    // L294 db.exec('COMMIT') 抛错 → catch 块 L296 db.exec('ROLLBACK') 撤回 DELETE+INSERT
+    // → L297 重新 throw error 给调用方。
+    const { db } = useIsolatedDb()
+    const originalExec = db.exec.bind(db)
+    let commitAttempted = false
+    let rollbackCalled = false
+    db.exec = (sql: string) => {
+      if (sql === 'COMMIT') { commitAttempted = true; throw new Error('disk full simulation') }
+      if (sql === 'ROLLBACK') rollbackCalled = true
+      return originalExec(sql)
+    }
+    expect(() => resetDemoDatabase(db)).toThrow('disk full simulation')
+    expect(commitAttempted).toBe(true)
+    expect(rollbackCalled).toBe(true)
+  })
 })

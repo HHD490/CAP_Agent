@@ -283,4 +283,41 @@ describe('AGENT-LIFECYCLE: 任务创建、状态机、停止、去重、级联',
       expect(String(row.error)).toMatch(/客户|customer|不存在/)
     })()
   })
+
+  it('AGENT-LIFE-019: runTask 中途 task 被 delete 时 updateTask 静默 return（agent.ts L199 容错）', () => {
+    // 触发路径：callModel 回调里先 DELETE task，再 return 合法 payload。
+    // L481 updateTask 走 happy path；callModel 完成后 L492/L496 updateTask 重新 SELECT 找不到 task
+    // → L199 `if (!current) return` 静默退出，不抛错。
+    const { db } = useIsolatedDb()
+    let capturedTaskId: string | null = null
+    setAgentProviderForTests(async () => {
+      // 模拟"task 在 runTask 中途被外部清理"（如后台清理/手工 SQL/测试 case 间干扰）
+      if (capturedTaskId) db.prepare('DELETE FROM agent_tasks WHERE id = ?').run(capturedTaskId)
+      return profilePayload()
+    })
+    const { task } = createAgentTask('customer_profiling', 'customer', 'customer-wca-01', { autoMatch: false })
+    capturedTaskId = task.id
+    return (async () => {
+      // L481 happy / L492 L199 / L496 L199 全部静默 return，runTask 不抛错
+      await expect(runAgentTaskNow(task.id)).resolves.toBeUndefined()
+      // task 已被回调 delete
+      const row = db.prepare('SELECT * FROM agent_tasks WHERE id = ?').get(task.id) as any
+      expect(row).toBeUndefined()
+    })()
+  })
+
+  it('AGENT-LIFE-020: runTask 收到非 Error 异常时 String(error) 分支正确序列化到 db.error（agent.ts L502）', () => {
+    // 触发路径：callModel 内 testProvider 抛 string（不是 Error 实例）。
+    // catch 块 L502 `error instanceof Error ? error.message : String(error)`
+    // 走 String 分支 → message = 'string-error-not-Error' → L504 updateTask 写入 db.error。
+    const { db } = useIsolatedDb()
+    setAgentProviderForTests((() => { throw 'string-error-not-Error' }) as any)
+    const { task } = createAgentTask('customer_profiling', 'customer', 'customer-wca-01', { autoMatch: false })
+    return (async () => {
+      await runAgentTaskNow(task.id)
+      const row = db.prepare('SELECT status, error FROM agent_tasks WHERE id = ?').get(task.id) as any
+      expect(row.status).toBe('failed')
+      expect(row.error).toBe('string-error-not-Error')
+    })()
+  })
 })
