@@ -3,7 +3,7 @@
  *   - PROCESS-001: 排除项"重新评估条件"列必非空（自动化契约测试）
  *
  * §4 当前 7 列结构（ae48726 / cc4be55 后）：
- *   col 0: #           数字编号 1-24
+ *   col 0: #           数字编号 1-23
  *   col 1: 排除项       中文名称
  *   col 2: 来源        引用出处
  *   col 3: 原因        为什么排除
@@ -52,9 +52,9 @@ describe('NFR-PROCESS: 文档契约（test-scope.md §4 排除项重新评估条
       // 列数 = 7：# / 排除项 / 来源 / 原因 / 责任人 / 重新评估条件 / 时间窗
       expect(cols.length, `§4 行 7 列：${line.slice(0, 80)}...`).toBe(7)
 
-      // col 0: # 数字编号 1-24
+      // col 0: # 数字编号 1-23
       const num = Number(cols[0])
-      expect(Number.isInteger(num) && num >= 1 && num <= 24, `# 列是 1-24 的整数：${line.slice(0, 80)}...`).toBe(true)
+      expect(Number.isInteger(num) && num >= 1 && num <= 23, `# 列是 1-23 的整数：${line.slice(0, 80)}...`).toBe(true)
 
       // col 1: 排除项 - 非空
       expect(cols[1].length, `排除项非空：${line.slice(0, 80)}...`).toBeGreaterThan(0)
