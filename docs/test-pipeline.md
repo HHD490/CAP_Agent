@@ -7,8 +7,8 @@
 ```
 ┌────────────────────┐
 │   npm test         │  ← vitest run
-│   - 33 个 test 文件 │
-│   - 556 条用例     │  ← 单测 + 集成测（不含 smoke）
+│   - 40 个 test 文件 │   (截至 2026-08-14 11:29)
+│   - 615 条用例     │  ← 单测 + 集成测（不含 smoke）
 └────────┬───────────┘
          │
          ├──→ 输出 coverage/coverage-final.json  （test:coverage）
@@ -61,14 +61,18 @@
 ### 3.2 覆盖率（test-scope-case-designer 建议）
 
 > 注：覆盖率是 **项目级 SLO**，本仓库当前未硬要求，但建议关键路径 ≥80%。
+> 数据更新时间：截至 2026-08-14 11:29（基于 `coverage/coverage-final.json` fresh 重跑）。
 
-| 模块 | 当前 | 目标 |
+| 模块 | 当前（stmt / branch） | 目标 |
 | --- | --- | --- |
-| `server/utils/agent.ts` | 90.2% line / 86.6% branch | 95% / 100% |
-| `server/api/demo/action.post.ts` | 98.0% line / 90.5% branch | 95% / 100% |
-| `server/utils/state.ts` | 99.2% / 94.5% | 95% / 100% |
-| `server/utils/website.ts` | 100% / 82.6% | 95% / 100% |
-| `pages/` / `components/` | 0%（UI 层未覆盖） | （按项目决定） |
+| `server/utils/agent.ts` | 98.3% / 88.8% | 95% / 100% |
+| `server/api/demo/action.post.ts` | 100% / 93.4% | 95% / 100% |
+| `server/utils/state.ts` | 100% / 96.4% | 95% / 100% |
+| `server/utils/website.ts` | 100% / 84.6% | 95% / 100% |
+| `composables/useDemoState.ts` | 67% / 100%（87.2% func） | 95% / 100% |
+| `pages/` / `components/` | 0% stmt（UI 层未覆盖，符合预期，**保持**） | （按项目决定） |
+| **业务代码合计** | 97.5% / 100% per test cases（91.9% func） | 95% / 100% |
+| 源文件总计（37 文件，含 .vue 0%） | 整体 stmt 42.4% / func 72.9% / branch 89.4% | — |
 
 ### 3.3 Agent 离线评测（agent-nondeterministic-evaluator）
 

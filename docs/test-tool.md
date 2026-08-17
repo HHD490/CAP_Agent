@@ -46,7 +46,7 @@
 
 | 目录 | 数量 | 类型 | 治理要求 |
 | --- | ---: | --- | --- |
-| `tests/unit/` | 19 文件 | 纯函数 + schema + 业务规则 | 必须 ≤100ms 级别；不允许起服务 |
+| `tests/unit/` | 28 文件 | 纯函数 + schema + 业务规则 | 必须 ≤100ms 级别；不允许起服务 |
 | `tests/integration/` | 5 文件 | Nitro endpoint + SQLite | 允许 `useIsolatedDb`；不允许占用 3100 端口 |
 | `tests/smoke/` | 1 文件 | Windows Nitro `nuxt dev` + `nuxt build` 实进程 | 随机 loopback 端口 + 严格进程清理；`npm run test:smoke` 单独入口 |
 | `tests/agent-evaluation/` | 1 JSON（72KB） | 离线评测数据集 | 见 `docs/agent-evaluation.md` |

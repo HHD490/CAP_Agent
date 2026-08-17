@@ -128,6 +128,7 @@
 | 21 | `customers.post.ts` L40 `domain && country ? SELECT : null` 兜底 | docs §4 8/14 二次审计新增 | 缺 domain/country 时跳过去重（业务期望"无标识就不去重"）；由 IMPORT-XLSX-020 锁定 | Mavis | 业务规则改为"严格去重"时重评 | 战略 ≤ 90 天|
 | 22 | **性能基线数字（CP0 对象）** | scope-excl §4 行 18（已 approved 2026-08-14）| 无 project_approved 阈值；任何阈值都需产品 / 研发 / SRE 联合签字 | SRE + 研发 | 产品 + 研发 + SRE 联合评审后启用 | 即时 ≤ 7 天 |
 | 23 | **NFR 排除项重新评估机制本身** | scope-excl §4 行 19（已 approved 2026-08-14）| 文档写"每月 review 一次"无 owner；长期遗漏 | 测试治理 owner | 用户对 §1.4 第 2 项决策后启动 | 周期 ≤ 30 天 |
+| 24 | `useDemoState.ts` L37 finally block v8 artifact | docs §4 8/14 二次审计 + 11/29 coverage | v8 控制流图 finally 块 reporting 偏差，实际总是执行 | Mavis | v8 升级或换 istanbul 时重评 | 战略 ≤ 90 天 |
 
 ## 5. 用例设计方法
 
