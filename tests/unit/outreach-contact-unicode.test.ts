@@ -47,7 +47,7 @@ describe('OUTREACH-CONTACT-UNICODE: Unicode/零宽/RTL/全角 bypass 真不变�
   }
 
   describe('D1 零宽字符（U+200B / U+200C / U+200D / U+FEFF）出现在 email', () => {
-    it.skip('OCU-001: zero-width space U+200B 出现在 email → 期望 false（拒绝零宽 bypass）', () => {
+    it('OCU-001: zero-width space U+200B 出现在 email → 期望 false（拒绝零宽 bypass）', () => {
       // email = "user" + U+200B + "@example.com" —— 表面看像合法邮箱，
       // 但 U+200B 是 zero-width space，下游 regex 校验 / split('@') / 显示 都可能异常
       const contact = { status: 'contactable' as const, email: 'user\u200B@example.com' }
@@ -59,7 +59,7 @@ describe('OUTREACH-CONTACT-UNICODE: Unicode/零宽/RTL/全角 bypass 真不变�
   })
 
   describe('D2 RTL 标记（U+202E）出现在 name 字段', () => {
-    it.skip('OCU-002: RTL override U+202E 出现在 name → 期望 false（拒绝身份伪装）', () => {
+    it('OCU-002: RTL override U+202E 出现在 name → 期望 false（拒绝身份伪装）', () => {
       // U+202E = Right-to-Left Override，渲染时把后续字符反序显示，
       // 攻击场景：name 字段混入 U+202E 让联系人显示成 "Admin" 实际是 "nimdA"
       // 函数签名类型是 { status?, email? }，加 name 需 as any 跳过 excess property check
@@ -76,7 +76,7 @@ describe('OUTREACH-CONTACT-UNICODE: Unicode/零宽/RTL/全角 bypass 真不变�
   })
 
   describe('D3 全角字符邮箱（U+FF20 全角 @）', () => {
-    it.skip('OCU-003: 全角 @ U+FF20 出现在 email → 期望 false（拒绝 split("@") 失败）', () => {
+    it('OCU-003: 全角 @ U+FF20 出现在 email → 期望 false（拒绝 split("@") 失败）', () => {
       // U+FF20 = FULLWIDTH COMMERCIAL AT，外形像 @ 但不是 ASCII
       // 任何 string.split('@') 都只返回 1 段，下游 mailto: 拼接会失败
       // isValidOutreachContact 当前只检查 trim().length > 0，全角 @ 不被 trim，
@@ -90,7 +90,7 @@ describe('OUTREACH-CONTACT-UNICODE: Unicode/零宽/RTL/全角 bypass 真不变�
   })
 
   describe('D4 whitespace bypass（NBSP U+00A0 前后包夹）', () => {
-    it.skip('OCU-004: 不间断空格 U+00A0 包夹 email → 期望 false（拒绝非 ASCII whitespace）', () => {
+    it('OCU-004: 不间断空格 U+00A0 包夹 email → 期望 false（拒绝非 ASCII whitespace）', () => {
       // U+00A0 = NO-BREAK SPACE，外形像空格但 trim() 在 ECMAScript spec
       // 里属于 WhiteSpace → 会被 trim 掉。所以现状是 trim 后 = "user@example.com"，
       // 长度 > 0 → true。
@@ -105,7 +105,7 @@ describe('OUTREACH-CONTACT-UNICODE: Unicode/零宽/RTL/全角 bypass 真不变�
   })
 
   describe('D5 复合攻击（零宽 + 全角 + RTL 三种 Unicode 同时出现）', () => {
-    it.skip('OCU-005: email 含 U+200B + U+FF20 + U+202E → 期望 false（拒绝复合 bypass）', () => {
+    it('OCU-005: email 含 U+200B + U+FF20 + U+202E → 期望 false（拒绝复合 bypass）', () => {
       // 复合：user + ZWSP + FULLWIDTH_AT + example + RTL_OVERRIDE + .com
       // 任何一种单独都被现状漏判（current=true），复合更应拒绝
       const contact = { status: 'contactable' as const, email: 'user\u200B\uff20example\u202E.com' }
