@@ -180,7 +180,7 @@ function getConfig(): RuntimeAgentConfig {
     modelMaxOutputTokens: Number(config.llmModelMaxOutputTokens || 32768),
     maxOutputTokens: Number(config.llmMaxOutputTokens || 65536),
     timeout: Number(config.llmTimeoutMs || 180000),
-    maxRetries: Number(config.llmMaxRetries || 2),
+    maxRetries: Number(config.llmMaxRetries != null ? config.llmMaxRetries : 2),
     temperature: Number(config.llmTemperature || 0.1)
   }
 }
@@ -371,11 +371,12 @@ function applyResult(taskId: string, mode: AgentMode, targetId: string, result: 
     db.prepare(`UPDATE customers SET customer_type = ?, ai_profile_json = ?, ai_profile_status = 'suggested', last_activity_at = ?, updated_at = ? WHERE id = ?`)
       .run(result.customer_type, JSON.stringify(profile), now, now, targetId)
     const opps = db.prepare('SELECT * FROM opportunities WHERE customer_id = ? AND status = ?').all(targetId, 'active') as any[]
+    // 事件落库顺序：先 customer-level（spec §2.7 G4：customer-level 在前），再 opp-level
+    addEvent({ customerId: targetId, type: 'profile_completed', title: 'AI 客户画像完成', description: result.summary, source: 'agent', data: { taskId, evidence: result.evidence } }, db)
     for (const opp of opps) {
       if (opp.stage < 2) db.prepare('UPDATE opportunities SET stage = 2, next_action = ?, updated_at = ? WHERE id = ?').run('等待 Agent 完成产品匹配', now, opp.id)
       addEvent({ opportunityId: opp.id, customerId: targetId, type: 'profile_completed', title: 'AI 客户画像完成', description: result.summary, source: 'agent', data: { taskId, evidence: result.evidence } }, db)
     }
-    addEvent({ customerId: targetId, type: 'profile_completed', title: 'AI 客户画像完成', description: result.summary, source: 'agent', data: { taskId, evidence: result.evidence } }, db)
   }
 
   if (mode === 'product_matching') {
@@ -471,6 +472,8 @@ async function runTask(taskId: string, config: RuntimeAgentConfig) {
   const db = getDb()
   const task = db.prepare('SELECT * FROM agent_tasks WHERE id = ?').get(taskId) as any
   if (!task || task.status === 'stopped') return
+  // 终态 dedup：任务已完成 / 失败 / 已停止，不再重复执行
+  if (task.status === 'completed' || task.status === 'failed') return
   const mode = task.mode as AgentMode
   const input = JSON.parse(task.input_json || '{}')
   try {

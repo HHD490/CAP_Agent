@@ -104,7 +104,7 @@ describe('NFR-DATA: 数据完整性（幂等 / 版本 / 事务）', () => {
 })
 
 describe('NFR-DATA-SIDE: 副作用回滚 / 任务幂等 / 版本自增 / 事件顺序', () => {
-  it('C1: 任务重复 runAgentTaskNow 仍会再次执行（PoC 缺 dedup，记录事实）', async () => {
+  it('C1: 任务重复 runAgentTaskNow 被终态 dedup 拦截（fix 后任务级幂等）', async () => {
     const { db } = useIsolatedDb()
     let callCount = 0
     setAgentProviderForTests(async () => {
@@ -130,11 +130,11 @@ describe('NFR-DATA-SIDE: 副作用回滚 / 任务幂等 / 版本自增 / 事件�
     expect(row1.status, '第 1 次 status = completed').toBe('completed')
     expect(String(row1.completed_at).length, '第 1 次 completed_at 非空').toBeGreaterThan(0)
 
-    // 第 2 次执行（PoC 无 dedup → 仍会执行；spec 期望 dedup 是 §2.5 缺口 C）
+    // 第 2 次执行：fix 后 runTask 入口终态 dedup 拦截，不再调 provider（spec §2.5 缺口 C）
     await runAgentTaskNow(task.id)
-    expect(callCount, '第 2 次仍执行（PoC 缺 dedup，callCount=2）').toBe(2)
+    expect(callCount, '第 2 次被 dedup 拦截，callCount 仍 = 1').toBe(1)
     const row2 = db.prepare('SELECT status FROM agent_tasks WHERE id = ?').get(task.id) as any
-    expect(row2.status, '第 2 次 status 仍 = completed').toBe('completed')
+    expect(row2.status, '第 2 次 status 仍 = completed（终态不变）').toBe('completed')
   })
 
   it('C2: applyAgentResult 中途失败（addEvent 抛错）→ 事务回滚，events 无新增', () => {
@@ -190,7 +190,7 @@ describe('NFR-DATA-SIDE: 副作用回滚 / 任务幂等 / 版本自增 / 事件�
     expect(after, 'profile_version = before + 100（无跳号、无丢失）').toBe(before + 100)
   })
 
-  it('C4: applyAgentResult 事件落库顺序（PoC 当前 opp-level 先、customer-level 后）', () => {
+  it('C4: applyAgentResult 事件落库顺序（fix 后 customer-level 先、opp-level 后，符合 spec §2.7 G4）', () => {
     const { db } = useIsolatedDb()
     // customer-wca-02 有 1 个 active opp = opp-02（status="active"）
     applyAgentResult('task-c4', 'customer_profiling', 'customer-wca-02', {
@@ -219,11 +219,11 @@ describe('NFR-DATA-SIDE: 副作用回滚 / 任务幂等 / 版本自增 / 事件�
     expect(oppLevel.length, '1 个 opp-level event (opportunity_id=opp-02)').toBe(1)
     expect(custLevel.length, '1 个 customer-level event (opportunity_id="")').toBe(1)
 
-    // PoC 实际顺序：opp-level 先插入（rowid 较小），customer-level 后插入（rowid 较大）
-    // spec §2.7 缺口 G4：期望 customer-level 在前（PoC 反之，记录事实）
+    // fix 后顺序：customer-level 先插入（rowid 较小），opp-level 后插入（rowid 较大）
+    // spec §2.7 G4：期望 customer-level 在前（已对齐 spec）
     const oppRowid = Number(oppLevel[0].rowid)
     const custRowid = Number(custLevel[0].rowid)
-    expect(oppRowid < custRowid, 'PoC 当前顺序：opp-level rowid < customer-level rowid（与 spec §2.7 缺口 G4 配套）').toBe(true)
+    expect(custRowid < oppRowid, 'fix 后顺序：customer-level rowid < opp-level rowid（spec §2.7 G4）').toBe(true)
   })
 
   it('C5: 任务失败后 agent_tasks.error 字段含可定位字符串', async () => {
