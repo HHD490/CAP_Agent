@@ -37,13 +37,13 @@ vi.mock('openai', () => ({
                   reject(new Error('Request was aborted due to timeout'))
                 }, this.timeoutMs)
                 createMock(request).then(
-                  (value) => {
+                  (value: unknown) => {
                     if (settled) return
                     settled = true
                     clearTimeout(timer)
                     resolve(value)
                   },
-                  (err) => {
+                  (err: unknown) => {
                     if (settled) return
                     settled = true
                     clearTimeout(timer)
