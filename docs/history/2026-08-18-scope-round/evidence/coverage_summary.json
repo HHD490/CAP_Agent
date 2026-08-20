@@ -1,0 +1,465 @@
+{
+  "files": [
+    {
+      "path": "D:\\by56_CAP_Agent\\shared\\types.ts",
+      "stmts": "0/0 (0.0%)",
+      "branches": "1/1 (100.0%)",
+      "fns": "1/1 (100.0%)",
+      "stmts_uncovered_count": 0,
+      "branches_uncovered_count": 0
+    },
+    {
+      "path": "D:\\by56_CAP_Agent\\composables\\useDemoState.ts",
+      "stmts": "61/91 (67.0%)",
+      "branches": "34/39 (87.2%)",
+      "fns": "6/6 (100.0%)",
+      "stmts_uncovered_count": 30,
+      "branches_uncovered_count": 5
+    },
+    {
+      "path": "D:\\by56_CAP_Agent\\server\\utils\\agent.ts",
+      "stmts": "460/468 (98.3%)",
+      "branches": "171/190 (90.0%)",
+      "fns": "19/19 (100.0%)",
+      "stmts_uncovered_count": 8,
+      "branches_uncovered_count": 19
+    },
+    {
+      "path": "D:\\by56_CAP_Agent\\server\\api\\state.get.ts",
+      "stmts": "2/2 (100.0%)",
+      "branches": "1/1 (100.0%)",
+      "fns": "0/0 (0.0%)",
+      "stmts_uncovered_count": 0,
+      "branches_uncovered_count": 0
+    },
+    {
+      "path": "D:\\by56_CAP_Agent\\server\\api\\agent\\tasks.post.ts",
+      "stmts": "12/12 (100.0%)",
+      "branches": "1/1 (100.0%)",
+      "fns": "0/0 (0.0%)",
+      "stmts_uncovered_count": 0,
+      "branches_uncovered_count": 0
+    },
+    {
+      "path": "D:\\by56_CAP_Agent\\server\\api\\agent\\tasks\\[id]\\stop.post.ts",
+      "stmts": "2/2 (100.0%)",
+      "branches": "2/2 (100.0%)",
+      "fns": "0/0 (0.0%)",
+      "stmts_uncovered_count": 0,
+      "branches_uncovered_count": 0
+    },
+    {
+      "path": "D:\\by56_CAP_Agent\\server\\api\\demo\\action.post.ts",
+      "stmts": "201/201 (100.0%)",
+      "branches": "142/152 (93.4%)",
+      "fns": "0/0 (0.0%)",
+      "stmts_uncovered_count": 0,
+      "branches_uncovered_count": 10
+    },
+    {
+      "path": "D:\\by56_CAP_Agent\\server\\api\\demo\\advance-time.post.ts",
+      "stmts": "35/35 (100.0%)",
+      "branches": "12/12 (100.0%)",
+      "fns": "0/0 (0.0%)",
+      "stmts_uncovered_count": 0,
+      "branches_uncovered_count": 0
+    },
+    {
+      "path": "D:\\by56_CAP_Agent\\server\\api\\demo\\reset.post.ts",
+      "stmts": "6/6 (100.0%)",
+      "branches": "1/1 (100.0%)",
+      "fns": "0/0 (0.0%)",
+      "stmts_uncovered_count": 0,
+      "branches_uncovered_count": 0
+    },
+    {
+      "path": "D:\\by56_CAP_Agent\\server\\api\\import\\customers.post.ts",
+      "stmts": "50/50 (100.0%)",
+      "branches": "52/54 (96.3%)",
+      "fns": "0/0 (0.0%)",
+      "stmts_uncovered_count": 0,
+      "branches_uncovered_count": 2
+    },
+    {
+      "path": "D:\\by56_CAP_Agent\\server\\api\\website\\identity.post.ts",
+      "stmts": "64/64 (100.0%)",
+      "branches": "23/26 (88.5%)",
+      "fns": "0/0 (0.0%)",
+      "stmts_uncovered_count": 0,
+      "branches_uncovered_count": 3
+    },
+    {
+      "path": "D:\\by56_CAP_Agent\\server\\api\\website\\quote.post.ts",
+      "stmts": "41/41 (100.0%)",
+      "branches": "11/11 (100.0%)",
+      "fns": "0/0 (0.0%)",
+      "stmts_uncovered_count": 0,
+      "branches_uncovered_count": 0
+    },
+    {
+      "path": "D:\\by56_CAP_Agent\\server\\api\\website\\rematch.post.ts",
+      "stmts": "38/38 (100.0%)",
+      "branches": "5/6 (83.3%)",
+      "fns": "0/0 (0.0%)",
+      "stmts_uncovered_count": 0,
+      "branches_uncovered_count": 1
+    },
+    {
+      "path": "D:\\by56_CAP_Agent\\server\\utils\\contact.ts",
+      "stmts": "5/5 (100.0%)",
+      "branches": "8/8 (100.0%)",
+      "fns": "1/1 (100.0%)",
+      "stmts_uncovered_count": 0,
+      "branches_uncovered_count": 0
+    },
+    {
+      "path": "D:\\by56_CAP_Agent\\server\\utils\\db.ts",
+      "stmts": "317/317 (100.0%)",
+      "branches": "71/75 (94.7%)",
+      "fns": "14/14 (100.0%)",
+      "stmts_uncovered_count": 0,
+      "branches_uncovered_count": 4
+    },
+    {
+      "path": "D:\\by56_CAP_Agent\\server\\utils\\state.ts",
+      "stmts": "238/238 (100.0%)",
+      "branches": "53/55 (96.4%)",
+      "fns": "9/9 (100.0%)",
+      "stmts_uncovered_count": 0,
+      "branches_uncovered_count": 2
+    },
+    {
+      "path": "D:\\by56_CAP_Agent\\server\\utils\\website.ts",
+      "stmts": "52/52 (100.0%)",
+      "branches": "22/26 (84.6%)",
+      "fns": "1/1 (100.0%)",
+      "stmts_uncovered_count": 0,
+      "branches_uncovered_count": 4
+    },
+    {
+      "path": "D:\\by56_CAP_Agent\\utils\\opportunity.ts",
+      "stmts": "11/11 (100.0%)",
+      "branches": "0/0 (0.0%)",
+      "fns": "0/0 (0.0%)",
+      "stmts_uncovered_count": 0,
+      "branches_uncovered_count": 0
+    }
+  ],
+  "uncovered_lines": {
+    "D:\\by56_CAP_Agent\\composables\\useDemoState.ts": {
+      "stmts_uncovered": [
+        "L17",
+        "L18",
+        "L19",
+        "L20",
+        "L21",
+        "L22",
+        "L23",
+        "L24",
+        "L25",
+        "L26",
+        "L81",
+        "L82",
+        "L83",
+        "L85",
+        "L86",
+        "L87",
+        "L88",
+        "L89",
+        "L90",
+        "L91",
+        "L92",
+        "L93",
+        "L94",
+        "L95",
+        "L96",
+        "L100",
+        "L101",
+        "L102",
+        "L103",
+        "L104"
+      ],
+      "stmts_uncovered_count": 30,
+      "branches_uncovered": [
+        "L80",
+        "L80",
+        "L16",
+        "L35",
+        "L37"
+      ],
+      "branches_uncovered_count": 5,
+      "pct_stmts": 67.03296703296702,
+      "pct_branches": 87.17948717948718,
+      "pct_fns": 100.0,
+      "total_stmts": 91,
+      "total_branches": 39,
+      "total_fns": 6
+    },
+    "D:\\by56_CAP_Agent\\server\\api\\state.get.ts": {
+      "stmts_uncovered": [],
+      "stmts_uncovered_count": 0,
+      "branches_uncovered": [],
+      "branches_uncovered_count": 0,
+      "pct_stmts": 100.0,
+      "pct_branches": 100.0,
+      "pct_fns": 0.0,
+      "total_stmts": 2,
+      "total_branches": 1,
+      "total_fns": 0
+    },
+    "D:\\by56_CAP_Agent\\server\\api\\agent\\tasks.post.ts": {
+      "stmts_uncovered": [],
+      "stmts_uncovered_count": 0,
+      "branches_uncovered": [],
+      "branches_uncovered_count": 0,
+      "pct_stmts": 100.0,
+      "pct_branches": 100.0,
+      "pct_fns": 0.0,
+      "total_stmts": 12,
+      "total_branches": 1,
+      "total_fns": 0
+    },
+    "D:\\by56_CAP_Agent\\server\\api\\agent\\tasks\\[id]\\stop.post.ts": {
+      "stmts_uncovered": [],
+      "stmts_uncovered_count": 0,
+      "branches_uncovered": [],
+      "branches_uncovered_count": 0,
+      "pct_stmts": 100.0,
+      "pct_branches": 100.0,
+      "pct_fns": 0.0,
+      "total_stmts": 2,
+      "total_branches": 2,
+      "total_fns": 0
+    },
+    "D:\\by56_CAP_Agent\\server\\api\\demo\\action.post.ts": {
+      "stmts_uncovered": [],
+      "stmts_uncovered_count": 0,
+      "branches_uncovered": [
+        "L21",
+        "L22",
+        "L31",
+        "L49",
+        "L49",
+        "L50",
+        "L60",
+        "L79",
+        "L93",
+        "L116"
+      ],
+      "branches_uncovered_count": 10,
+      "pct_stmts": 100.0,
+      "pct_branches": 93.42105263157895,
+      "pct_fns": 0.0,
+      "total_stmts": 201,
+      "total_branches": 152,
+      "total_fns": 0
+    },
+    "D:\\by56_CAP_Agent\\server\\api\\demo\\advance-time.post.ts": {
+      "stmts_uncovered": [],
+      "stmts_uncovered_count": 0,
+      "branches_uncovered": [],
+      "branches_uncovered_count": 0,
+      "pct_stmts": 100.0,
+      "pct_branches": 100.0,
+      "pct_fns": 0.0,
+      "total_stmts": 35,
+      "total_branches": 12,
+      "total_fns": 0
+    },
+    "D:\\by56_CAP_Agent\\server\\api\\demo\\reset.post.ts": {
+      "stmts_uncovered": [],
+      "stmts_uncovered_count": 0,
+      "branches_uncovered": [],
+      "branches_uncovered_count": 0,
+      "pct_stmts": 100.0,
+      "pct_branches": 100.0,
+      "pct_fns": 0.0,
+      "total_stmts": 6,
+      "total_branches": 1,
+      "total_fns": 0
+    },
+    "D:\\by56_CAP_Agent\\server\\api\\import\\customers.post.ts": {
+      "stmts_uncovered": [],
+      "stmts_uncovered_count": 0,
+      "branches_uncovered": [
+        "L18",
+        "L20"
+      ],
+      "branches_uncovered_count": 2,
+      "pct_stmts": 100.0,
+      "pct_branches": 96.29629629629629,
+      "pct_fns": 0.0,
+      "total_stmts": 50,
+      "total_branches": 54,
+      "total_fns": 0
+    },
+    "D:\\by56_CAP_Agent\\server\\api\\website\\identity.post.ts": {
+      "stmts_uncovered": [],
+      "stmts_uncovered_count": 0,
+      "branches_uncovered": [
+        "L20",
+        "L27",
+        "L42"
+      ],
+      "branches_uncovered_count": 3,
+      "pct_stmts": 100.0,
+      "pct_branches": 88.46153846153845,
+      "pct_fns": 0.0,
+      "total_stmts": 64,
+      "total_branches": 26,
+      "total_fns": 0
+    },
+    "D:\\by56_CAP_Agent\\server\\api\\website\\quote.post.ts": {
+      "stmts_uncovered": [],
+      "stmts_uncovered_count": 0,
+      "branches_uncovered": [],
+      "branches_uncovered_count": 0,
+      "pct_stmts": 100.0,
+      "pct_branches": 100.0,
+      "pct_fns": 0.0,
+      "total_stmts": 41,
+      "total_branches": 11,
+      "total_fns": 0
+    },
+    "D:\\by56_CAP_Agent\\server\\api\\website\\rematch.post.ts": {
+      "stmts_uncovered": [],
+      "stmts_uncovered_count": 0,
+      "branches_uncovered": [
+        "L31"
+      ],
+      "branches_uncovered_count": 1,
+      "pct_stmts": 100.0,
+      "pct_branches": 83.33333333333334,
+      "pct_fns": 0.0,
+      "total_stmts": 38,
+      "total_branches": 6,
+      "total_fns": 0
+    },
+    "D:\\by56_CAP_Agent\\server\\utils\\agent.ts": {
+      "stmts_uncovered": [
+        "L216",
+        "L217",
+        "L218",
+        "L348",
+        "L349",
+        "L350",
+        "L523",
+        "L524"
+      ],
+      "stmts_uncovered_count": 8,
+      "branches_uncovered": [
+        "L203",
+        "L205",
+        "L215",
+        "L240",
+        "L241",
+        "L242",
+        "L279",
+        "L280",
+        "L285",
+        "L286",
+        "L287",
+        "L291",
+        "L253",
+        "L254",
+        "L255",
+        "L347",
+        "L351",
+        "L475",
+        "L522"
+      ],
+      "branches_uncovered_count": 19,
+      "pct_stmts": 98.29059829059828,
+      "pct_branches": 90.0,
+      "pct_fns": 100.0,
+      "total_stmts": 468,
+      "total_branches": 190,
+      "total_fns": 19
+    },
+    "D:\\by56_CAP_Agent\\server\\utils\\contact.ts": {
+      "stmts_uncovered": [],
+      "stmts_uncovered_count": 0,
+      "branches_uncovered": [],
+      "branches_uncovered_count": 0,
+      "pct_stmts": 100.0,
+      "pct_branches": 100.0,
+      "pct_fns": 100.0,
+      "total_stmts": 5,
+      "total_branches": 8,
+      "total_fns": 1
+    },
+    "D:\\by56_CAP_Agent\\server\\utils\\db.ts": {
+      "stmts_uncovered": [],
+      "stmts_uncovered_count": 0,
+      "branches_uncovered": [
+        "L193",
+        "L206",
+        "L246",
+        "L246"
+      ],
+      "branches_uncovered_count": 4,
+      "pct_stmts": 100.0,
+      "pct_branches": 94.66666666666667,
+      "pct_fns": 100.0,
+      "total_stmts": 317,
+      "total_branches": 75,
+      "total_fns": 14
+    },
+    "D:\\by56_CAP_Agent\\server\\utils\\state.ts": {
+      "stmts_uncovered": [],
+      "stmts_uncovered_count": 0,
+      "branches_uncovered": [
+        "L5",
+        "L98"
+      ],
+      "branches_uncovered_count": 2,
+      "pct_stmts": 100.0,
+      "pct_branches": 96.36363636363636,
+      "pct_fns": 100.0,
+      "total_stmts": 238,
+      "total_branches": 55,
+      "total_fns": 9
+    },
+    "D:\\by56_CAP_Agent\\server\\utils\\website.ts": {
+      "stmts_uncovered": [],
+      "stmts_uncovered_count": 0,
+      "branches_uncovered": [
+        "L16",
+        "L17",
+        "L18",
+        "L23"
+      ],
+      "branches_uncovered_count": 4,
+      "pct_stmts": 100.0,
+      "pct_branches": 84.61538461538461,
+      "pct_fns": 100.0,
+      "total_stmts": 52,
+      "total_branches": 26,
+      "total_fns": 1
+    },
+    "D:\\by56_CAP_Agent\\shared\\types.ts": {
+      "stmts_uncovered": [],
+      "stmts_uncovered_count": 0,
+      "branches_uncovered": [],
+      "branches_uncovered_count": 0,
+      "pct_stmts": 0.0,
+      "pct_branches": 100.0,
+      "pct_fns": 100.0,
+      "total_stmts": 0,
+      "total_branches": 1,
+      "total_fns": 1
+    },
+    "D:\\by56_CAP_Agent\\utils\\opportunity.ts": {
+      "stmts_uncovered": [],
+      "stmts_uncovered_count": 0,
+      "branches_uncovered": [],
+      "branches_uncovered_count": 0,
+      "pct_stmts": 100.0,
+      "pct_branches": 0.0,
+      "pct_fns": 0.0,
+      "total_stmts": 11,
+      "total_branches": 0,
+      "total_fns": 0
+    }
+  }
+}
