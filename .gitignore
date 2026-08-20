@@ -20,3 +20,9 @@ coverage/
 
 # 一次性问题定位报告（不入仓）
 /CAP_Agent_问题定位报告_*.html
+
+# 一次性调试 stdout/stderr（vitest/coverage 烟囱 + scope 评估目录；不重写 coverage/）
+.tmp_*.log
+.tmp_scope_eval/
+vitest-*.log
+coverage_fresh_*
