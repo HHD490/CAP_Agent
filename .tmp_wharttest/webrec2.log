@@ -1,0 +1,20 @@
+﻿
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mD:/by56_CAP_Agent[39m
+
+ [32m✓[39m tests/unit/website-recommendations.test.ts[2m > [22mWEBSITE-RECOMMEND: deterministic recommendation rules[2m > [22mWEB-REC-001: only published products are returned, sorted by score, capped at Top 3[32m 106[2mms[22m[39m
+ [32m✓[39m tests/unit/website-recommendations.test.ts[2m > [22mWEBSITE-RECOMMEND: deterministic recommendation rules[2m > [22mWEB-REC-002: Chinese destination city is normalized to its country for route matching[32m 90[2mms[22m[39m
+ [32m✓[39m tests/unit/website-recommendations.test.ts[2m > [22mWEBSITE-RECOMMEND: deterministic recommendation rules[2m > [22mWEB-REC-003: cargo and battery capability bonuses accumulate and score is capped at 98[32m 87[2mms[22m[39m
+ [32m✓[39m tests/unit/website-recommendations.test.ts[2m > [22mWEBSITE-RECOMMEND: deterministic recommendation rules[2m > [22mWEB-REC-004: time, sea-volume, and large-shipment bonuses follow their boundaries[32m 95[2mms[22m[39m
+ [32m✓[39m tests/unit/website-recommendations.test.ts[2m > [22mWEBSITE-RECOMMEND: deterministic recommendation rules[2m > [22mWEB-REC-005: unmatched product exposes stable fallback evidence and quote metadata[32m 84[2mms[22m[39m
+ [32m✓[39m tests/unit/website-recommendations.test.ts[2m > [22mWEBSITE-RECOMMEND: deterministic recommendation rules[2m > [22mWEB-REC-006: empty products table → returns [] (no crash, no fallback)[32m 84[2mms[22m[39m
+ [32m✓[39m tests/unit/website-recommendations.test.ts[2m > [22mWEBSITE-RECOMMEND: deterministic recommendation rules[2m > [22mWEB-REC-007: no published products → returns [] (only published are visible)[32m 92[2mms[22m[39m
+ [32m✓[39m tests/unit/website-recommendations.test.ts[2m > [22mWEBSITE-RECOMMEND: deterministic recommendation rules[2m > [22mWEB-REC-008: all 5 bonus paths stacking on one product → score capped at 98[32m 87[2mms[22m[39m
+ [32m✓[39m tests/unit/website-recommendations.test.ts[2m > [22mWEBSITE-RECOMMEND: deterministic recommendation rules[2m > [22mWEB-REC-009: destination outside cityCountryMap and no route match → only base 52[32m 83[2mms[22m[39m
+ [32m✓[39m tests/unit/website-recommendations.test.ts[2m > [22mWEBSITE-RECOMMEND: deterministic recommendation rules[2m > [22mWEB-REC-010: identical scores preserve insertion order (stable sort)[32m 89[2mms[22m[39m
+ [32m✓[39m tests/unit/website-recommendations.test.ts[2m > [22mWEBSITE-RECOMMEND: deterministic recommendation rules[2m > [22mWEB-REC-011: weight/volume boundary at exactly 500 kg / 3 cbm still triggers the bonus[32m 91[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m11 passed[39m[22m[90m (11)[39m
+[2m   Start at [22m 14:39:45
+[2m   Duration [22m 1.81s[2m (transform 164ms, setup 36ms, collect 297ms, tests 989ms, environment 0ms, prepare 114ms)[22m
+

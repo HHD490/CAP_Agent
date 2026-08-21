@@ -1,0 +1,14 @@
+feat(agent-eval): runner 改进：剥 think 块 + 高风险逐条报告
+
+改进：
+- 提取 JSON 策略：先剥 <think>...</think>（reasoning model 习惯在 JSON 前先思考），再剥外层 code fence，再找最外层 {}
+- 失败 fallback：再找下一个 { 试一次
+- 报存 rawContent 到 sample（debug 排查 JSON 解析失败用）
+- 检测空 response（finish_reason 截断/拒绝/安全过滤）
+
+报告增强（用户选 report_mode_opt2）：
+- 在 9 项阈值表后加高风险用例逐条结果章节
+- 每条高风险用例：verdict（通过/部分/全败）+ 每样本 verdict/latency/tokens + 关键字段截 280 字
+- 强调：高风险每次有效运行必须通过（spec_hard_gate），不允许被平均
+
+回归：10 case x 3 sample 跑通，28/30 passed，2/30 tech err（LLM 真实 JSON 语法错误）。

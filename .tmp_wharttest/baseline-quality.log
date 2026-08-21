@@ -1,0 +1,112 @@
+npm notice run test:quality
+npm notice run npm run typecheck && npm test && npm run test:agent-eval
+npm notice run typecheck
+npm notice run nuxt typecheck
+npm notice run test
+npm notice run vitest run
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mD:/by56_CAP_Agent[39m
+
+ [32m✓[39m tests/integration/nfr-evidence.test.ts [2m([22m[2m21 tests[22m[2m)[22m[33m 2707[2mms[22m[39m
+   [33m[2m✓[22m[39m NFR-PERF-EXT: 性能域扩展（SCOPE-NFR-2026-08-11 representative_cases）[2m > [22mPERF-001: GET /api/state 100 次 p50/p95/p99 全分布（spec_default: p95<100ms / p99<200ms） [33m 403[2mms[22m[39m
+   [33m[2m✓[22m[39m NFR-PERF-EXT: 性能域扩展（SCOPE-NFR-2026-08-11 representative_cases）[2m > [22mPERF-004: 阶梯并发 5/10/20 demo action accept_match（错误率<1%, p95 ≤ 2× 单线程） [33m 309[2mms[22m[39m
+   [33m[2m✓[22m[39m NFR-PERF-EXT: 性能域扩展（SCOPE-NFR-2026-08-11 representative_cases）[2m > [22mPERF-005: Provider 调用计数 5 mode × 10 次 → call_count=50（spec_default 无重试） [33m 533[2mms[22m[39m
+ [32m✓[39m tests/unit/demo-actions-workflow.test.ts [2m([22m[2m41 tests[22m[2m)[22m[33m 1848[2mms[22m[39m
+ [32m✓[39m tests/integration/website-journey.test.ts [2m([22m[2m35 tests[22m[2m)[22m[33m 1588[2mms[22m[39m
+ [32m✓[39m tests/unit/state-endpoint.test.ts [2m([22m[2m30 tests[22m[2m)[22m[33m 1772[2mms[22m[39m
+ [32m✓[39m tests/integration/import-xlsx.test.ts [2m([22m[2m18 tests[22m[2m)[22m[33m 1377[2mms[22m[39m
+ [32m✓[39m tests/integration/nfr-resilience.test.ts [2m([22m[2m25 tests[22m[2m)[22m[33m 1333[2mms[22m[39m
+ [32m✓[39m tests/unit/agent-context-and-result.test.ts [2m([22m[2m33 tests[22m[2m)[22m[33m 1537[2mms[22m[39m
+ [32m✓[39m tests/unit/state-website-coverage.test.ts [2m([22m[2m25 tests[22m[2m)[22m[33m 1064[2mms[22m[39m
+(node:9808) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ [32m✓[39m tests/unit/smoke-entry.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 1800[2mms[22m[39m
+   [33m[2m✓[22m[39m SMOKE-ENTRY: discoverable Windows Nitro smoke commands[2m > [22mSMOKE-ENTRY-001: vitest.smoke.config.ts discovers at least two smoke tests [33m 1798[2mms[22m[39m
+ [32m✓[39m tests/unit/agent-lifecycle.test.ts [2m([22m[2m18 tests[22m[2m)[22m[33m 1080[2mms[22m[39m
+ [32m✓[39m tests/integration/nfr-security.test.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 805[2mms[22m[39m
+ [32m✓[39m tests/unit/agent-reply-qualification.test.ts [2m([22m[2m15 tests[22m[2m)[22m[33m 890[2mms[22m[39m
+ [32m✓[39m tests/integration/demo-action-residual-branches.test.ts [2m([22m[2m17 tests[22m[2m)[22m[33m 752[2mms[22m[39m
+ [32m✓[39m tests/unit/parse-json-response.test.ts [2m([22m[2m16 tests[22m[2m)[22m[33m 851[2mms[22m[39m
+ [32m✓[39m tests/integration/agent-tasks-endpoint.test.ts [2m([22m[2m19 tests[22m[2m)[22m[33m 1113[2mms[22m[39m
+ [32m✓[39m tests/unit/agent-edge-cases.test.ts [2m([22m[2m16 tests[22m[2m)[22m[33m 786[2mms[22m[39m
+ [32m✓[39m tests/integration/nfr-cost.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 694[2mms[22m[39m
+   [33m[2m✓[22m[39m NFR-COST: 成本（Provider 调用计数 / 缓存命中）[2m > [22mCOST-001: Provider 调用计数 5 mode × 10 次 → call_count=50（spec_default 无重试） [33m 629[2mms[22m[39m
+ [32m✓[39m tests/unit/advance-time-reminders.test.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 661[2mms[22m[39m
+ [32m✓[39m tests/unit/outreach-contact.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 521[2mms[22m[39m
+ [32m✓[39m tests/unit/db-utils.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 561[2mms[22m[39m
+ [32m✓[39m tests/unit/agent-tasks-edge.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 466[2mms[22m[39m
+ [32m✓[39m tests/unit/website-recommendations.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 454[2mms[22m[39m
+ [32m✓[39m tests/unit/legacy-publish.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 328[2mms[22m[39m
+ [32m✓[39m tests/unit/profile-type.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 349[2mms[22m[39m
+ [32m✓[39m tests/unit/mark-non-accepted-matches-stale.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 379[2mms[22m[39m
+ [32m✓[39m tests/unit/handoff-legacy.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 279[2mms[22m[39m
+ [32m✓[39m tests/integration/rematch-identity-stale.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 275[2mms[22m[39m
+ [32m✓[39m tests/unit/agent-callmodel-real.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 266[2mms[22m[39m
+ [32m✓[39m tests/unit/handoff-contract.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 252[2mms[22m[39m
+ [32m✓[39m tests/integration/demo-action-stale.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 211[2mms[22m[39m
+ [32m✓[39m tests/integration/nfr-observ.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 189[2mms[22m[39m
+ [32m✓[39m tests/unit/demo-reset.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 152[2mms[22m[39m
+ [32m✓[39m tests/integration/nfr-data.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 147[2mms[22m[39m
+ [32m✓[39m tests/unit/product-publish.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 147[2mms[22m[39m
+ [32m✓[39m tests/unit/agent-evaluation.test.ts [2m([22m[2m14 tests[22m[2m)[22m[32m 29[2mms[22m[39m
+ [32m✓[39m tests/unit/agent-schemas.test.ts [2m([22m[2m87 tests[22m[2m)[22m[32m 25[2mms[22m[39m
+ [32m✓[39m tests/unit/use-demo-state.test.ts [2m([22m[2m31 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m tests/unit/opportunity-stages.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 4[2mms[22m[39m
+ [32m✓[39m tests/unit/is-valid-outreach-contact.test.ts [2m([22m[2m20 tests[22m[2m)[22m[32m 3[2mms[22m[39m
+ [32m✓[39m tests/unit/doc-contracts.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 3[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m40 passed[39m[22m[90m (40)[39m
+[2m      Tests [22m [1m[32m615 passed[39m[22m[90m (615)[39m
+[2m   Start at [22m 15:09:06
+[2m   Duration [22m 40.31s[2m (transform 451ms, setup 116ms, collect 3.60s, tests 27.71s, environment 5ms, prepare 2.54s)[22m
+
+npm notice run test:agent-eval
+npm notice run node scripts/agent-eval-report.mjs --check
+# Agent 离线评测报告
+
+生成时间：2026-08-14T07:09:47.704Z
+测试集版本：v1.0
+测试集路径：tests/agent-evaluation/core-regression.json
+
+## 总览
+
+- **总用例数**：100
+- **覆盖模式**：5 / 5（customer_profiling, product_matching, outreach_drafting, reply_qualification, handoff_summary）
+- **高风险用例**：60
+- **采样 <3 次的用例**：0
+
+## 各模式覆盖
+
+| Mode | 用例数 | 高风险 | 低风险 | 反例 | 一致性 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| customer_profiling | 20 | 5 | 7 | 1 | 5 |
+| product_matching | 20 | 15 | 4 | 3 | 12 |
+| outreach_drafting | 20 | 13 | 3 | 5 | 8 |
+| reply_qualification | 20 | 14 | 3 | 1 | 13 |
+| handoff_summary | 20 | 13 | 7 | 6 | 7 |
+
+## 通过率阈值（来自 agent-nondeterministic-evaluator skill）
+
+| 维度 | 目标 | 最低 | 说明 |
+| --- | ---: | ---: | --- |
+| 实体抽取准确率 | 98% | 95% | 核心实体必须 100% 命中，缺少字段直接判失败 |
+| 指令遵循/约束满足 | 95% | 85% | evidence 必填，hard_blockers 不允许被掩盖，required 字段缺失直接失败 |
+| 计算正确性 | 100% | 100% | 数值/计算 100% 命中，允许的浮点误差 ≤0.01 |
+| 推荐合理性 | 95% | 90% | 命中规则/候选集合比例 |
+| 输出格式遵循 | 100% | 98% | JSON Schema 100% 通过 |
+| 鲁棒性 | 90% | 85% | 缺省/错别字/噪声输入应被正确处理或友好拒绝 |
+| 一致性差异 | 95% | 90% | 同输入多次采样关键字段差异 ≤5% |
+| 幻觉错误率 | 99% | 95% | 幻觉样本 ≤1%（人工抽检） |
+| 安全拒绝 | 100% | 100% | 对抗/越狱/越权必须 100% 拒绝 |
+
+## 校验结果
+
+✅ 所有结构 / 阈值 / 用例数量校验通过
+
+## 后续动作
+
+1. 在 CI 中运行 `node scripts/agent-eval-report.mjs --check` 作为护栏
+2. 接入真实模型后，每版生成 `tests/agent-evaluation/baselines/<version>.json`
+3. 与基线对比：核心指标恶化 >10% 触发专项评审
+4. 人工抽检 ≥10% 复杂语义用例，结果与自动指标分开记录
+exit=0

@@ -1,0 +1,12 @@
+chore(git): 补全 .gitignore 覆盖 IDE/烟囱/coverage/HTML 报告
+
+之前 6 行 .gitignore 漏掉 4 类本地产物:
+- .cursor/  (IDE)
+- .codex_spreadsheet_analysis/  (codex 工具产物)
+- coverage/  (vitest --coverage 报告)
+- .tmp_wharttest/  (烟囱 log, runner 临时文件)
+- /CAP_Agent_问题定位报告_*.html  (一次性报告)
+
+.env / node_modules / .nuxt / data/*.sqlite* / .DS_Store 已正确忽略 (line 1-6).
+
+本 commit 仅整理 git 卫生. 后续 7 commit (本轮 4 维度产出) 一起 push.

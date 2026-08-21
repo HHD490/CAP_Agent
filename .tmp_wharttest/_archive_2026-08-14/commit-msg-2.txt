@@ -1,0 +1,26 @@
+test(scope): 补 callModel 真 API 路径契约 4 case + 5 项排除项登记
+
+- 新建 tests/unit/agent-callmodel-real.test.ts (4 cases)
+  - REAL-001: openai-compatible 模式 → request 含 response_format=json_object + temperature
+  - REAL-002: deepseek + thinking=enabled → request 含 thinking + reasoning_effort，不发 response_format
+  - REAL-003: response.finish_reason="length" → task=failed + error 含 "模型输出达到长度上限"
+  - REAL-004: response.choices[0].message.content 为 null → task=failed + error 含 "没有返回业务结果"
+  - 真不变量（coverage-final.json 实测 0 覆盖）：
+    - agent.ts L324-340：构造 OpenAI client + 请求体（deepseek vs openai-compatible 分支）
+    - agent.ts L343-344：response 错误处理（空 content / finish_reason=length）
+  - 实现：vi.mock('openai') + vi.hoisted 隔离副作用；不走 testProvider
+
+- docs/test-scope.md 更新（按 docs/INDEX.md "5 skills" 约定，不新建文档）
+  - §3 测试范围清单 +1 行：callModel 真 API 路径契约，4 用例
+  - §4 排除项与假设 +5 行：前端 Vue SFC / useDemoState 客户端副作用 / systemPrompt / setTimeout 调度 / parseJsonResponse Array 分支
+  - §6 数字：609 → 613；测试文件 39 → 40；新增 8/14 changelog 注脚
+
+依据：用户 9:46 决策 commit + push 到 codex/AHa-testing；
+      用户 9:49 复审"可以再斟酌斟酌" → 触发新审视"凭感觉 vs 证据"差异
+      → 实地看 coverage-final.json 发现 L324-344 真未覆盖
+      → 补 4 case 锁住 API 契约（用户配 deepseek / openai 行为不再无锁）
+
+不动 main；agent.ts L300-311（systemPrompt）/ L523-524（setTimeout 调度）/
+防御性 ?? 兜底（L199/203/205/240-242/253-255/279-280/285-287/291）等仍
+未直接覆盖的部分按 §4 排除项依据记录，剩余风险 = 0（已由现有大量业务测试
+间接锁、或为 test-only 工具函数、或为死分支被 PJR-014 锁定）。

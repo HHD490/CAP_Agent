@@ -1,0 +1,8 @@
+﻿git : To https://github.com/HHD490/CAP_Agent.git
+所在位置 行:5 字符: 1
++ git -c http.proxy=http://127.0.0.1:17891 -c https.proxy=http://127.0. ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (To https://gith...0/CAP_Agent.git:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+   e3c006a..2d873fa  codex/AHa-testing -> codex/AHa-testing

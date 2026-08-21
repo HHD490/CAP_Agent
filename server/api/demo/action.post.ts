@@ -1,7 +1,6 @@
 import nodemailer from 'nodemailer'
 import { z } from 'zod'
 import { getDb, demoNow, addEvent, newId } from '../../utils/db'
-import { isValidOutreachContact } from '../../utils/contact'
 import { createAgentTask } from '../../utils/agent'
 
 const bodySchema = z.object({
@@ -32,7 +31,7 @@ export default defineEventHandler(async (event) => {
     if (hardBlockers.length && !data.overrideBlockers) throw createError({ statusCode: 400, statusMessage: '存在硬阻断项，请确认后再接受匹配' })
     const contactId = String(data.contactId || '')
     const contact = contactId ? db.prepare('SELECT * FROM contacts WHERE id = ? AND customer_id = ?').get(contactId, match.customer_id) as any : null
-    const validContact = isValidOutreachContact(contact)
+    const validContact = contact && contact.status === 'contactable' && contact.email
     const existing = db.prepare(`SELECT * FROM opportunities WHERE customer_id = ? AND product_id = ? AND status IN ('active', 'handed_off') LIMIT 1`).get(match.customer_id, match.product_id) as any
     let opportunityId = existing?.id
     if (!existing) {
@@ -59,7 +58,7 @@ export default defineEventHandler(async (event) => {
     const opportunity = db.prepare('SELECT * FROM opportunities WHERE id = ?').get(id) as any
     const contact = db.prepare('SELECT * FROM contacts WHERE id = ? AND customer_id = ?').get(String(data.contactId || ''), opportunity?.customer_id || '') as any
     if (!opportunity || !contact) throw createError({ statusCode: 404, statusMessage: '机会或联系人不存在' })
-    if (!isValidOutreachContact(contact)) throw createError({ statusCode: 400, statusMessage: '请选择状态为“可联系”且有邮箱的联系人' })
+    if (contact.status !== 'contactable' || !contact.email) throw createError({ statusCode: 400, statusMessage: '请选择状态为“可联系”且有邮箱的联系人' })
     db.prepare(`UPDATE opportunities SET contact_id = ?, blocker = '', next_action = '等待 Agent 生成建联内容', updated_at = ? WHERE id = ?`).run(contact.id, now, id)
     addEvent({ opportunityId: id, customerId: opportunity.customer_id, type: 'contact_selected', title: '已选择建联联系人', description: `${contact.name} · ${contact.email}`, source: 'human' }, db)
     return { ok: true, task: createAgentTask('outreach_drafting', 'opportunity', id, { language: 'zh', triggeredBy: 'contact_selected' }) }
@@ -80,8 +79,7 @@ export default defineEventHandler(async (event) => {
     const nextVersion = customer.profile_version + 1
     db.prepare(`UPDATE customers SET facts_json = ?, profile_version = ?, ai_profile_status = 'pending', updated_at = ?, last_activity_at = ? WHERE id = ?`)
       .run(JSON.stringify(facts), nextVersion, now, now, id)
-    db.prepare(`UPDATE match_results SET stale = 1, updated_at = ? WHERE customer_id = ? AND customer_version < ? AND status <> ?`)
-      .run(now, id, nextVersion, 'accepted')
+    db.prepare(`UPDATE match_results SET stale = 1, updated_at = ? WHERE customer_id = ? AND customer_version < ?`).run(now, id, nextVersion)
     db.prepare(`UPDATE opportunities SET stale_review = 1, updated_at = ? WHERE customer_id = ? AND status IN ('active', 'handed_off')`).run(now, id)
     addEvent({ customerId: id, type: 'customer_updated', title: '客户资料已更新', description: `画像版本已更新为 V${nextVersion}，旧匹配已标记待重算。`, source: 'human' }, db)
     return { ok: true, version: nextVersion }
@@ -93,8 +91,7 @@ export default defineEventHandler(async (event) => {
     const marketing = { ...JSON.parse(product.marketing_json || '{}'), ...(data.marketing || {}), updatedBy: '模拟操作者' }
     const nextVersion = product.product_version + 1
     db.prepare(`UPDATE products SET marketing_json = ?, product_version = ?, updated_at = ? WHERE id = ?`).run(JSON.stringify(marketing), nextVersion, now, id)
-    db.prepare(`UPDATE match_results SET stale = 1, updated_at = ? WHERE product_id = ? AND product_version < ? AND status <> ?`)
-      .run(now, id, nextVersion, 'accepted')
+    db.prepare(`UPDATE match_results SET stale = 1, updated_at = ? WHERE product_id = ? AND product_version < ?`).run(now, id, nextVersion)
     db.prepare(`UPDATE opportunities SET stale_review = 1, updated_at = ? WHERE product_id = ? AND status IN ('active', 'handed_off')`).run(now, id)
     return { ok: true, version: nextVersion }
   }

@@ -1,0 +1,373 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for by56_CAP_Agent/pages/index.vue</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">by56_CAP_Agent/pages</a> index.vue</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>0/96</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>0/96</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >&lt;script setup lang="ts"&gt;</span></span></span>
+<span class="cstat-no" title="statement not covered" >import { Message } from '@arco-design/web-vue'</span>
+<span class="cstat-no" title="statement not covered" >import { IconArrowRight, IconCheckCircle, IconEdit, IconRobot, IconClockCircle, IconSafe, IconEmail } from '@arco-design/web-vue/es/icon'</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >const { state, refresh } = useDemoState()</span>
+<span class="cstat-no" title="statement not covered" >const form = reactive({ origin:'深圳', destination:'洛杉矶', cargoName:'蓝牙音箱（带电）', weightKg:820, volumeCbm:5.4, preference:'平衡价格与时效', details:{ cargoTraits:'内置锂电池，单件 2.4 KG', sla:'希望 10 天内签收', tradeTerm:'DDP', shipmentDate:'2026-07-24', monthlyVolume:'5–8 CBM', notes:'需要稳定舱位与全程轨迹' } })</span>
+<span class="cstat-no" title="statement not covered" >const identity = reactive({ email:'test@example.com', companyName:'远舟跨境演示客户', contactName:'陈经理', customerType:'ecommerce_seller' })</span>
+<span class="cstat-no" title="statement not covered" >const showDetails = ref(false)</span>
+<span class="cstat-no" title="statement not covered" >const quoteLoading = ref(false)</span>
+<span class="cstat-no" title="statement not covered" >const identityLoading = ref(false)</span>
+<span class="cstat-no" title="statement not covered" >const rematchLoading = ref(false)</span>
+<span class="cstat-no" title="statement not covered" >const sessionId = ref('')</span>
+<span class="cstat-no" title="statement not covered" >const inquiryId = ref('')</span>
+<span class="cstat-no" title="statement not covered" >const recommendations = ref&lt;any[]&gt;([])</span>
+<span class="cstat-no" title="statement not covered" >const selectedProductId = ref('')</span>
+<span class="cstat-no" title="statement not covered" >const customerId = ref('')</span>
+<span class="cstat-no" title="statement not covered" >const opportunityId = ref('')</span>
+<span class="cstat-no" title="statement not covered" >const taskId = ref('')</span>
+<span class="cstat-no" title="statement not covered" >const phase = ref&lt;'need'|'identity'|'agent'&gt;('need')</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >const relatedTasks = computed(() =&gt; (state.value?.tasks || []).filter(task =&gt; task.targetId === customerId.value || task.id === taskId.value).slice(0,4))</span>
+<span class="cstat-no" title="statement not covered" >const activeTask = computed(() =&gt; relatedTasks.value.find(task =&gt; ['queued','running','waiting'].includes(task.status)))</span>
+<span class="cstat-no" title="statement not covered" >const latestTask = computed(() =&gt; activeTask.value || relatedTasks.value[0])</span>
+<span class="cstat-no" title="statement not covered" >const productById = (id:string) =&gt; state.value?.products.find(product =&gt; product.id === id)</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >onMounted(() =&gt; { void refresh({ quiet:true }) })</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >async function quote() {</span>
+<span class="cstat-no" title="statement not covered" >  quoteLoading.value = true</span>
+<span class="cstat-no" title="statement not covered" >  try {</span>
+<span class="cstat-no" title="statement not covered" >    const result = await $fetch&lt;any&gt;('/api/website/quote', { method:'POST', body:{ ...form, sessionId:sessionId.value || undefined, inquiryId:inquiryId.value || undefined } })</span>
+<span class="cstat-no" title="statement not covered" >    sessionId.value = result.sessionId; inquiryId.value = result.inquiryId; recommendations.value = result.recommendations; selectedProductId.value = result.recommendations[0]?.productId || ''; phase.value = 'identity'</span>
+<span class="cstat-no" title="statement not covered" >    Message.success('已匹配已发布产品，请留资保存本次询价')</span>
+<span class="cstat-no" title="statement not covered" >    requestAnimationFrame(() =&gt; document.getElementById('quote-results')?.scrollIntoView({ behavior:'smooth', block:'start' }))</span>
+<span class="cstat-no" title="statement not covered" >  } catch (error:any) { Message.error(error?.data?.statusMessage || '查询失败，请检查输入后重试') }</span>
+<span class="cstat-no" title="statement not covered" >  finally { quoteLoading.value = false }</span>
+<span class="cstat-no" title="statement not covered" >}</span>
+<span class="cstat-no" title="statement not covered" >async function identify() {</span>
+<span class="cstat-no" title="statement not covered" >  if (!selectedProductId.value) return Message.warning('请选择一个产品方案')</span>
+<span class="cstat-no" title="statement not covered" >  identityLoading.value = true</span>
+<span class="cstat-no" title="statement not covered" >  try {</span>
+<span class="cstat-no" title="statement not covered" >    const result = await $fetch&lt;any&gt;('/api/website/identity', { method:'POST', body:{ inquiryId:inquiryId.value, ...identity, selectedProductId:selectedProductId.value } })</span>
+<span class="cstat-no" title="statement not covered" >    customerId.value = result.customerId; opportunityId.value = result.opportunityId; taskId.value = result.task?.task?.id || ''; phase.value = 'agent'</span>
+<span class="cstat-no" title="statement not covered" >    Message.info('客户档案已建立，Agent 已开始分析；请勿重复提交')</span>
+<span class="cstat-no" title="statement not covered" >    await refresh({ quiet:true })</span>
+<span class="cstat-no" title="statement not covered" >  } catch (error:any) { Message.error(error?.data?.statusMessage || '身份留资失败，请稍后重试') }</span>
+<span class="cstat-no" title="statement not covered" >  finally { identityLoading.value = false }</span>
+<span class="cstat-no" title="statement not covered" >}</span>
+<span class="cstat-no" title="statement not covered" >async function rematch() {</span>
+<span class="cstat-no" title="statement not covered" >  if (!inquiryId.value) return quote()</span>
+<span class="cstat-no" title="statement not covered" >  rematchLoading.value = true</span>
+<span class="cstat-no" title="statement not covered" >  try {</span>
+<span class="cstat-no" title="statement not covered" >    const result = await $fetch&lt;any&gt;('/api/website/rematch', { method:'POST', body:{ inquiryId:inquiryId.value, ...form } })</span>
+<span class="cstat-no" title="statement not covered" >    recommendations.value = result.recommendations; selectedProductId.value = result.recommendations[0]?.productId || selectedProductId.value; if (result.task?.task?.id) taskId.value = result.task.task.id</span>
+<span class="cstat-no" title="statement not covered" >    Message.info(customerId.value ? '询价已更新，Agent 已开始重新匹配' : '询价已更新，推荐结果已刷新')</span>
+<span class="cstat-no" title="statement not covered" >    await refresh({ quiet:true })</span>
+<span class="cstat-no" title="statement not covered" >  } catch (error:any) { Message.error(error?.data?.statusMessage || '重新匹配失败') }</span>
+<span class="cstat-no" title="statement not covered" >  finally { rematchLoading.value = false }</span>
+<span class="cstat-no" title="statement not covered" >}</span>
+<span class="cstat-no" title="statement not covered" >function resetFlow() { phase.value='need';sessionId.value='';inquiryId.value='';recommendations.value=[];selectedProductId.value='';customerId.value='';opportunityId.value='';taskId.value='';window.scrollTo({top:0,behavior:'smooth'}) }</span>
+<span class="cstat-no" title="statement not covered" >function scrollToQuote() { document.getElementById('quote')?.scrollIntoView({ behavior:'smooth' }) }</span>
+<span class="cstat-no" title="statement not covered" >&lt;/script&gt;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >&lt;template&gt;</span>
+<span class="cstat-no" title="statement not covered" >  &lt;div class="marketing-site"&gt;</span>
+<span class="cstat-no" title="statement not covered" >    &lt;header class="site-header"&gt;&lt;NuxtLink to="/" class="site-brand"&gt;&lt;span class="site-logo"&gt;百&lt;/span&gt;&lt;strong&gt;百运物流&lt;/strong&gt;&lt;/NuxtLink&gt;&lt;nav&gt;&lt;a href="#services"&gt;物流产品&lt;/a&gt;&lt;a href="#quote"&gt;在线询价&lt;/a&gt;&lt;a href="#agent"&gt;AI 物流助手&lt;/a&gt;&lt;/nav&gt;&lt;NuxtLink class="admin-link" to="/admin"&gt;进入获客演示台 &lt;IconArrowRight /&gt;&lt;/NuxtLink&gt;&lt;/header&gt;</span>
+<span class="cstat-no" title="statement not covered" >    &lt;main&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;section class="hero"&gt;&lt;div class="hero__glow" /&gt;&lt;div class="hero__copy"&gt;&lt;span class="hero__eyebrow"&gt;GLOBAL LOGISTICS · AI POWERED&lt;/span&gt;&lt;h1&gt;让每一次跨境运输需求&lt;br&gt;&lt;em&gt;快速找到合适的产品&lt;/em&gt;&lt;/h1&gt;&lt;p&gt;输入路线与货物信息，系统会从百运已发布物流产品中推荐最多 3 个方案。完成留资后，智能获客 Agent 将继续分析并协助后续跟进。&lt;/p&gt;&lt;div class="hero__trust"&gt;&lt;span&gt;&lt;IconSafe /&gt; 信息分层保护&lt;/span&gt;&lt;span&gt;&lt;IconClockCircle /&gt; 即时产品匹配&lt;/span&gt;&lt;span&gt;&lt;IconRobot /&gt; Agent 持续跟进&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;aside class="agent-preview" id="agent"&gt;&lt;div class="agent-preview__head"&gt;&lt;span class="agent-avatar"&gt;✦&lt;/span&gt;&lt;div&gt;&lt;strong&gt;AI 物流助手&lt;/strong&gt;&lt;small&gt;已连接产品库&lt;/small&gt;&lt;/div&gt;&lt;span class="online-dot" /&gt;&lt;/div&gt;&lt;div class="agent-message"&gt;&lt;span&gt;✦ AI 助手&lt;/span&gt;&lt;p&gt;您好，我可以先根据路线、货物和时效偏好，为您匹配百运当前已发布的物流产品。&lt;/p&gt;&lt;/div&gt;&lt;div class="agent-chips"&gt;&lt;button @click="scrollToQuote"&gt;中国 → 美国&lt;/button&gt;&lt;button @click="scrollToQuote"&gt;带电产品&lt;/button&gt;&lt;button @click="scrollToQuote"&gt;对比价格与时效&lt;/button&gt;&lt;/div&gt;&lt;div class="agent-input"&gt;&lt;span&gt;请输入您的物流需求…&lt;/span&gt;&lt;button disabled&gt;发送&lt;/button&gt;&lt;/div&gt;&lt;small class="agent-note"&gt;对话能力接口已预留，本次演示以结构化询价为主&lt;/small&gt;&lt;/aside&gt;&lt;/section&gt;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >      &lt;section id="quote" class="quote-section"&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;div class="section-title"&gt;&lt;span&gt;ONLINE QUOTE&lt;/span&gt;&lt;h2&gt;获取适配的物流产品方案&lt;/h2&gt;&lt;p&gt;第 1 步填写运输需求，第 2 步留资建立客户档案；提交期间会持续显示真实处理状态。&lt;/p&gt;&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;div class="quote-layout"&gt;&lt;div class="quote-card"&gt;&lt;div class="quote-card__head"&gt;&lt;div&gt;&lt;span class="step-badge"&gt;01&lt;/span&gt;&lt;h2&gt;运输需求&lt;/h2&gt;&lt;/div&gt;&lt;span v-if="inquiryId" class="saved-hint"&gt;&lt;IconCheckCircle /&gt; 询价已保存&lt;/span&gt;&lt;/div&gt;&lt;div class="quote-form"&gt;&lt;label&gt;&lt;span&gt;始发地 *&lt;/span&gt;&lt;a-input v-model="form.origin" :disabled="quoteLoading || rematchLoading" /&gt;&lt;/label&gt;&lt;label&gt;&lt;span&gt;目的地 *&lt;/span&gt;&lt;a-input v-model="form.destination" :disabled="quoteLoading || rematchLoading" /&gt;&lt;/label&gt;&lt;label&gt;&lt;span&gt;货物名称 *&lt;/span&gt;&lt;a-input v-model="form.cargoName" :disabled="quoteLoading || rematchLoading" /&gt;&lt;/label&gt;&lt;label&gt;&lt;span&gt;预计重量 *&lt;/span&gt;&lt;a-input-number v-model="form.weightKg" :min="0.1" :disabled="quoteLoading || rematchLoading"&gt;&lt;template #suffix&gt;KG&lt;/template&gt;&lt;/a-input-number&gt;&lt;/label&gt;&lt;label&gt;&lt;span&gt;预计体积 *&lt;/span&gt;&lt;a-input-number v-model="form.volumeCbm" :min="0.01" :step="0.1" :disabled="quoteLoading || rematchLoading"&gt;&lt;template #suffix&gt;CBM&lt;/template&gt;&lt;/a-input-number&gt;&lt;/label&gt;&lt;div class="field-control"&gt;&lt;span&gt;运输偏好 *&lt;/span&gt;&lt;a-select v-model="form.preference" :disabled="quoteLoading || rematchLoading"&gt;&lt;a-option value="平衡价格与时效"&gt;平衡价格与时效&lt;/a-option&gt;&lt;a-option value="优先时效"&gt;优先时效&lt;/a-option&gt;&lt;a-option value="优先价格"&gt;优先价格&lt;/a-option&gt;&lt;/a-select&gt;&lt;/div&gt;&lt;/div&gt;&lt;button class="details-toggle" @click="showDetails=!showDetails"&gt;&lt;IconEdit /&gt; {{ showDetails ? '收起补充信息' : '补充货物特性、贸易条款与出货计划' }}&lt;/button&gt;&lt;Transition name="details"&gt;&lt;div v-if="showDetails" class="quote-details"&gt;&lt;label&gt;&lt;span&gt;货物特性&lt;/span&gt;&lt;a-input v-model="form.details.cargoTraits" /&gt;&lt;/label&gt;&lt;label&gt;&lt;span&gt;期望时效&lt;/span&gt;&lt;a-input v-model="form.details.sla" /&gt;&lt;/label&gt;&lt;div class="field-control"&gt;&lt;span&gt;贸易条款&lt;/span&gt;&lt;a-select v-model="form.details.tradeTerm"&gt;&lt;a-option value="DDP"&gt;DDP&lt;/a-option&gt;&lt;a-option value="DDU"&gt;DDU&lt;/a-option&gt;&lt;a-option value="FOB"&gt;FOB&lt;/a-option&gt;&lt;/a-select&gt;&lt;/div&gt;&lt;label&gt;&lt;span&gt;计划出货日&lt;/span&gt;&lt;a-input v-model="form.details.shipmentDate" /&gt;&lt;/label&gt;&lt;label&gt;&lt;span&gt;月均货量&lt;/span&gt;&lt;a-input v-model="form.details.monthlyVolume" /&gt;&lt;/label&gt;&lt;label&gt;&lt;span&gt;备注&lt;/span&gt;&lt;a-input v-model="form.details.notes" /&gt;&lt;/label&gt;&lt;/div&gt;&lt;/Transition&gt;&lt;div class="quote-submit"&gt;&lt;a-button v-if="inquiryId" size="large" :loading="rematchLoading" :disabled="quoteLoading || Boolean(activeTask)" @click="rematch"&gt;&lt;template #icon&gt;&lt;IconRobot /&gt;&lt;/template&gt;修改后重新匹配&lt;/a-button&gt;&lt;a-button type="primary" size="large" :loading="quoteLoading" :disabled="rematchLoading || Boolean(activeTask)" @click="quote"&gt;{{ inquiryId ? '重新查看产品方案' : '查看匹配方案' }}&lt;template #icon&gt;&lt;IconArrowRight /&gt;&lt;/template&gt;&lt;/a-button&gt;&lt;/div&gt;&lt;div v-if="quoteLoading || rematchLoading" class="inline-progress"&gt;&lt;div class="agent-signal"&gt;&lt;span/&gt;&lt;span/&gt;&lt;span/&gt;&lt;/div&gt;&lt;strong&gt;{{ rematchLoading ? '正在重新匹配' : '正在查询已发布产品' }}&lt;/strong&gt;&lt;p&gt;{{ rematchLoading &amp;&amp; customerId ? '修改后的询价将同步到客户档案，并启动 Agent 重新判断。' : '正在根据线路、货物与偏好筛选产品，请勿重复点击。' }}&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;aside class="quote-aside"&gt;&lt;h3&gt;本次演示会记录什么？&lt;/h3&gt;&lt;ol&gt;&lt;li&gt;&lt;span&gt;1&lt;/span&gt;&lt;div&gt;&lt;strong&gt;匿名询价&lt;/strong&gt;&lt;p&gt;只形成访问会话和询价，不建立正式客户。&lt;/p&gt;&lt;/div&gt;&lt;/li&gt;&lt;li&gt;&lt;span&gt;2&lt;/span&gt;&lt;div&gt;&lt;strong&gt;完成留资&lt;/strong&gt;&lt;p&gt;通过邮箱查重并建立或合并客户档案。&lt;/p&gt;&lt;/div&gt;&lt;/li&gt;&lt;li&gt;&lt;span&gt;3&lt;/span&gt;&lt;div&gt;&lt;strong&gt;Agent 分析&lt;/strong&gt;&lt;p&gt;生成客户画像与 Top 3 产品匹配。&lt;/p&gt;&lt;/div&gt;&lt;/li&gt;&lt;li&gt;&lt;span&gt;4&lt;/span&gt;&lt;div&gt;&lt;strong&gt;人工建联&lt;/strong&gt;&lt;p&gt;后台审核建议、邮件和后续机会进度。&lt;/p&gt;&lt;/div&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/aside&gt;&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;/section&gt;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >      &lt;section v-if="recommendations.length" id="quote-results" class="results-section"&gt;&lt;div class="section-title"&gt;&lt;span&gt;MATCHED PRODUCTS&lt;/span&gt;&lt;h2&gt;为您匹配的已发布产品&lt;/h2&gt;&lt;p&gt;以下为演示参考，最终价格、舱位与货物适用性需由人工确认。&lt;/p&gt;&lt;/div&gt;&lt;div class="recommend-grid"&gt;&lt;article v-for="(rec,index) in recommendations" :key="rec.productId" :class="['recommend-card',{ selected:selectedProductId===rec.productId }]" @click="selectedProductId=rec.productId"&gt;&lt;div class="recommend-card__rank"&gt;推荐 {{ index+1 }}&lt;/div&gt;&lt;span class="select-indicator"&gt;&lt;IconCheckCircle /&gt;&lt;/span&gt;&lt;div class="recommend-score"&gt;&lt;strong&gt;{{ rec.score }}&lt;/strong&gt;&lt;span&gt;参考匹配分&lt;/span&gt;&lt;/div&gt;&lt;h3&gt;{{ rec.name }}&lt;/h3&gt;&lt;p class="recommend-code"&gt;{{ rec.code }} · {{ rec.transitTime }}&lt;/p&gt;&lt;ul&gt;&lt;li v-for="item in rec.evidence" :key="item"&gt;{{ item }}&lt;/li&gt;&lt;/ul&gt;&lt;div class="recommend-capabilities"&gt;&lt;span v-for="item in rec.capabilities.slice(0,3)" :key="item"&gt;{{ item }}&lt;/span&gt;&lt;/div&gt;&lt;div class="recommend-price"&gt;&lt;small&gt;{{ rec.quoteReady ? '模拟参考报价' : '报价状态' }}&lt;/small&gt;&lt;strong&gt;{{ rec.quoteReady ? rec.referencePrice : '需人工询价' }}&lt;/strong&gt;&lt;/div&gt;&lt;/article&gt;&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >        &lt;div v-if="phase === 'identity'" class="identity-card"&gt;&lt;div class="identity-card__intro"&gt;&lt;span class="step-badge"&gt;02&lt;/span&gt;&lt;div&gt;&lt;h2&gt;保存方案并由 Agent 继续跟进&lt;/h2&gt;&lt;p&gt;工作邮箱必填；公司与联系人可稍后补充。提交后会立即显示 Agent 运行状态。&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="identity-form"&gt;&lt;label&gt;&lt;span&gt;工作邮箱 *&lt;/span&gt;&lt;a-input v-model="identity.email" :disabled="identityLoading" /&gt;&lt;/label&gt;&lt;label&gt;&lt;span&gt;公司名称&lt;/span&gt;&lt;a-input v-model="identity.companyName" :disabled="identityLoading" /&gt;&lt;/label&gt;&lt;label&gt;&lt;span&gt;联系人&lt;/span&gt;&lt;a-input v-model="identity.contactName" :disabled="identityLoading" /&gt;&lt;/label&gt;&lt;div class="field-control"&gt;&lt;span&gt;客户类型&lt;/span&gt;&lt;a-select v-model="identity.customerType" :disabled="identityLoading"&gt;&lt;a-option value="ecommerce_seller"&gt;跨境电商卖家&lt;/a-option&gt;&lt;a-option value="exporter"&gt;出口企业&lt;/a-option&gt;&lt;a-option value="trading_company"&gt;贸易公司&lt;/a-option&gt;&lt;a-option value="direct_shipper"&gt;直接货主&lt;/a-option&gt;&lt;a-option value="freight_forwarder_partner"&gt;货代伙伴&lt;/a-option&gt;&lt;a-option value="unknown"&gt;暂不确定&lt;/a-option&gt;&lt;/a-select&gt;&lt;/div&gt;&lt;/div&gt;&lt;a-button type="primary" size="large" long :loading="identityLoading" :disabled="Boolean(activeTask)" @click="identify"&gt;&lt;template #icon&gt;&lt;IconRobot /&gt;&lt;/template&gt;保存询价并启动 Agent&lt;/a-button&gt;&lt;div v-if="identityLoading" class="inline-progress"&gt;&lt;div class="agent-signal"&gt;&lt;span/&gt;&lt;span/&gt;&lt;span/&gt;&lt;/div&gt;&lt;strong&gt;正在建立客户档案&lt;/strong&gt;&lt;p&gt;系统正在按邮箱与域名检查已有客户，请勿重复提交。&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >        &lt;div v-if="phase === 'agent'" class="agent-result-card"&gt;&lt;div class="agent-result-card__head"&gt;&lt;span class="agent-avatar"&gt;✦&lt;/span&gt;&lt;div&gt;&lt;h2&gt;{{ latestTask?.status === 'failed' ? 'Agent 处理失败' : activeTask ? 'Agent 正在处理您的需求' : 'Agent 已完成当前处理' }}&lt;/h2&gt;&lt;p&gt;{{ latestTask?.currentStep || '客户档案和获客机会已经建立。' }}&lt;/p&gt;&lt;/div&gt;&lt;span :class="['semantic-tag',latestTask?.status === 'failed' ? 'error' : activeTask ? 'info' : 'success']"&gt;{{ latestTask?.status || 'completed' }}&lt;/span&gt;&lt;/div&gt;&lt;a-progress :percent="(latestTask?.progress || 100)/100" :status="latestTask?.status === 'failed' ? 'danger' : activeTask ? 'normal' : 'success'" /&gt;&lt;div class="agent-result-card__steps"&gt;&lt;div v-for="task in relatedTasks" :key="task.id"&gt;&lt;IconCheckCircle v-if="task.status==='completed'" /&gt;&lt;div class="agent-signal" v-else-if="['queued','running','waiting'].includes(task.status)"&gt;&lt;span/&gt;&lt;span/&gt;&lt;span/&gt;&lt;/div&gt;&lt;span v-else class="error-dot"&gt;×&lt;/span&gt;&lt;p&gt;&lt;strong&gt;{{ task.currentStep }}&lt;/strong&gt;&lt;small&gt;{{ task.status }} · {{ task.progress }}%&lt;/small&gt;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;div v-if="latestTask?.error" class="site-error"&gt;{{ latestTask.error }}&lt;/div&gt;&lt;div class="agent-result-card__actions"&gt;&lt;a-button @click="resetFlow"&gt;重新开始一组演示&lt;/a-button&gt;&lt;NuxtLink :to="{ path:'/admin/opportunities', query:{ opportunity:opportunityId } }"&gt;&lt;a-button type="primary"&gt;在运营后台查看完整进度 &lt;IconArrowRight /&gt;&lt;/a-button&gt;&lt;/NuxtLink&gt;&lt;/div&gt;&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;/section&gt;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >      &lt;section id="services" class="service-strip"&gt;&lt;div&gt;&lt;strong&gt;12&lt;/strong&gt;&lt;span&gt;已发布演示产品&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;strong&gt;5&lt;/strong&gt;&lt;span&gt;Agent 业务任务模式&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;strong&gt;9&lt;/strong&gt;&lt;span&gt;统一机会进度阶段&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;strong&gt;2&lt;/strong&gt;&lt;span&gt;主动与被动获客入口&lt;/span&gt;&lt;/div&gt;&lt;/section&gt;</span>
+<span class="cstat-no" title="statement not covered" >    &lt;/main&gt;</span>
+<span class="cstat-no" title="statement not covered" >    &lt;footer class="site-footer"&gt;&lt;div class="site-brand"&gt;&lt;span class="site-logo"&gt;百&lt;/span&gt;&lt;strong&gt;百运物流 · 智能获客 PoC&lt;/strong&gt;&lt;/div&gt;&lt;span&gt;仅用于内部演示，价格、客户与互动数据均为模拟内容。&lt;/span&gt;&lt;NuxtLink to="/admin"&gt;运营演示台&lt;/NuxtLink&gt;&lt;/footer&gt;</span>
+<span class="cstat-no" title="statement not covered" >  &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >&lt;/template&gt;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >&lt;style scoped&gt;</span>
+<span class="cstat-no" title="statement not covered" >.marketing-site{min-height:100vh;background:#f7faff;color:#24344b}.site-header{height:68px;display:flex;align-items:center;padding:0 max(24px,calc((100vw - 1240px)/2));background:#fff;border-bottom:1px solid #e7edf5;position:sticky;top:0;z-index:50}.site-brand{display:flex;align-items:center;gap:10px}.site-logo{width:36px;height:36px;display:grid;place-items:center;border-radius:11px;color:#fff;background:linear-gradient(135deg,#046efc,#7b4ff6)}.site-header nav{margin-left:64px;display:flex;gap:34px}.site-header nav a{color:#536178}.site-header nav a:hover{color:#046efc}.admin-link{margin-left:auto;display:flex;align-items:center;gap:6px;color:#046efc}.hero{position:relative;min-height:560px;padding:88px max(24px,calc((100vw - 1240px)/2));display:grid;grid-template-columns:1.35fr .65fr;align-items:center;gap:70px;background:linear-gradient(120deg,#061a39 0%,#0c2c5b 62%,#252369 100%);overflow:hidden}.hero__glow{position:absolute;width:680px;height:680px;right:-180px;top:-260px;border-radius:50%;background:radial-gradient(circle,rgba(83,120,255,.38),transparent 66%)}.hero__copy{position:relative;z-index:1}.hero__eyebrow{color:#70b6ff;font-size:12px;letter-spacing:.18em}.hero h1{margin:18px 0 22px;color:#fff;font-size:48px;line-height:1.22;font-weight:500}.hero h1 em{font-style:normal;color:#7fc1ff}.hero__copy&gt;p{max-width:660px;color:#b7c8de;font-size:17px;line-height:1.9}.hero__trust{margin-top:30px;display:flex;gap:24px;color:#dceaff}.hero__trust span{display:flex;align-items:center;gap:7px}.agent-preview{position:relative;z-index:1;padding:18px;border:1px solid rgba(255,255,255,.16);border-radius:20px;background:rgba(255,255,255,.1);backdrop-filter:blur(18px);box-shadow:0 24px 70px rgba(0,0,0,.25)}.agent-preview__head{display:flex;align-items:center;gap:10px;color:#fff}.agent-avatar{width:38px;height:38px;display:grid;place-items:center;border-radius:12px;color:#fff;background:linear-gradient(135deg,#046efc,#7b4ff6)}.agent-preview__head strong,.agent-preview__head small{display:block;color:#fff}.agent-preview__head small{color:#9fb6d2}.online-dot{margin-left:auto;width:9px;height:9px;border-radius:50%;background:#38d9a9;box-shadow:0 0 0 5px rgba(56,217,169,.14)}.agent-message{margin:22px 0 14px;padding:14px;border-radius:12px 12px 12px 4px;background:#fff}.agent-message span{color:#7b4ff6;font-size:12px}.agent-message p{margin:5px 0 0}.agent-chips{display:flex;flex-wrap:wrap;gap:7px}.agent-chips button{padding:6px 10px;border:1px solid rgba(255,255,255,.24);border-radius:99px;color:#dceaff;background:rgba(255,255,255,.08);cursor:pointer}.agent-input{margin-top:20px;height:44px;padding:0 6px 0 13px;display:flex;align-items:center;border:1px solid rgba(255,255,255,.2);border-radius:10px;color:#8ea5c3;background:rgba(0,0,0,.12)}.agent-input button{margin-left:auto;padding:7px 12px;border:0;border-radius:7px;color:#fff;background:#046efc;opacity:.5}.agent-note{display:block;margin-top:8px;color:#8ea5c3;text-align:center}.quote-section,.results-section{padding:78px max(24px,calc((100vw - 1240px)/2))}.section-title{text-align:center;margin-bottom:36px}.section-title&gt;span{color:#046efc;font-size:12px;letter-spacing:.16em}.section-title h2{margin:9px 0 6px;font-size:30px;color:#14253d}.section-title p{color:#748198}.quote-layout{display:grid;grid-template-columns:1fr 300px;gap:20px}.quote-card{position:relative;padding:28px;border:1px solid #dce5f0;border-radius:18px;background:#fff;box-shadow:0 14px 36px rgba(36,66,110,.08)}.quote-card__head,.identity-card__intro{display:flex;align-items:center;gap:12px}.quote-card__head&gt;div{display:flex;align-items:center;gap:10px}.quote-card__head h2,.identity-card h2{margin:0;font-size:20px}.step-badge{width:34px;height:34px;display:grid;place-items:center;border-radius:10px;color:#fff;background:#046efc}.saved-hint{margin-left:auto;display:flex;align-items:center;gap:5px;color:#18a058}.quote-form,.quote-details,.identity-form{margin-top:22px;display:grid;grid-template-columns:repeat(2,1fr);gap:20px 24px}.quote-form :is(label,.field-control)&gt;span,.quote-details :is(label,.field-control)&gt;span,.identity-form :is(label,.field-control)&gt;span{display:block;margin-bottom:7px;color:#536178}.quote-form :deep(.arco-input-wrapper),.quote-form :deep(.arco-select-view),.quote-form :deep(.arco-input-number),.quote-details :deep(.arco-input-wrapper),.quote-details :deep(.arco-select-view),.identity-form :deep(.arco-input-wrapper),.identity-form :deep(.arco-select-view){width:100%;height:42px;border-radius:9px}.details-toggle{margin-top:20px;padding:0;border:0;color:#046efc;background:transparent;cursor:pointer}.details-toggle svg{vertical-align:-2px}.quote-details{padding:20px;border-radius:12px;background:#f5f8fc}.quote-submit{margin-top:24px;display:flex;justify-content:flex-end;gap:10px}.quote-submit :deep(.arco-btn){height:44px}.quote-aside{padding:26px;border-radius:18px;color:#dce8f7;background:#102d57}.quote-aside h3{color:#fff;font-size:18px}.quote-aside ol{margin:24px 0 0;padding:0;display:grid;gap:22px;list-style:none}.quote-aside li{display:flex;gap:12px}.quote-aside li&gt;span{flex:0 0 auto;width:27px;height:27px;display:grid;place-items:center;border-radius:8px;color:#fff;background:rgba(93,166,255,.25)}.quote-aside strong{color:#fff}.quote-aside p{margin:2px 0 0;color:#a9bfd9;font-size:12px}.inline-progress{margin-top:18px;padding:14px;display:grid;grid-template-columns:30px 1fr;align-items:center;border:1px solid rgba(123,79,246,.18);border-radius:10px;background:linear-gradient(90deg,#ebf3fd,#eeedfe)}.inline-progress .agent-signal{grid-row:span 2}.inline-progress strong{color:#1a2130}.inline-progress p{margin:0;color:#69758a;font-size:12px}.results-section{background:#fff}.recommend-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.recommend-card{position:relative;padding:22px;border:1px solid #dce5f0;border-radius:16px;background:#fff;cursor:pointer;transition:.15s}.recommend-card:hover,.recommend-card.selected{transform:translateY(-3px);border-color:#046efc;box-shadow:0 12px 30px rgba(4,110,252,.12)}.recommend-card__rank{display:inline-flex;padding:4px 9px;border-radius:7px;color:#046efc;background:#ebf3fd;font-size:12px}.select-indicator{position:absolute;right:18px;top:18px;color:#c0c8d3;font-size:20px}.recommend-card.selected .select-indicator{color:#18a058}.recommend-score{margin-top:18px;display:flex;align-items:baseline;gap:5px}.recommend-score strong{font-size:31px;color:#046efc}.recommend-score span{color:#8a96a8;font-size:12px}.recommend-card h3{margin:7px 0 3px;font-size:18px}.recommend-code{color:#8a96a8}.recommend-card ul{min-height:76px;padding-left:20px}.recommend-capabilities{display:flex;flex-wrap:wrap;gap:5px}.recommend-capabilities span{padding:3px 7px;border-radius:6px;color:#5b4fcf;background:#edeaff;font-size:11px}.recommend-price{margin-top:18px;padding-top:14px;border-top:1px solid #edf0f4}.recommend-price small,.recommend-price strong{display:block}.recommend-price small{color:#8a96a8}.recommend-price strong{margin-top:3px}.identity-card,.agent-result-card{max-width:900px;margin:34px auto 0;padding:28px;border:1px solid #dce5f0;border-radius:18px;background:#f9fbfe}.identity-card__intro p{margin:3px 0 0;color:#748198}.identity-card&gt;.arco-btn{margin-top:24px;height:46px}.agent-result-card{background:linear-gradient(135deg,#f4f8ff,#f5f2ff);border-color:rgba(123,79,246,.22)}.agent-result-card__head{display:flex;align-items:center;gap:12px}.agent-result-card__head h2,.agent-result-card__head p{margin:0}.agent-result-card__head .semantic-tag{margin-left:auto}.agent-result-card&gt;.arco-progress{margin:20px 0}.agent-result-card__steps{display:grid;gap:9px}.agent-result-card__steps&gt;div{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;background:rgba(255,255,255,.72)}.agent-result-card__steps svg{color:#18a058}.agent-result-card__steps p{margin:0}.agent-result-card__steps strong,.agent-result-card__steps small{display:block}.agent-result-card__steps small{color:#8a96a8}.error-dot{color:#e24b4a}.site-error{margin-top:12px;padding:10px;border-radius:8px;color:#e24b4a;background:#fdecec}.agent-result-card__actions{margin-top:20px;display:flex;justify-content:flex-end;gap:10px}.service-strip{padding:40px max(24px,calc((100vw - 1240px)/2));display:grid;grid-template-columns:repeat(4,1fr);background:#0c2243}.service-strip&gt;div{text-align:center;border-right:1px solid rgba(255,255,255,.12)}.service-strip&gt;div:last-child{border-right:0}.service-strip strong,.service-strip span{display:block}.service-strip strong{color:#fff;font-size:30px}.service-strip span{color:#9fb3ce}.site-footer{min-height:86px;padding:0 max(24px,calc((100vw - 1240px)/2));display:flex;align-items:center;gap:18px;color:#78869a;background:#fff}.site-footer&gt;span{margin-left:auto}.site-footer&gt;a{color:#046efc}.details-enter-active,.details-leave-active{transition:opacity .2s,transform .2s}.details-enter-from,.details-leave-to{opacity:0;transform:translateY(-8px)}</span>
+<span class="cstat-no" title="statement not covered" >/* InputNumber 的根节点也是 span，避免被字段标题的通用 span 样式改成块级元素。 */</span>
+<span class="cstat-no" title="statement not covered" >.quote-form :deep(.arco-input-number){display:inline-flex!important;margin-bottom:0!important;color:var(--color-text-body)!important}</span>
+<span class="cstat-no" title="statement not covered" >.quote-form :deep(.arco-input-number-suffix){display:flex;align-items:center;padding:0 12px;color:#536178;font-size:13px;white-space:nowrap}</span>
+<span class="cstat-no" title="statement not covered" >@media(max-width:1000px){.site-header nav{display:none}.hero{grid-template-columns:1fr;padding-top:65px}.agent-preview{max-width:560px}.quote-layout{grid-template-columns:1fr}.quote-aside{display:none}.recommend-grid{grid-template-columns:1fr 1fr}.service-strip{grid-template-columns:1fr 1fr;gap:24px}.service-strip&gt;div{border-right:0}.hero h1{font-size:40px}}</span>
+<span class="cstat-no" title="statement not covered" >@media(max-width:700px){.site-header{height:60px;padding:0 16px}.admin-link{font-size:12px}.hero{padding:52px 16px;gap:36px}.hero h1{font-size:34px}.hero__trust{flex-direction:column;gap:8px}.quote-section,.results-section{padding:54px 16px}.quote-card{padding:18px}.quote-form,.quote-details,.identity-form{grid-template-columns:1fr}.quote-submit{flex-direction:column}.quote-submit :deep(.arco-btn){width:100%;height:48px}.recommend-grid{grid-template-columns:1fr}.agent-result-card__actions{flex-direction:column}.agent-result-card__actions :deep(.arco-btn){width:100%}.service-strip{padding:34px 16px}.site-footer{padding:22px 16px;align-items:flex-start;flex-direction:column}.site-footer&gt;span{margin-left:0}}</span>
+<span class="cstat-no" title="statement not covered" >&lt;/style&gt;</span>
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-08-20T02:03:18.965Z
+            </div>
+        <script src="../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../sorter.js"></script>
+        <script src="../../block-navigation.js"></script>
+    </body>
+</html>
+    

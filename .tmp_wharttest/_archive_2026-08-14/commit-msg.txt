@@ -1,0 +1,12 @@
+chore(git): 入仓 AGENTS.md + 补 .gitignore 烟囱模式
+
+- AGENTS.md (3.6KB 项目工作流规则文件) 第一次入仓
+  - 含"codex/AHa-testing 是唯一工作分支"等硬规则
+  - 文件头注明接手此项目的任何 agent / session / 工具动手前必读
+  - 2026-08-12 写成；此前一直在工作目录但未 commit
+- .gitignore 增 .tmp_*.out / .tmp_*.err 模式
+  - 覆盖 8/13 推送调试烟囱 (.tmp_push1-4.err/.out)
+  - 8 个文件归档到 .tmp_wharttest/_archive_2026-08-14/
+    （目录本身已在 .gitignore 内，未来自动忽略）
+
+不动 main；按 2026-08-14 09:46 用户确认 commit + push 到 codex/AHa-testing

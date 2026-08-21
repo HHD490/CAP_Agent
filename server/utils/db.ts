@@ -183,77 +183,25 @@ const schema = [
   )`
 ]
 
-/** Test-only seam: replace or clear the process-wide DB singleton. */
-export function setDbForTests(db: DatabaseSync | undefined) {
-  database = db
-}
-
-/** Apply schema/PRAGMA to an already-opened connection (used by tests and getDb). */
-export function initializeDatabaseConnection(db: DatabaseSync, options: { seed?: boolean } = {}) {
-  try { db.exec('PRAGMA journal_mode = WAL') } catch { /* :memory: / some hosts may reject WAL */ }
-  db.exec('PRAGMA foreign_keys = ON')
-  for (const statement of schema) db.exec(statement)
-  if (options.seed) {
-    const state = db.prepare('SELECT id FROM demo_state WHERE id = 1').get()
-    if (!state) resetDemoDatabase(db)
-    ensureWebsiteInquiryDemoData(db)
-  }
-}
-
 export function getDb() {
   if (database) return database
   const config = useRuntimeConfig()
   const path = resolve(process.cwd(), String(config.databasePath || './data/acquisition-demo.sqlite'))
   mkdirSync(dirname(path), { recursive: true })
   database = new DatabaseSync(path)
-  initializeDatabaseConnection(database)
-  prepareOpenedDatabase(database)
-  return database
-}
-
-/**
- * Post-open initialization for an existing connection.
- * Seeds only when demo_state is absent; never resets an already-seeded database.
- */
-export function prepareOpenedDatabase(db: DatabaseSync) {
-  const state = db.prepare('SELECT id FROM demo_state WHERE id = 1').get()
-  if (!state) resetDemoDatabase(db)
+  database.exec('PRAGMA journal_mode = WAL')
+  database.exec('PRAGMA foreign_keys = ON')
+  for (const statement of schema) database.exec(statement)
+  const state = database.prepare('SELECT id FROM demo_state WHERE id = 1').get()
+  if (!state) resetDemoDatabase(database)
   // Earlier PoC seed versions created all three website customers but only
   // persisted one inquiry. Keep existing demo databases consistent without
   // forcing a destructive reset or overwriting inquiries created in the UI.
-  ensureWebsiteInquiryDemoData(db)
-  runDatabaseMigrations(db)
-  const now = demoNow(db)
-  db.prepare(`UPDATE agent_tasks SET status = 'failed', phase = 'failed', error = ?, completed_at = ? WHERE status IN ('queued', 'running', 'waiting')`)
+  ensureWebsiteInquiryDemoData(database)
+  const now = demoNow(database)
+  database.prepare(`UPDATE agent_tasks SET status = 'failed', phase = 'failed', error = ?, completed_at = ? WHERE status IN ('queued', 'running', 'waiting')`)
     .run('服务在 Agent 运行期间重启，本次任务已中断；可安全重新运行。', now)
-}
-
-const MIGRATION_BY004_UNPUBLISH = 'by004_unpublish_v1'
-
-/** Idempotent schema/data migrations for already-seeded databases. */
-export function runDatabaseMigrations(db: DatabaseSync) {
-  db.exec(`CREATE TABLE IF NOT EXISTS schema_migrations (
-    id TEXT PRIMARY KEY,
-    applied_at TEXT NOT NULL
-  )`)
-  const applied = db.prepare('SELECT id FROM schema_migrations WHERE id = ?').get(MIGRATION_BY004_UNPUBLISH)
-  if (applied) return
-
-  const now = demoNow(db)
-  const by004 = db.prepare('SELECT id, published, pms_snapshot_json FROM products WHERE code = ?').get('BY004') as any
-  if (by004) {
-    const snapshot = (() => {
-      try { return JSON.parse(by004.pms_snapshot_json || '{}') } catch { return {} }
-    })() as Record<string, unknown>
-    const needsFix = Number(by004.published) === 1 || snapshot.published === true
-    if (needsFix) {
-      snapshot.published = false
-      db.prepare('UPDATE products SET published = 0, pms_snapshot_json = ?, updated_at = ? WHERE code = ?')
-        .run(JSON.stringify(snapshot), now, 'BY004')
-    }
-  }
-
-  db.prepare('INSERT INTO schema_migrations (id, applied_at) VALUES (?, ?)').run(MIGRATION_BY004_UNPUBLISH, now)
+  return database
 }
 
 export function demoNow(db = getDb()) {
@@ -299,29 +247,27 @@ export function resetDemoDatabase(db = getDb()) {
 }
 
 function seedProducts(db: DatabaseSync, now: string) {
-  // Each row explicitly carries quote_ready AND published (independent fields) plus simulated.
   const products = [
-    ['product-by001', 'BY001', '美国空派标快（含税）', '空运', '空派专线', ['中国-美国'], ['普货', '纺织品'], ['DDP', '含税清关', '末端派送'], true, '¥ 42.0000/KG 起', '8–10 个工作日', true, false],
-    ['product-by002', 'BY002', '美东大客户空派专线', '空运', '空派专线', ['中国-美国东部'], ['普货', '大票货'], ['大票优惠', '美东覆盖', '预约派送'], true, '¥ 38.5000/KG 起', '9–12 个工作日', true, false],
-    ['product-by003', 'BY003', '美国空派特快带电', '空运', '空派专线', ['中国-美国'], ['带电产品', '消费电子'], ['带电可接', '快速清关', '全程轨迹'], true, '¥ 56.0000/KG 起', '5–7 个工作日', true, false],
-    ['product-by004', 'BY004', '美国空派中技全链路', '空运', '空派专线', ['中国-美国'], ['普货', '带电产品'], ['上门提货', '出口报关', '清关派送'], false, '需人工询价', '7–10 个工作日', false, false],
-    ['product-sim005', 'SIM005', '欧洲空派经济包税线', '空运', '空派专线', ['中国-德国', '中国-法国', '中国-荷兰'], ['普货', '服装'], ['DDP', '欧盟清关', '多国派送'], true, '¥ 36.8000/KG 起', '10–13 个工作日', true, true],
-    ['product-sim006', 'SIM006', '英国空派敏感货专线', '空运', '空派专线', ['中国-英国'], ['化妆品', '弱磁产品'], ['敏感货预审', 'VAT 协同', '本地派送'], false, '需人工询价', '8–11 个工作日', true, true],
-    ['product-sim007', 'SIM007', '美西海运快线（整柜）', '海运', '海运整柜', ['中国-美国西部'], ['普货', '家具', '大件货'], ['整柜', '洛杉矶/长滩', '卡车派送'], true, 'USD 3,280.0000/40HQ 起', '18–24 个自然日', true, true],
-    ['product-sim008', 'SIM008', '美国海运拼箱卡派', '海运', '海运拼箱', ['中国-美国'], ['普货', '大件货'], ['LCL', '仓库集货', '卡车派送'], true, '¥ 1,480.0000/CBM 起', '25–32 个自然日', true, true],
-    ['product-sim009', 'SIM009', '东南亚跨境陆运专线', '陆运', '跨境陆运', ['中国-泰国', '中国-越南', '中国-马来西亚'], ['普货', '工业配件'], ['门到门', '陆路清关', '整车/零担'], false, '需人工询价', '5–9 个工作日', true, true],
-    ['product-sim010', 'SIM010', '日本电商小包特快', '快递', '国际小包', ['中国-日本'], ['电商小件', '普货'], ['一单到底', '末端宅配', '轨迹回传'], true, '¥ 28.0000/KG 起', '3–5 个工作日', true, true],
-    ['product-sim011', 'SIM011', '澳洲空海联运稳定线', '联运', '空海联运', ['中国-澳大利亚'], ['普货', '户外用品'], ['空海联运', '悉尼/墨尔本', '尾程派送'], true, '¥ 22.6000/KG 起', '14–19 个工作日', true, true],
-    ['product-sim012', 'SIM012', '中东空运门到门专线', '空运', '国际空运', ['中国-阿联酋', '中国-沙特'], ['普货', '汽配'], ['机场到门', '本地清关协同', '双清可选'], false, '需人工询价', '6–9 个工作日', true, true]
+    ['product-by001', 'BY001', '美国空派标快（含税）', '空运', '空派专线', ['中国-美国'], ['普货', '纺织品'], ['DDP', '含税清关', '末端派送'], true, '¥ 42.0000/KG 起', '8–10 个工作日', false],
+    ['product-by002', 'BY002', '美东大客户空派专线', '空运', '空派专线', ['中国-美国东部'], ['普货', '大票货'], ['大票优惠', '美东覆盖', '预约派送'], true, '¥ 38.5000/KG 起', '9–12 个工作日', false],
+    ['product-by003', 'BY003', '美国空派特快带电', '空运', '空派专线', ['中国-美国'], ['带电产品', '消费电子'], ['带电可接', '快速清关', '全程轨迹'], true, '¥ 56.0000/KG 起', '5–7 个工作日', false],
+    ['product-by004', 'BY004', '美国空派中技全链路', '空运', '空派专线', ['中国-美国'], ['普货', '带电产品'], ['上门提货', '出口报关', '清关派送'], false, '需人工询价', '7–10 个工作日', false],
+    ['product-sim005', 'SIM005', '欧洲空派经济包税线', '空运', '空派专线', ['中国-德国', '中国-法国', '中国-荷兰'], ['普货', '服装'], ['DDP', '欧盟清关', '多国派送'], true, '¥ 36.8000/KG 起', '10–13 个工作日', true],
+    ['product-sim006', 'SIM006', '英国空派敏感货专线', '空运', '空派专线', ['中国-英国'], ['化妆品', '弱磁产品'], ['敏感货预审', 'VAT 协同', '本地派送'], false, '需人工询价', '8–11 个工作日', true],
+    ['product-sim007', 'SIM007', '美西海运快线（整柜）', '海运', '海运整柜', ['中国-美国西部'], ['普货', '家具', '大件货'], ['整柜', '洛杉矶/长滩', '卡车派送'], true, 'USD 3,280.0000/40HQ 起', '18–24 个自然日', true],
+    ['product-sim008', 'SIM008', '美国海运拼箱卡派', '海运', '海运拼箱', ['中国-美国'], ['普货', '大件货'], ['LCL', '仓库集货', '卡车派送'], true, '¥ 1,480.0000/CBM 起', '25–32 个自然日', true],
+    ['product-sim009', 'SIM009', '东南亚跨境陆运专线', '陆运', '跨境陆运', ['中国-泰国', '中国-越南', '中国-马来西亚'], ['普货', '工业配件'], ['门到门', '陆路清关', '整车/零担'], false, '需人工询价', '5–9 个工作日', true],
+    ['product-sim010', 'SIM010', '日本电商小包特快', '快递', '国际小包', ['中国-日本'], ['电商小件', '普货'], ['一单到底', '末端宅配', '轨迹回传'], true, '¥ 28.0000/KG 起', '3–5 个工作日', true],
+    ['product-sim011', 'SIM011', '澳洲空海联运稳定线', '联运', '空海联运', ['中国-澳大利亚'], ['普货', '户外用品'], ['空海联运', '悉尼/墨尔本', '尾程派送'], true, '¥ 22.6000/KG 起', '14–19 个工作日', true],
+    ['product-sim012', 'SIM012', '中东空运门到门专线', '空运', '国际空运', ['中国-阿联酋', '中国-沙特'], ['普货', '汽配'], ['机场到门', '本地清关协同', '双清可选'], false, '需人工询价', '6–9 个工作日', true]
   ] as const
   const statement = db.prepare(`INSERT INTO products
     (id, code, name, category, transport_mode, routes_json, cargo_types_json, capabilities_json, quote_ready,
      reference_price, transit_time, published, product_version, pms_snapshot_json, marketing_json, simulated, updated_at)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?, ?)`)
-  for (const [id, code, name, category, mode, routes, cargo, capabilities, quote, price, transit, published, simulated] of products) {
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, 1, ?, ?, ?, ?)`)
+  for (const [id, code, name, category, mode, routes, cargo, capabilities, quote, price, transit, simulated] of products) {
     statement.run(id, code, name, category, mode, JSON.stringify(routes), JSON.stringify(cargo), JSON.stringify(capabilities), quote ? 1 : 0,
-      price, transit, published ? 1 : 0,
-      JSON.stringify({ code, name, published: Boolean(published), source: simulated ? 'PoC 模拟 PMS 快照' : 'PMS 原型快照' }),
+      price, transit, JSON.stringify({ code, name, published: true, source: simulated ? 'PoC 模拟 PMS 快照' : 'PMS 原型快照' }),
       JSON.stringify({ headline: `${routes.join(' / ')} · ${transit}`, sellingPoints: capabilities, idealCustomer: cargo.join('、') }),
       simulated ? 1 : 0, now)
   }
@@ -530,10 +476,4 @@ function ensureWebsiteInquiryDemoData(db: DatabaseSync) {
 
 export function newId(prefix: string) {
   return `${prefix}-${randomUUID()}`
-}
-
-/** Invalidate non-accepted matches for a customer. Accepted (human-confirmed) rows are never auto-staled. */
-export function markNonAcceptedMatchesStale(customerId: string, db = getDb(), now = demoNow(db)) {
-  db.prepare('UPDATE match_results SET stale = 1, updated_at = ? WHERE customer_id = ? AND status <> ?')
-    .run(now, customerId, 'accepted')
 }

@@ -1,0 +1,34 @@
+docs(owner-sync): 同步 2 处 owner doc 引用测试数 435→640 (8/21 baseline)
+
+8/19 → 8/21 期间项目测试用例数 615 → 640 (+25: 5 OCU unskip + 6 LLM
+异常 + 3 SQLite lock + 5 副作用回滚 + 3 env 缺失 + 3 agent.ts 业务
+缺口修复), 但 2 处 owner doc 引用了 8/17 时刻的 435 数字。
+
+精确改动:
+- docs/release-regression.md L168: `npm run test:quality` 注释
+  435 条确定性测试 → 640 条确定性测试
+- docs/agent-evaluation.md L82: §5 规则 1
+  npm test (435 条确定性用例) → npm test (640 条确定性用例)
+
+Evidence:
+- 8/21 10:24 本机 baseline 实测: 43 files / 640 tests / 0 fail /
+  50.71s (npm test + nuxt typecheck + agent-eval --check 全绿)
+- 8/19 implementation-report (docs/history/2026-08-19-scope-round/
+  implementation-report-2026-08-19.md): 测试数 615 → 640 的来源
+  commit 链
+- §6.2 owner 决策面 gap: 4 个 owner skill (test-scope-case-designer
+  / test-execution-governor / release-gatekeeper / agent-nondeterministic-
+  evaluator) 的 SKILL.md 工作流均不覆盖"doc 数字维护"职责;
+  435 → 640 是机械数字同步而非业务规则 / 阈值 / 流程变更, 按
+  §6.4 evidence-driven 直接 commit + commit message 留 evidence 链
+
+Out-of-scope (未做):
+- test-process.md / test-scope.md / AGENTS.md / core-regression.json
+  / tests/unit/agent-evaluation.test.ts / package.json scripts
+  注释 全部未动 (不需 435→640 同步或属于其他 owner)
+- 没改 4 份 doc 的章节结构 / 契约 / 阈值 / 流程
+- 没 commit / push 之外的任何 git 操作
+
+Subagent: worker (task bg_2e4ea150-8efa-4433-9341-8a8405442a52)
+Mavis verify: git status --short = 2 行 modified; git diff --stat =
+2 files / +2 -2; git diff 4 行仅 435→640 数字替换。

@@ -1,0 +1,295 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for by56_CAP_Agent/server/api/website/identity.post.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../../index.html">All files</a> / <a href="index.html">by56_CAP_Agent/server/api/website</a> identity.post.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>64/64</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">88.46% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>23/26</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/0</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>64/64</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line high'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { z } from 'zod'
+import { getDb, demoNow, newId, addEvent, markNonAcceptedMatchesStale } from '../../utils/db'
+import { createAgentTask } from '../../utils/agent'
+&nbsp;
+const schema = z.object({
+  inquiryId: z.string().min(1),
+  email: z.string().email(),
+  companyName: z.string().optional().default(''),
+  contactName: z.string().optional().default(''),
+  customerType: z.string().optional().default('unknown'),
+  selectedProductId: z.string().optional().default('')
+})
+&nbsp;
+export default defineEventHandler(async (event) =&gt; {
+  const body = schema.parse(await readBody(event))
+  const db = getDb()
+  const now = demoNow(db)
+  const inquiry = db.prepare('SELECT * FROM inquiries WHERE id = ?').get(body.inquiryId) as any
+  if (!inquiry) throw createError({ statusCode: 404, statusMessage: 'Visitor Session 或询价记录不存在，请重新提交需求' })
+  const recs = JSON.parse(inquiry.<span class="branch-0 cbranch-no" title="branch not covered" >recommendations_json || '[]')</span> as any[]
+  const productId = body.selectedProductId || recs[0]?.productId
+  const isRecommended = recs.some(recommendation =&gt; recommendation?.productId === productId)
+  if (!productId || !isRecommended || !db.prepare('SELECT id FROM products WHERE id = ? AND published = 1').get(productId)) {
+    throw createError({ statusCode: 400, statusMessage: '请选择有效的已发布推荐产品' })
+  }
+  const email = body.email.trim().toLowerCase()
+  const domain = email.split('@')[1<span class="branch-0 cbranch-no" title="branch not covered" >] || ''</span>
+  let contact = db.prepare('SELECT * FROM contacts WHERE email_normalized = ? ORDER BY created_at LIMIT 1').get(email) as any
+  let customer = contact ? db.prepare('SELECT * FROM customers WHERE id = ?').get(contact.customer_id) as any : null
+  if (!customer &amp;&amp; domain) customer = db.prepare(`SELECT * FROM customers WHERE domain = ? AND source = 'website' ORDER BY created_at LIMIT 1`).get(domain) as any
+  let customerId = customer?.id || ''
+  if (!customerId) {
+    customerId = newId('customer-web')
+    db.prepare(`INSERT INTO customers
+      (id, name, source, source_ref, country, city, website, domain, customer_type, status, profile_version, raw_json, facts_json,
+       ai_profile_json, ai_profile_status, last_activity_at, created_at, updated_at)
+      VALUES (?, ?, 'website', ?, '', '', '', ?, ?, 'normal', 1, ?, ?, '{}', 'pending', ?, ?, ?)`)
+      .run(customerId, body.companyName || `网站访客 · ${domain}`, `WEB-${Date.now()}`, domain, body.customerType,
+        JSON.stringify({ firstTouch: '虚拟官网询价', inquiryId: inquiry.id }),
+        JSON.stringify({ capturedEmail: email, companyName: body.companyName, contactName: body.contactName, customerType: body.customerType }), now, now, now)
+  } else {
+    const facts = { ...JSON.parse(customer.<span class="branch-0 cbranch-no" title="branch not covered" >facts_json || '{}')</span>, capturedEmail: email, latestInquiryId: inquiry.id }
+    db.prepare(`UPDATE customers SET facts_json = ?, profile_version = profile_version + 1, ai_profile_status = 'pending', last_activity_at = ?, updated_at = ? WHERE id = ?`)
+      .run(JSON.stringify(facts), now, now, customerId)
+    markNonAcceptedMatchesStale(customerId, db, now)
+    db.prepare(`UPDATE opportunities SET stale_review = 1, updated_at = ? WHERE customer_id = ? AND status IN ('active', 'handed_off')`).run(now, customerId)
+  }
+  if (!contact) {
+    const contactId = newId('contact')
+    db.prepare(`INSERT INTO contacts (id, customer_id, name, title, email, email_normalized, status, is_primary, created_at, updated_at)
+      VALUES (?, ?, ?, '物流负责人', ?, ?, 'contactable', 1, ?, ?)`)
+      .run(contactId, customerId, body.contactName, email, email, now, now)
+    contact = { id: contactId, customer_id: customerId, email, status: 'contactable' }
+  }
+  let opportunity = db.prepare(`SELECT * FROM opportunities WHERE customer_id = ? AND product_id = ? AND status IN ('active', 'handed_off') LIMIT 1`).get(customerId, productId) as any
+  if (!opportunity) {
+    const opportunityId = newId('opp')
+    db.prepare(`INSERT INTO opportunities
+      (id, customer_id, product_id, contact_id, source, stage, status, focus, owner, next_action, due_at, blocker, stale_review,
+       close_reason, ai_summary, created_at, updated_at)
+      VALUES (?, ?, ?, ?, 'passive', 1, 'active', 1, '', '等待 Agent 生成客户画像', ?, '', 0, '', '', ?, ?)`)
+      .run(opportunityId, customerId, productId, contact.id, now, now, now)
+    db.prepare('UPDATE opportunities SET focus = 0 WHERE customer_id = ? AND id &lt;&gt; ?').run(customerId, opportunityId)
+    opportunity = db.prepare('SELECT * FROM opportunities WHERE id = ?').get(opportunityId)
+  }
+  db.prepare(`UPDATE inquiries SET customer_id = ?, opportunity_id = ?, status = 'identified', updated_at = ? WHERE id = ?`).run(customerId, opportunity.id, now, inquiry.id)
+  db.prepare('UPDATE website_sessions SET customer_id = ?, updated_at = ? WHERE id = ?').run(customerId, now, inquiry.session_id)
+  addEvent({ opportunityId: opportunity.id, customerId, type: 'website_identity_captured', title: '官网访客已建立客户档案', description: `${email} 已完成身份留资，Agent 开始分析。`, source: 'website', data: { inquiryId: inquiry.id } }, db)
+  return { ok: true, customerId, opportunityId: opportunity.id, task: createAgentTask('customer_profiling', 'customer', customerId, { autoMatch: true, inquiryId: inquiry.id }) }
+})
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-08-20T02:03:18.965Z
+            </div>
+        <script src="../../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../../sorter.js"></script>
+        <script src="../../../../block-navigation.js"></script>
+    </body>
+</html>
+    

@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CAP_Agent 代码问题定位报告</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --bg-soft: #161922;
+    --bg-card: #1a1e2a;
+    --bg-code: #0b0d13;
+    --border: #2a2f3d;
+    --border-strong: #3a4257;
+    --text: #e6e8ee;
+    --text-soft: #a4abbb;
+    --text-dim: #6b7280;
+    --accent: #7c9cff;
+    --accent-soft: rgba(124, 156, 255, 0.12);
+    --red: #ff6b6b;
+    --orange: #ffa94d;
+    --yellow: #ffd43b;
+    --green: #51cf66;
+    --blue: #4dabf7;
+    --purple: #b197fc;
+    --pink: #f783ac;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                 "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 48px 32px 80px;
+  }
+
+  /* ============ Header ============ */
+  .header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 32px;
+    margin-bottom: 48px;
+  }
+  .header .eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border: 1px solid rgba(124, 156, 255, 0.3);
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 18px;
+  }
+  .header h1 {
+    font-size: 34px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+  }
+  .header .sub {
+    color: var(--text-soft);
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 13px;
+  }
+  .meta .chip {
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    color: var(--text-soft);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-family: "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+  }
+  .meta .chip strong { color: var(--text); font-weight: 600; margin-left: 4px; }
+
+  /* ============ Summary table ============ */
+  .summary {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 48px;
+  }
+  .summary h2 {
+    font-size: 18px;
+    margin-bottom: 16px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .summary h2::before {
+    content: "";
+    width: 4px;
+    height: 16px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+  .summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .summary-table th,
+  .summary-table td {
+    text-align: left;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .summary-table th {
+    color: var(--text-soft);
+    font-weight: 600;
+    background: var(--bg-soft);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .summary-table tr:last-child td { border-bottom: none; }
+  .summary-table td.idx {
+    color: var(--text-dim);
+    font-family: "SF Mono", Consolas, monospace;
+    width: 48px;
+  }
+  .summary-table td.prob { color: var(--text); font-weight: 500; }
+  .summary-table td.loc { font-family: "SF Mono", Consolas, monospace; color: var(--blue); font-size: 13px; }
+
+  /* ============ Issue cards ============ */
+  .issue {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 28px;
+    overflow: hidden;
+  }
+  .issue-head {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 28px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-soft);
+  }
+  .issue-num {
+    flex: 0 0 auto;
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    font-size: 16px;
+    font-family: "SF Mono", Consolas, monospace;
+    color: #fff;
+  }
+  .issue[data-tone="red"]    .issue-num { background: linear-gradient(135deg, #ff6b6b, #c92a2a); }
+  .issue[data-tone="orange"] .issue-num { background: linear-gradient(135deg, #ffa94d, #d9480f); }
+  .issue[data-tone="yellow"] .issue-num { background: linear-gradient(135deg, #ffd43b, #f59f00); }
+  .issue[data-tone="green"]  .issue-num { background: linear-gradient(135deg, #51cf66, #2f9e44); }
+  .issue[data-tone="blue"]   .issue-num { background: linear-gradient(135deg, #4dabf7, #1971c2); }
+  .issue[data-tone="purple"] .issue-num { background: linear-gradient(135deg, #b197fc, #7048e8); }
+
+  .issue-title {
+    flex: 1;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .issue-tag {
+    flex: 0 0 auto;
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--border-strong);
+    color: var(--text-soft);
+    background: var(--bg-card);
+  }
+
+  .issue-body { padding: 24px 28px 28px; }
+  .section {
+    margin-top: 20px;
+  }
+  .section:first-child { margin-top: 0; }
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  .section-label::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .desc {
+    color: var(--text);
+    font-size: 14.5px;
+  }
+  .desc strong { color: #fff; font-weight: 600; }
+  .desc code {
+    font-family: "SF Mono", Consolas, monospace;
+    font-size: 13px;
+    padding: 1px 6px;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--yellow);
+  }
+
+  /* Links list */
+  .links {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--blue);
+    text-decoration: none;
+    font-family: "SF Mono", Consolas, monospace;
+    font-size: 13px;
+    padding: 6px 10px;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    width: max-content;
+    max-width: 100%;
+    word-break: break-all;
+    transition: all 0.15s ease;
+  }
+  .links a:hover {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .links a::before { content: "↗"; color: var(--text-dim); }
+
+  /* Code block */
+  pre {
+    background: var(--bg-code);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    overflow-x: auto;
+    font-family: "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 13px;
+    line-height: 1.65;
+    color: #e6e8ee;
+  }
+  pre .kw   { color: #c792ea; }
+  pre .str  { color: #c3e88d; }
+  pre .num  { color: #f78c6c; }
+  pre .com  { color: #6b7280; font-style: italic; }
+  pre .fn   { color: #82aaff; }
+  pre .var  { color: #ffcb6b; }
+  pre .punc { color: #89ddff; }
+
+  /* Owner block */
+  .owner {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-size: 14px;
+    color: var(--text);
+  }
+  .owner .badge {
+    flex: 0 0 auto;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border: 1px solid rgba(124, 156, 255, 0.3);
+  }
+  .owner .owner-text { color: var(--text); }
+  .owner .owner-text code {
+    font-family: "SF Mono", Consolas, monospace;
+    font-size: 13px;
+    color: var(--yellow);
+  }
+
+  /* Notes list */
+  .notes {
+    list-style: none;
+    padding-left: 0;
+  }
+  .notes li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 8px;
+    color: var(--text-soft);
+    font-size: 14px;
+  }
+  .notes li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--accent);
+  }
+  .notes li code {
+    font-family: "SF Mono", Consolas, monospace;
+    font-size: 13px;
+    color: var(--yellow);
+  }
+  .notes li a {
+    color: var(--blue);
+    text-decoration: none;
+    word-break: break-all;
+  }
+  .notes li a:hover { text-decoration: underline; }
+
+  /* Footer */
+  .footer {
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 12.5px;
+    text-align: center;
+  }
+  .footer code {
+    font-family: "SF Mono", Consolas, monospace;
+    color: var(--text-soft);
+  }
+
+  @media (max-width: 720px) {
+    .page { padding: 28px 16px 60px; }
+    .header h1 { font-size: 24px; }
+    .issue-head { padding: 16px 18px; gap: 12px; }
+    .issue-body { padding: 18px; }
+    .summary { padding: 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ===== Header ===== -->
+  <div class="header">
+    <span class="eyebrow">Code Audit Report</span>
+    <h1>CAP_Agent 代码问题定位报告</h1>
+    <p class="sub">已按 GitHub 仓库 <code style="font-family: 'SF Mono', Consolas, monospace; color: var(--yellow);">main</code> 原始代码重新核对,以下定位不依赖本地新增测试代码。</p>
+    <div class="meta">
+      <span class="chip">报告日期 <strong>2026-07-28</strong></span>
+      <span class="chip">仓库 <strong>HHD490/CAP_Agent</strong></span>
+      <span class="chip">HEAD <strong>65e213a64941131e7b2353dafb7ffb93fc762371</strong></span>
+      <span class="chip">分支 <strong>main</strong></span>
+      <span class="chip">问题数 <strong>6</strong></span>
+    </div>
+  </div>
+
+  <!-- ===== Summary ===== -->
+  <div class="summary">
+    <h2>最终归属汇总</h2>
+    <table class="summary-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>问题</th>
+          <th>代码归属</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="idx">01</td>
+          <td class="prob">BY004 发布状态错误</td>
+          <td class="loc">server/utils/db.ts、server/utils/agent.ts</td>
+        </tr>
+        <tr>
+          <td class="idx">02</td>
+          <td class="prob">空收件人 draft / stage 5</td>
+          <td class="loc">server/utils/agent.ts</td>
+        </tr>
+        <tr>
+          <td class="idx">03</td>
+          <td class="prob">任意 customer_type 落库</td>
+          <td class="loc">server/utils/agent.ts</td>
+        </tr>
+        <tr>
+          <td class="idx">04</td>
+          <td class="prob">accepted 匹配被 stale</td>
+          <td class="loc">server/api/website/rematch.post.ts</td>
+        </tr>
+        <tr>
+          <td class="idx">05</td>
+          <td class="prob">recommended_product 类型冲突</td>
+          <td class="loc">server/utils/agent.ts</td>
+        </tr>
+        <tr>
+          <td class="idx">06</td>
+          <td class="prob">Windows xlsx HTTP 加载错误</td>
+          <td class="loc">server/api/import/customers.post.ts</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ===== Issue 01 ===== -->
+  <div class="issue" data-tone="red">
+    <div class="issue-head">
+      <div class="issue-num">01</div>
+      <div class="issue-title">BY004 被错误标记为已发布</div>
+      <span class="issue-tag">数据/Agent 链路</span>
+    </div>
+    <div class="issue-body">
+      <div class="section">
+        <div class="section-label">代码位置</div>
+        <div class="links">
+          <a href="https://github.com/HHD490/CAP_Agent/blob/65e213a64941131e7b2353dafb7ffb93fc762371/server/utils/db.ts#L254" target="_blank">server/utils/db.ts#L254</a>
+          <a href="https://github.com/HHD490/CAP_Agent/blob/65e213a64941131e7b2353dafb7ffb93fc762371/server/utils/db.ts#L264-L270" target="_blank">server/utils/db.ts#L264-L270</a>
+          <a href="https://github.com/HHD490/CAP_Agent/blob/65e213a64941131e7b2353dafb7ffb93fc762371/server/utils/agent.ts#L168-L180" target="_blank">server/utils/agent.ts#L168-L180</a>
+          <a href="https://github.com/HHD490/CAP_Agent/blob/65e213a64941131e7b2353dafb7ffb93fc762371/server/utils/agent.ts#L293-L298" target="_blank">server/utils/agent.ts#L293-L298</a>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label">问题描述</div>
+        <p class="desc">
+          <code>server/utils/db.ts#L254</code> 中的 <code>false</code> 是 <code>quote_ready</code>,不是 <code>published</code>。
+          <code>server/utils/db.ts#L264-L270</code> 的 SQL 将所有产品的 <code>published</code> 硬编码为 <code>1</code>,
+          PMS 快照也写入 <code>published: true</code>。
+          <code>server/utils/agent.ts#L168-L180</code> 只筛选 <code>published = 1</code> 的产品进入模型上下文。
+          <code>server/utils/agent.ts#L293-L298</code> 中模型返回 BY004 后,因为数据库中是已发布状态,会继续落库。
+        </p>
+      </div>
+      <div class="section">
+        <div class="section-label">SQL 关键片段</div>
+        <pre><span class="com">-- L264-L270 硬编码 published=1</span>
+<span class="kw">INSERT INTO</span> products (code, name, published, quote_ready, ...)
+<span class="kw">VALUES</span> (?, ?, <span class="num">1</span>, <span class="num">0</span>, ...);</pre>
+      </div>
+      <div class="section">
+        <div class="section-label">问题归属</div>
+        <div class="owner">
+          <span class="badge">Owner</span>
+          <span class="owner-text"><code>server/utils/db.ts</code> 的产品 seed 和 <code>server/utils/agent.ts</code> 的产品匹配链路</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Issue 02 ===== -->
+  <div class="issue" data-tone="orange">
+    <div class="issue-head">
+      <div class="issue-num">02</div>
+      <div class="issue-title">无联系人仍生成空收件人 draft,并推进 stage 5</div>
+      <span class="issue-tag">Agent 流程</span>
+    </div>
+    <div class="issue-body">
+      <div class="section">
+        <div class="section-label">代码位置</div>
+        <div class="links">
+          <a href="https://github.com/HHD490/CAP_Agent/blob/65e213a64941131e7b2353dafb7ffb93fc762371/server/utils/agent.ts#L319-L326" target="_blank">server/utils/agent.ts#L319-L326</a>
+          <a href="https://github.com/HHD490/CAP_Agent/blob/65e213a64941131e7b2353dafb7ffb93fc762371/server/utils/agent.ts#L327-L330" target="_blank">server/utils/agent.ts#L327-L330</a>
+          <a href="https://github.com/HHD490/CAP_Agent/blob/65e213a64941131e7b2353dafb7ffb93fc762371/server/utils/db.ts#L367" target="_blank">server/utils/db.ts#L367</a>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label">问题描述</div>
+        <p class="desc">
+          <code>server/utils/agent.ts#L319-L326</code>:没有联系人时,<code>contact</code> 为 <code>null</code>,
+          通过 <code>contact?.email || ''</code> 写入空收件人。
+          <code>server/utils/agent.ts#L327-L330</code>:仍将机会推进到 <code>stage = 5</code>,并清空 <code>blocker</code>。
+          <code>server/utils/db.ts#L367</code>:<code>opp-06</code> 的 <code>contact_id</code> 本身就是空值。
+        </p>
+      </div>
+      <div class="section">
+        <div class="section-label">关键代码</div>
+        <pre><span class="com">// L319-L326</span>
+<span class="kw">const</span> recipient = contact?.email || <span class="str">''</span>;  <span class="com">// ⚠ 空字符串落库</span>
+
+<span class="com">// L327-L330</span>
+<span class="kw">await</span> <span class="fn">updateOpportunity</span>(opp.id, {
+  stage: <span class="num">5</span>,        <span class="com">// ⚠ 无收件人仍推进</span>
+  blocker: <span class="kw">null</span>,
+});</pre>
+      </div>
+      <div class="section">
+        <div class="section-label">问题归属</div>
+        <div class="owner">
+          <span class="badge">Owner</span>
+          <span class="owner-text"><code>server/utils/agent.ts</code> 的 <code>applyResult → outreach_drafting</code> 分支</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Issue 03 ===== -->
+  <div class="issue" data-tone="yellow">
+    <div class="issue-head">
+      <div class="issue-num">03</div>
+      <div class="issue-title">customer_type 允许任意字符串并写入客户</div>
+      <span class="issue-tag">Schema 校验</span>
+    </div>
+    <div class="issue-body">
+      <div class="section">
+        <div class="section-label">代码位置</div>
+        <div class="links">
+          <a href="https://github.com/HHD490/CAP_Agent/blob/65e213a64941131e7b2353dafb7ffb93fc762371/server/utils/agent.ts#L30-L40" target="_blank">server/utils/agent.ts#L30-L40</a>
+          <a href="https://github.com/HHD490/CAP_Agent/blob/65e213a64941131e7b2353dafb7ffb93fc762371/server/utils/agent.ts#L283-L284" target="_blank">server/utils/agent.ts#L283-L284</a>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label">问题描述</div>
+        <p class="desc">
+          <code>server/utils/agent.ts#L30-L40</code> 中 <code>customer_type</code> 仅校验为 <code>z.string()</code>,
+          没有业务枚举限制。
+          <code>server/utils/agent.ts#L283-L284</code> 解析通过后直接写入 <code>customers.customer_type</code>。
+          因此 <code>high_value_partner</code> 这类未定义类型也可能被接受并持久化。
+        </p>
+      </div>
+      <div class="section">
+        <div class="section-label">Schema 片段</div>
+        <pre><span class="com">// L30-L40 缺少业务枚举</span>
+<span class="kw">const</span> profileSchema = z.<span class="fn">object</span>({
+  customer_type: z.<span class="fn">string</span>(),  <span class="com">// ⚠ 无枚举约束</span>
+  ...
+});</pre>
+      </div>
+      <div class="section">
+        <div class="section-label">问题归属</div>
+        <div class="owner">
+          <span class="badge">Owner</span>
+          <span class="owner-text"><code>server/utils/agent.ts</code> 的 <code>profileSchema</code> 和画像结果落库逻辑</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Issue 04 ===== -->
+  <div class="issue" data-tone="green">
+    <div class="issue-head">
+      <div class="issue-num">04</div>
+      <div class="issue-title">重匹配会把 accepted 匹配标记为 stale</div>
+      <span class="issue-tag">官网接口</span>
+    </div>
+    <div class="issue-body">
+      <div class="section">
+        <div class="section-label">代码位置</div>
+        <div class="links">
+          <a href="https://github.com/HHD490/CAP_Agent/blob/65e213a64941131e7b2353dafb7ffb93fc762371/server/api/website/rematch.post.ts#L29-L35" target="_blank">server/api/website/rematch.post.ts#L29-L35</a>
+          <a href="https://github.com/HHD490/CAP_Agent/blob/65e213a64941131e7b2353dafb7ffb93fc762371/server/api/website/identity.post.ts#L39" target="_blank">server/api/website/identity.post.ts#L39 (相邻路径需复核)</a>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label">问题描述</div>
+        <p class="desc">
+          第 34 行 <code>UPDATE match_results SET stale = 1 WHERE customer_id = ?</code>
+          该 SQL 没有排除 <code>status = 'accepted'</code>,所以人工已接受的匹配也会被标记为过期。
+        </p>
+      </div>
+      <div class="section">
+        <div class="section-label">SQL 片段</div>
+        <pre><span class="com">-- L34:缺少 status 过滤</span>
+<span class="kw">UPDATE</span> match_results
+<span class="kw">SET</span> stale = <span class="num">1</span>
+<span class="kw">WHERE</span> customer_id = ?;  <span class="com">-- ⚠ 应追加 AND status != 'accepted'</span></pre>
+      </div>
+      <div class="section">
+        <div class="section-label">需要复核</div>
+        <ul class="notes">
+          <li><code>server/api/website/identity.post.ts#L39</code> 相邻路径同样需开发复核</li>
+        </ul>
+      </div>
+      <div class="section">
+        <div class="section-label">问题归属</div>
+        <div class="owner">
+          <span class="badge">Owner</span>
+          <span class="owner-text">官网身份/重匹配接口的匹配失效逻辑</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Issue 05 ===== -->
+  <div class="issue" data-tone="blue">
+    <div class="issue-head">
+      <div class="issue-num">05</div>
+      <div class="issue-title">recommended_product 字段契约不兼容</div>
+      <span class="issue-tag">契约</span>
+    </div>
+    <div class="issue-body">
+      <div class="section">
+        <div class="section-label">代码位置</div>
+        <div class="links">
+          <a href="https://github.com/HHD490/CAP_Agent/blob/65e213a64941131e7b2353dafb7ffb93fc762371/server/utils/agent.ts#L70-L77" target="_blank">server/utils/agent.ts#L70-L77</a>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label">问题描述</div>
+        <p class="desc">
+          <code>server/utils/agent.ts#L70-L77</code> 中 <code>recommended_product: z.string()</code>。
+          如果模型返回对象:
+        </p>
+        <pre><span class="punc">{</span>
+  <span class="var">"product_code"</span>: <span class="str">"BY002"</span>,
+  <span class="var">"product_name"</span>: <span class="str">"美东大客户空派专线"</span>
+<span class="punc">}</span></pre>
+        <p class="desc" style="margin-top:10px">
+          则会在 Agent 结果 schema 校验阶段失败,无法进入交接摘要写入和事件生成流程。
+        </p>
+      </div>
+      <div class="section">
+        <div class="section-label">Schema 片段</div>
+        <pre><span class="com">// L70-L77</span>
+recommended_product: z.<span class="fn">string</span>(),  <span class="com">// ⚠ 无法接收对象结构</span></pre>
+      </div>
+      <div class="section">
+        <div class="section-label">问题归属</div>
+        <div class="owner">
+          <span class="badge">Owner</span>
+          <span class="owner-text"><code>server/utils/agent.ts</code> 的 <code>handoffSchema</code>,属于 Provider 与后端输出契约不一致</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Issue 06 ===== -->
+  <div class="issue" data-tone="purple">
+    <div class="issue-head">
+      <div class="issue-num">06</div>
+      <div class="issue-title">Windows Nitro 下 xlsx 静态加载导致 HTTP 运行时错误</div>
+      <span class="issue-tag">运行环境</span>
+    </div>
+    <div class="issue-body">
+      <div class="section">
+        <div class="section-label">代码位置</div>
+        <div class="links">
+          <a href="https://github.com/HHD490/CAP_Agent/blob/65e213a64941131e7b2353dafb7ffb93fc762371/server/api/import/customers.post.ts#L1" target="_blank">server/api/import/customers.post.ts#L1</a>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label">问题描述</div>
+        <p class="desc">
+          原始仓库代码:
+        </p>
+        <pre><span class="kw">import</span> * <span class="kw">as</span> XLSX <span class="kw">from</span> <span class="str">'xlsx'</span>  <span class="com">// ⚠ 静态加载触发 ESM URL SCHEME 错误</span></pre>
+        <p class="desc" style="margin-top:10px">
+          在 Windows Nitro dev server 中,该静态加载触发 <code>ERR_UNSUPPORTED_ESM_URL_SCHEME</code>。
+          注意:问题源头不是 <code>server/api/state.get.ts</code>,而是 Nitro 加载 <code>customers.post.ts</code> 时的
+          ESM/CommonJS 路径兼容问题;<code>/api/state</code> 只是最先暴露这个运行时错误的接口。
+        </p>
+      </div>
+      <div class="section">
+        <div class="section-label">根因对比</div>
+        <ul class="notes">
+          <li><code>server/api/state.get.ts</code> — <strong>非源头</strong>,只是被错误地指向</li>
+          <li><code>server/api/import/customers.post.ts#L1</code> — <strong>真正源头</strong>:静态 <code>import * as XLSX from 'xlsx'</code></li>
+          <li><code>/api/state</code> — 只是最先暴露这个运行时错误的接口</li>
+        </ul>
+      </div>
+      <div class="section">
+        <div class="section-label">问题归属</div>
+        <div class="owner">
+          <span class="badge">Owner</span>
+          <span class="owner-text"><code>server/api/import/customers.post.ts</code> 的 Windows/Nitro 模块加载兼容性</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Footer ===== -->
+  <div class="footer">
+    报告日期 <code>2026-07-28</code> · 基于 <code>main</code> @ <code>65e213a64941131e7b2353dafb7ffb93fc762371</code> 生成 ·
+    仅作代码定位参考,未做本地新增测试代码依赖
+  </div>
+
+</div>
+</body>
+</html>

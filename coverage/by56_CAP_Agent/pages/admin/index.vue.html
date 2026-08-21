@@ -1,0 +1,499 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for by56_CAP_Agent/pages/admin/index.vue</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">by56_CAP_Agent/pages/admin</a> index.vue</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>0/138</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>0/138</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a>
+<a name='L130'></a><a href='#L130'>130</a>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >&lt;script setup lang="ts"&gt;</span></span></span>
+<span class="cstat-no" title="statement not covered" >import { IconUserGroup, IconCalendarClock, IconExclamationCircle, IconRobot, IconRefresh, IconClockCircle, IconImport } from '@arco-design/web-vue/es/icon'</span>
+<span class="cstat-no" title="statement not covered" >import { opportunityStages } from '~/utils/opportunity'</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >definePageMeta({ layout: 'admin' })</span>
+<span class="cstat-no" title="statement not covered" >const router = useRouter()</span>
+<span class="cstat-no" title="statement not covered" >const { state, loading, doAction, resetDemo, advanceTime } = useDemoState()</span>
+<span class="cstat-no" title="statement not covered" >const resetting = ref(false)</span>
+<span class="cstat-no" title="statement not covered" >const advancing = ref(false)</span>
+<span class="cstat-no" title="statement not covered" >const syncing = ref(false)</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >const stageCounts = computed(() =&gt; opportunityStages.map((label, index) =&gt; ({</span>
+<span class="cstat-no" title="statement not covered" >  label,</span>
+<span class="cstat-no" title="statement not covered" >  stage: index + 1,</span>
+<span class="cstat-no" title="statement not covered" >  count: state.value?.opportunities.filter(item =&gt; item.stage === index + 1).length || 0</span>
+<span class="cstat-no" title="statement not covered" >})))</span>
+<span class="cstat-no" title="statement not covered" >const maxStageCount = computed(() =&gt; Math.max(1, ...stageCounts.value.map(item =&gt; item.count)))</span>
+<span class="cstat-no" title="statement not covered" >const humanItems = computed(() =&gt; (state.value?.opportunities || []).filter(item =&gt; item.status === 'active' &amp;&amp; (item.blocker || item.stage === 5 || item.stage === 8 || (item.dueAt &amp;&amp; item.dueAt &lt;= (state.value?.currentTime || '')))).slice(0, 6))</span>
+<span class="cstat-no" title="statement not covered" >const recentTasks = computed(() =&gt; state.value?.tasks.slice(0, 5) || [])</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >async function handleReset() {</span>
+<span class="cstat-no" title="statement not covered" >  resetting.value = true</span>
+<span class="cstat-no" title="statement not covered" >  try { await resetDemo() } finally { resetting.value = false }</span>
+<span class="cstat-no" title="statement not covered" >}</span>
+<span class="cstat-no" title="statement not covered" >async function handleAdvance() {</span>
+<span class="cstat-no" title="statement not covered" >  advancing.value = true</span>
+<span class="cstat-no" title="statement not covered" >  try { await advanceTime(3) } finally { advancing.value = false }</span>
+<span class="cstat-no" title="statement not covered" >}</span>
+<span class="cstat-no" title="statement not covered" >async function handleSync() {</span>
+<span class="cstat-no" title="statement not covered" >  syncing.value = true</span>
+<span class="cstat-no" title="statement not covered" >  try { await doAction('sync_wca', '', {}, '模拟 WCA 同步完成') } finally { syncing.value = false }</span>
+<span class="cstat-no" title="statement not covered" >}</span>
+<span class="cstat-no" title="statement not covered" >function openOpportunity(id: string) { void router.push({ path: '/admin/opportunities', query: { opportunity: id } }) }</span>
+<span class="cstat-no" title="statement not covered" >function date(value?: string) { return value ? value.slice(0, 16).replace('T', ' ') : '—' }</span>
+<span class="cstat-no" title="statement not covered" >function taskStatus(status: string) { return status === 'completed' ? 'success' : status === 'failed' ? 'error' : status === 'stopped' ? 'neutral' : 'info' }</span>
+<span class="cstat-no" title="statement not covered" >&lt;/script&gt;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >&lt;template&gt;</span>
+<span class="cstat-no" title="statement not covered" >  &lt;div&gt;</span>
+<span class="cstat-no" title="statement not covered" >    &lt;header class="page-header page-header--simple"&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;div class="page-header__copy"&gt;&lt;h1&gt;获客总览&lt;/h1&gt;&lt;p&gt;主动与被动获客统一进入客户、匹配和机会协作链路&lt;/p&gt;&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;div class="page-header__actions"&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;a-button :loading="syncing" @click="handleSync"&gt;&lt;template #icon&gt;&lt;IconImport /&gt;&lt;/template&gt;模拟 WCA 同步&lt;/a-button&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;a-button :loading="advancing" @click="handleAdvance"&gt;&lt;template #icon&gt;&lt;IconClockCircle /&gt;&lt;/template&gt;推进 3 天&lt;/a-button&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;a-popconfirm content="确认恢复全部演示数据？当前操作记录会被重置。" @ok="handleReset"&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;a-button :loading="resetting"&gt;&lt;template #icon&gt;&lt;IconRefresh /&gt;&lt;/template&gt;重置演示&lt;/a-button&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;/a-popconfirm&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >    &lt;/header&gt;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    &lt;main class="page-content"&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;a-alert v-if="state &amp;&amp; !state.model.configured" type="warning" class="page-section"&gt;</span>
+<span class="cstat-no" title="statement not covered" >        模型接口尚未配置。历史种子结果仍可查看，但新触发的 Agent 任务会明确失败，不会使用伪造回退结果。</span>
+<span class="cstat-no" title="statement not covered" >      &lt;/a-alert&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;a-alert v-else type="info" class="page-section"&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;template #title&gt;{{ state?.model.name }} 已接入&lt;/template&gt;</span>
+<span class="cstat-no" title="statement not covered" >        OpenAI 标准兼容接口 · 思考模式 {{ state?.model.thinkingMode }} · 推理努力 {{ state?.model.reasoningEffort }} · 上下文 {{ (state?.model.contextWindowTokens || 0).toLocaleString() }} tokens</span>
+<span class="cstat-no" title="statement not covered" >      &lt;/a-alert&gt;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >      &lt;section class="metric-grid page-section" aria-label="运营动作统计"&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;article class="card metric-card"&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div class="metric-card__top"&gt;&lt;span&gt;客户档案&lt;/span&gt;&lt;span class="metric-card__icon"&gt;&lt;IconUserGroup /&gt;&lt;/span&gt;&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div class="metric-card__value"&gt;{{ state?.counts.totalCustomers ?? '—' }}&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div class="metric-card__foot"&gt;WCA 模拟 {{ state?.counts.wcaCustomers || 0 }} · 官网 {{ state?.counts.websiteCustomers || 0 }}&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;/article&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;article class="card metric-card metric-card--ai"&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div class="metric-card__top"&gt;&lt;span&gt;运行中的 Agent&lt;/span&gt;&lt;span class="metric-card__icon"&gt;&lt;IconRobot /&gt;&lt;/span&gt;&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div class="metric-card__value"&gt;{{ state?.counts.runningTasks ?? '—' }}&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div class="metric-card__foot"&gt;待生成画像 {{ state?.counts.pendingProfiles || 0 }}&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;/article&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;article class="card metric-card metric-card--warning"&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div class="metric-card__top"&gt;&lt;span&gt;需要人工动作&lt;/span&gt;&lt;span class="metric-card__icon"&gt;&lt;IconExclamationCircle /&gt;&lt;/span&gt;&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div class="metric-card__value"&gt;{{ state?.counts.humanTasks ?? '—' }}&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div class="metric-card__foot"&gt;过期匹配 {{ state?.counts.staleMatches || 0 }} · 待分配 {{ state?.counts.explicitIntent || 0 }}&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;/article&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;article class="card metric-card metric-card--success"&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div class="metric-card__top"&gt;&lt;span&gt;进行中机会&lt;/span&gt;&lt;span class="metric-card__icon"&gt;&lt;IconCalendarClock /&gt;&lt;/span&gt;&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div class="metric-card__value"&gt;{{ state?.counts.activeOpportunities ?? '—' }}&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div class="metric-card__foot"&gt;仅记录已执行动作和当前进度，不代表转化成功&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;/article&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;/section&gt;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >      &lt;section class="two-column page-section"&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;article class="card"&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div class="card__header"&gt;&lt;h2&gt;机会阶段分布&lt;/h2&gt;&lt;span class="muted"&gt;共 {{ state?.opportunities.length || 0 }} 条机会&lt;/span&gt;&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div class="card__body stage-distribution"&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;div v-for="item in stageCounts" :key="item.stage" class="stage-distribution__row"&gt;</span>
+<span class="cstat-no" title="statement not covered" >              &lt;span class="stage-distribution__name"&gt;{{ item.stage }}. {{ item.label }}&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >              &lt;span class="stage-distribution__bar"&gt;&lt;i :style="{ width: `${(item.count / maxStageCount) * 100}%` }" /&gt;&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >              &lt;strong&gt;{{ item.count }}&lt;/strong&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;/article&gt;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >        &lt;article class="card"&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div class="card__header"&gt;&lt;h2&gt;最近 Agent 任务&lt;/h2&gt;&lt;NuxtLink class="card__header-actions text-primary" to="/admin/tasks"&gt;查看全部&lt;/NuxtLink&gt;&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div class="card__body task-mini-list"&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;div v-for="task in recentTasks" :key="task.id" class="task-mini-item"&gt;</span>
+<span class="cstat-no" title="statement not covered" >              &lt;span :class="['task-mini-item__dot', task.status]" /&gt;</span>
+<span class="cstat-no" title="statement not covered" >              &lt;div&gt;&lt;strong&gt;{{ task.currentStep }}&lt;/strong&gt;&lt;small&gt;{{ task.model || '—' }} · {{ date(task.createdAt) }}&lt;/small&gt;&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >              &lt;span :class="['semantic-tag', taskStatus(task.status)]"&gt;{{ task.status }}&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;div v-if="!recentTasks.length" class="empty-state"&gt;暂无 Agent 任务&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;/article&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;/section&gt;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >      &lt;section class="card page-section"&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;div class="card__header"&gt;&lt;h2&gt;人工待办&lt;/h2&gt;&lt;span class="muted"&gt;AI 建议只有经人工确认后才成为正式动作&lt;/span&gt;&lt;NuxtLink class="card__header-actions text-primary" to="/admin/opportunities"&gt;进入机会中心&lt;/NuxtLink&gt;&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;a-table :data="humanItems" :pagination="false" :loading="loading" row-key="id"&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;template #columns&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;a-table-column title="客户 / 产品" :width="290"&gt;</span>
+<span class="cstat-no" title="statement not covered" >              &lt;template #cell="{ record }"&gt;&lt;a-link @click="openOpportunity(record.id)"&gt;{{ record.customer?.name }}&lt;/a-link&gt;&lt;div class="muted"&gt;{{ record.product?.name }}&lt;/div&gt;&lt;/template&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;/a-table-column&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;a-table-column title="当前进度" :width="300"&gt;&lt;template #cell="{ record }"&gt;&lt;StageProgress :stage="record.stage" compact :status="record.status" /&gt;&lt;/template&gt;&lt;/a-table-column&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;a-table-column title="下一步动作"&gt;&lt;template #cell="{ record }"&gt;&lt;span&gt;{{ record.nextAction || '—' }}&lt;/span&gt;&lt;div v-if="record.blocker" class="danger-text"&gt;阻塞：{{ record.blocker }}&lt;/div&gt;&lt;/template&gt;&lt;/a-table-column&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;a-table-column title="负责人" :width="110"&gt;&lt;template #cell="{ record }"&gt;{{ record.owner || '待分配' }}&lt;/template&gt;&lt;/a-table-column&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;a-table-column title="截止时间" :width="150"&gt;&lt;template #cell="{ record }"&gt;&lt;span :class="{ 'danger-text': record.dueAt &amp;&amp; record.dueAt &lt;= (state?.currentTime || '') }"&gt;{{ date(record.dueAt) }}&lt;/span&gt;&lt;/template&gt;&lt;/a-table-column&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;a-table-column title="操作" :width="90"&gt;&lt;template #cell="{ record }"&gt;&lt;a-button type="text" @click="openOpportunity(record.id)"&gt;处理&lt;/a-button&gt;&lt;/template&gt;&lt;/a-table-column&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;/template&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;/a-table&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;/section&gt;</span>
+<span class="cstat-no" title="statement not covered" >    &lt;/main&gt;</span>
+<span class="cstat-no" title="statement not covered" >  &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >&lt;/template&gt;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >&lt;style scoped&gt;</span>
+<span class="cstat-no" title="statement not covered" >.stage-distribution { display: grid; gap: 11px; }</span>
+<span class="cstat-no" title="statement not covered" >.stage-distribution__row { display: grid; grid-template-columns: 180px 1fr 24px; align-items: center; gap: 12px; }</span>
+<span class="cstat-no" title="statement not covered" >.stage-distribution__name { font-size: 13px; }</span>
+<span class="cstat-no" title="statement not covered" >.stage-distribution__bar { height: 8px; border-radius: 99px; background: var(--color-bg-surface); overflow: hidden; }</span>
+<span class="cstat-no" title="statement not covered" >.stage-distribution__bar i { display: block; height: 100%; min-width: 3px; border-radius: inherit; background: linear-gradient(90deg, var(--color-primary-400), var(--color-ai)); }</span>
+<span class="cstat-no" title="statement not covered" >.task-mini-list { display: grid; gap: 4px; }</span>
+<span class="cstat-no" title="statement not covered" >.task-mini-item { min-height: 54px; display: grid; grid-template-columns: 10px 1fr auto; align-items: center; gap: 10px; border-bottom: 1px solid var(--color-divider); }</span>
+<span class="cstat-no" title="statement not covered" >.task-mini-item:last-child { border-bottom: 0; }.task-mini-item strong,.task-mini-item small { display: block; }.task-mini-item small { color: var(--color-text-secondary); }</span>
+<span class="cstat-no" title="statement not covered" >.task-mini-item__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-text-secondary); }.task-mini-item__dot.completed { background: var(--color-success); }.task-mini-item__dot.failed { background: var(--color-error); }.task-mini-item__dot.running,.task-mini-item__dot.queued { background: var(--color-ai); box-shadow: 0 0 0 4px rgba(123,79,246,.12); }</span>
+<span class="cstat-no" title="statement not covered" >@media (max-width: 767px) { .stage-distribution__row { grid-template-columns: 120px 1fr 20px; }.page-header__actions .arco-btn:first-child { display: none; } }</span>
+<span class="cstat-no" title="statement not covered" >&lt;/style&gt;</span>
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-08-20T02:03:18.965Z
+            </div>
+        <script src="../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../sorter.js"></script>
+        <script src="../../../block-navigation.js"></script>
+    </body>
+</html>
+    

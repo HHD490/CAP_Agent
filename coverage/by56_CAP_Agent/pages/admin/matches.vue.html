@@ -1,0 +1,412 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for by56_CAP_Agent/pages/admin/matches.vue</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">by56_CAP_Agent/pages/admin</a> matches.vue</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>0/109</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>0/109</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >&lt;script setup lang="ts"&gt;</span></span></span>
+<span class="cstat-no" title="statement not covered" >import { Message } from '@arco-design/web-vue'</span>
+<span class="cstat-no" title="statement not covered" >import { IconRobot, IconRefresh, IconCheck, IconExclamationCircle, IconEmail } from '@arco-design/web-vue/es/icon'</span>
+<span class="cstat-no" title="statement not covered" >import type { MatchResult } from '../../shared/types'</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >definePageMeta({ layout: 'admin' })</span>
+<span class="cstat-no" title="statement not covered" >const router = useRouter()</span>
+<span class="cstat-no" title="statement not covered" >const { state, loading, runAgent, doAction, refresh } = useDemoState()</span>
+<span class="cstat-no" title="statement not covered" >const status = ref('all')</span>
+<span class="cstat-no" title="statement not covered" >const source = ref('all')</span>
+<span class="cstat-no" title="statement not covered" >const selected = ref&lt;MatchResult | null&gt;(null)</span>
+<span class="cstat-no" title="statement not covered" >const modalOpen = ref(false)</span>
+<span class="cstat-no" title="statement not covered" >const contactId = ref('')</span>
+<span class="cstat-no" title="statement not covered" >const overrideBlockers = ref(false)</span>
+<span class="cstat-no" title="statement not covered" >const accepting = ref(false)</span>
+<span class="cstat-no" title="statement not covered" >const batchRunning = ref(false)</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >const matches = computed(() =&gt; (state.value?.matches || []).filter(match =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >  const sourceValue = match.customer?.source === 'website' ? 'passive' : 'active'</span>
+<span class="cstat-no" title="statement not covered" >  const statusHit = status.value === 'all' || (status.value === 'stale' ? match.stale : match.status === status.value)</span>
+<span class="cstat-no" title="statement not covered" >  return statusHit &amp;&amp; (source.value === 'all' || sourceValue === source.value)</span>
+<span class="cstat-no" title="statement not covered" >}))</span>
+<span class="cstat-no" title="statement not covered" >const runningCustomerIds = computed(() =&gt; new Set((state.value?.tasks || []).filter(task =&gt; task.mode === 'product_matching' &amp;&amp; ['queued','running','waiting'].includes(task.status)).map(task =&gt; task.targetId)))</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >function openAccept(match: MatchResult) {</span>
+<span class="cstat-no" title="statement not covered" >  selected.value = match</span>
+<span class="cstat-no" title="statement not covered" >  const contacts = match.customer?.contacts || []</span>
+<span class="cstat-no" title="statement not covered" >  contactId.value = contacts.find(contact =&gt; contact.status === 'contactable' &amp;&amp; contact.isPrimary)?.id || contacts.find(contact =&gt; contact.status === 'contactable')?.id || ''</span>
+<span class="cstat-no" title="statement not covered" >  overrideBlockers.value = false</span>
+<span class="cstat-no" title="statement not covered" >  modalOpen.value = true</span>
+<span class="cstat-no" title="statement not covered" >}</span>
+<span class="cstat-no" title="statement not covered" >async function acceptMatch() {</span>
+<span class="cstat-no" title="statement not covered" >  if (!selected.value) return</span>
+<span class="cstat-no" title="statement not covered" >  accepting.value = true</span>
+<span class="cstat-no" title="statement not covered" >  try {</span>
+<span class="cstat-no" title="statement not covered" >    const result = await doAction('accept_match', selected.value.id, { contactId: contactId.value, overrideBlockers: overrideBlockers.value }, '匹配已接受，获客机会已创建')</span>
+<span class="cstat-no" title="statement not covered" >    modalOpen.value = false</span>
+<span class="cstat-no" title="statement not covered" >    if (result.opportunityId) void router.push({ path: '/admin/opportunities', query: { opportunity: result.opportunityId } })</span>
+<span class="cstat-no" title="statement not covered" >  } finally { accepting.value = false }</span>
+<span class="cstat-no" title="statement not covered" >}</span>
+<span class="cstat-no" title="statement not covered" >async function rerun(match: MatchResult) { await runAgent('product_matching', 'customer', match.customerId, { triggeredBy: 'manual_match_center' }) }</span>
+<span class="cstat-no" title="statement not covered" >function openOutreach(match: MatchResult) {</span>
+<span class="cstat-no" title="statement not covered" >  const opportunity = state.value?.opportunities.find(item =&gt; item.customerId === match.customerId &amp;&amp; item.productId === match.productId)</span>
+<span class="cstat-no" title="statement not covered" >  if (!opportunity) return Message.error('未找到这条匹配对应的获客机会')</span>
+<span class="cstat-no" title="statement not covered" >  void router.push({ path: '/admin/outreach', query: { opportunity: opportunity.id, focus: 'review' } })</span>
+<span class="cstat-no" title="statement not covered" >}</span>
+<span class="cstat-no" title="statement not covered" >async function batchRerun() {</span>
+<span class="cstat-no" title="statement not covered" >  const customerIds = [...new Set((state.value?.matches || []).filter(match =&gt; match.stale).map(match =&gt; match.customerId))].slice(0, 8)</span>
+<span class="cstat-no" title="statement not covered" >  if (!customerIds.length) return Message.info('当前没有过期匹配')</span>
+<span class="cstat-no" title="statement not covered" >  batchRunning.value = true</span>
+<span class="cstat-no" title="statement not covered" >  try {</span>
+<span class="cstat-no" title="statement not covered" >    for (const id of customerIds) await $fetch('/api/agent/tasks', { method: 'POST', body: { mode: 'product_matching', targetType: 'customer', targetId: id, input: { triggeredBy: 'stale_batch' } } })</span>
+<span class="cstat-no" title="statement not covered" >    Message.info(`已启动 ${customerIds.length} 个重新匹配任务，结果会自动更新`)</span>
+<span class="cstat-no" title="statement not covered" >    await refresh({ quiet: true })</span>
+<span class="cstat-no" title="statement not covered" >  } catch (error: any) { Message.error(error?.data?.statusMessage || '批量任务启动失败') }</span>
+<span class="cstat-no" title="statement not covered" >  finally { batchRunning.value = false }</span>
+<span class="cstat-no" title="statement not covered" >}</span>
+<span class="cstat-no" title="statement not covered" >function confidence(value: string) { return value === 'high' ? '高' : value === 'medium' ? '中' : '低' }</span>
+<span class="cstat-no" title="statement not covered" >&lt;/script&gt;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >&lt;template&gt;</span>
+<span class="cstat-no" title="statement not covered" >  &lt;div&gt;</span>
+<span class="cstat-no" title="statement not covered" >    &lt;header class="page-header"&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;div class="page-header__copy"&gt;&lt;div class="breadcrumbs"&gt;智能获客 / 智能匹配&lt;/div&gt;&lt;h1&gt;智能匹配&lt;/h1&gt;&lt;p&gt;确定性硬筛选 + Agent 语义判断；匹配分数仅用于排序，不代表成交概率&lt;/p&gt;&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;div class="page-header__actions"&gt;&lt;a-button :loading="batchRunning" @click="batchRerun"&gt;&lt;template #icon&gt;&lt;IconRefresh /&gt;&lt;/template&gt;批量重算过期匹配&lt;/a-button&gt;&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >    &lt;/header&gt;</span>
+<span class="cstat-no" title="statement not covered" >    &lt;main class="page-content"&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;section class="card filter-card"&gt;&lt;div class="filter-row"&gt;&lt;div class="field-control"&gt;&lt;span class="field-label"&gt;匹配状态&lt;/span&gt;&lt;a-select v-model="status"&gt;&lt;a-option value="all"&gt;全部状态&lt;/a-option&gt;&lt;a-option value="proposed"&gt;AI 建议&lt;/a-option&gt;&lt;a-option value="accepted"&gt;人工已接受&lt;/a-option&gt;&lt;a-option value="stale"&gt;资料更新 / 待重算&lt;/a-option&gt;&lt;/a-select&gt;&lt;/div&gt;&lt;div class="field-control"&gt;&lt;span class="field-label"&gt;获客来源&lt;/span&gt;&lt;a-select v-model="source"&gt;&lt;a-option value="all"&gt;全部来源&lt;/a-option&gt;&lt;a-option value="active"&gt;主动获客&lt;/a-option&gt;&lt;a-option value="passive"&gt;被动获客&lt;/a-option&gt;&lt;/a-select&gt;&lt;/div&gt;&lt;div /&gt;&lt;div class="filter-actions"&gt;&lt;a-button @click="status='all';source='all'"&gt;重置&lt;/a-button&gt;&lt;a-button type="primary"&gt;查询&lt;/a-button&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;a-alert v-if="state?.counts.staleMatches" type="warning" class="page-section"&gt;有 {{ state.counts.staleMatches }} 条匹配因客户或产品资料更新而过期。旧结果被保留，不会覆盖已接受机会；请由操作者决定是否重算。&lt;/a-alert&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;div class="toolbar"&gt;&lt;span class="count-label"&gt;共 {{ matches.length }} 条公司×产品匹配&lt;/span&gt;&lt;span class="semantic-tag info"&gt;AI 建议 → 人工确认 → 创建机会&lt;/span&gt;&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;section class="match-grid"&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;article v-for="match in matches" :key="match.id" :class="['card', 'match-card', { 'match-card--stale': match.stale }]"&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div class="match-card__header"&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;div&gt;&lt;span :class="['source-tag', match.customer?.source === 'website' ? 'passive' : 'active']"&gt;{{ match.customer?.source === 'website' ? '被动获客' : '主动获客' }}&lt;/span&gt;&lt;span v-if="match.stale" class="semantic-tag warning"&gt;资料已更新&lt;/span&gt;&lt;span v-if="match.status === 'accepted'" class="semantic-tag success"&gt;已接受&lt;/span&gt;&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;div class="fit-score"&gt;&lt;strong&gt;{{ match.score }}&lt;/strong&gt;&lt;span&gt;匹配分&lt;/span&gt;&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div class="match-pair"&gt;&lt;div&gt;&lt;small&gt;客户&lt;/small&gt;&lt;h2&gt;{{ match.customer?.name }}&lt;/h2&gt;&lt;p&gt;{{ match.customer?.country }} · {{ match.customer?.city }}&lt;/p&gt;&lt;/div&gt;&lt;div class="match-pair__arrow"&gt;→&lt;/div&gt;&lt;div&gt;&lt;small&gt;产品&lt;/small&gt;&lt;h2&gt;{{ match.product?.name }}&lt;/h2&gt;&lt;p&gt;{{ match.product?.routes.join(' / ') }}&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div class="match-meta"&gt;&lt;span&gt;置信度：{{ confidence(match.confidence) }}&lt;/span&gt;&lt;span&gt;客户档案 V{{ match.customerVersion }}&lt;/span&gt;&lt;span&gt;产品 V{{ match.productVersion }}&lt;/span&gt;&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;AiInsightCard title="匹配判断" :status="match.blockers.length ? 'risk' : 'suggested'" :evidence="match.evidence"&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;div v-if="match.risks.length"&gt;&lt;strong&gt;风险&lt;/strong&gt;&lt;ul class="business-list"&gt;&lt;li v-for="item in match.risks" :key="item"&gt;{{ item }}&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;div v-if="match.missing.length" class="match-list"&gt;&lt;strong&gt;缺失信息&lt;/strong&gt;&lt;ul class="business-list"&gt;&lt;li v-for="item in match.missing" :key="item"&gt;{{ item }}&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;div v-if="match.blockers.length" class="match-list danger-text"&gt;&lt;strong&gt;硬阻断&lt;/strong&gt;&lt;ul class="business-list"&gt;&lt;li v-for="item in match.blockers" :key="item"&gt;{{ item }}&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;/AiInsightCard&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div class="match-card__actions"&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;a-button :loading="runningCustomerIds.has(match.customerId)" @click="rerun(match)"&gt;&lt;template #icon&gt;&lt;IconRobot /&gt;&lt;/template&gt;{{ match.stale ? '重新匹配' : '再次运行 Agent' }}&lt;/a-button&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;a-button v-if="match.status !== 'accepted'" type="primary" :disabled="match.stale" @click="openAccept(match)"&gt;&lt;template #icon&gt;&lt;IconCheck /&gt;&lt;/template&gt;接受匹配&lt;/a-button&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;a-button v-else @click="openOutreach(match)"&gt;&lt;template #icon&gt;&lt;IconEmail /&gt;&lt;/template&gt;查看建联邮箱&lt;/a-button&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;/article&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;div v-if="!matches.length &amp;&amp; !loading" class="card empty-state"&gt;未找到相关匹配，请调整筛选条件&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;/section&gt;</span>
+<span class="cstat-no" title="statement not covered" >    &lt;/main&gt;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    &lt;a-modal v-model:visible="modalOpen" title="确认产品匹配并创建机会" :width="560" :ok-loading="accepting" @ok="acceptMatch"&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;div v-if="selected"&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;a-alert type="info" class="modal-section"&gt;接受后会创建获客机会；选择有效联系人后，系统将自动启动 Agent 生成中文建联草稿。&lt;/a-alert&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;dl class="detail-grid modal-section"&gt;&lt;div class="detail-field"&gt;&lt;dt&gt;客户&lt;/dt&gt;&lt;dd&gt;{{ selected.customer?.name }}&lt;/dd&gt;&lt;/div&gt;&lt;div class="detail-field"&gt;&lt;dt&gt;产品&lt;/dt&gt;&lt;dd&gt;{{ selected.product?.name }}&lt;/dd&gt;&lt;/div&gt;&lt;div class="detail-field"&gt;&lt;dt&gt;匹配分&lt;/dt&gt;&lt;dd&gt;{{ selected.score }} / 100&lt;/dd&gt;&lt;/div&gt;&lt;div class="detail-field"&gt;&lt;dt&gt;置信度&lt;/dt&gt;&lt;dd&gt;{{ confidence(selected.confidence) }}&lt;/dd&gt;&lt;/div&gt;&lt;/dl&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;div class="field-control"&gt;&lt;span class="field-label"&gt;建联联系人&lt;/span&gt;&lt;a-select v-model="contactId" allow-clear placeholder="可暂不选择，机会将进入联系人待补充状态"&gt;&lt;a-option v-for="contact in selected.customer?.contacts" :key="contact.id" :value="contact.id" :disabled="contact.status !== 'contactable'"&gt;{{ contact.name || '未命名' }} · {{ contact.email }} · {{ contact.status }}&lt;/a-option&gt;&lt;/a-select&gt;&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;a-alert v-if="selected.blockers.length" type="error" class="modal-section"&gt;&lt;template #title&gt;&lt;IconExclamationCircle /&gt; 存在硬阻断项&lt;/template&gt;{{ selected.blockers.join('；') }}&lt;/a-alert&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;a-checkbox v-if="selected.blockers.length" v-model="overrideBlockers"&gt;我已人工核查并确认仍要接受该匹配&lt;/a-checkbox&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >    &lt;/a-modal&gt;</span>
+<span class="cstat-no" title="statement not covered" >  &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >&lt;/template&gt;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >&lt;style scoped&gt;</span>
+<span class="cstat-no" title="statement not covered" >.match-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; }.match-card { padding: 18px; }.match-card--stale { border-color: rgba(232,125,19,.35); }.match-card__header { display: flex; align-items: flex-start; justify-content: space-between; }.match-card__header &gt; div:first-child { display: flex; gap: 6px; }.fit-score { display: flex; align-items: baseline; gap: 4px; color: var(--color-primary); }.fit-score strong { color: var(--color-primary); font-size: 28px; line-height: 1; }.fit-score span { font-size: 12px; }.match-pair { margin: 16px 0; display: grid; grid-template-columns: 1fr 28px 1fr; align-items: center; gap: 8px; }.match-pair small { color: var(--color-text-secondary); }.match-pair h2 { margin: 3px 0; }.match-pair p { margin: 0; color: var(--color-text-secondary); }.match-pair__arrow { color: var(--color-ai); font-size: 20px; text-align: center; }.match-meta { margin-bottom: 12px; display: flex; gap: 16px; color: var(--color-text-secondary); font-size: 12px; }.match-list { margin-top: 10px; }.match-card__actions { margin-top: 16px; display: flex; justify-content: flex-end; gap: 8px; }.modal-section { margin-bottom: 18px; }</span>
+<span class="cstat-no" title="statement not covered" >@media (max-width: 1100px) { .match-grid { grid-template-columns: 1fr; } } @media (max-width: 767px) { .match-pair { grid-template-columns: 1fr; }.match-pair__arrow { transform: rotate(90deg); }.match-meta { flex-wrap: wrap; } }</span>
+<span class="cstat-no" title="statement not covered" >&lt;/style&gt;</span>
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-08-20T02:03:18.965Z
+            </div>
+        <script src="../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../sorter.js"></script>
+        <script src="../../../block-navigation.js"></script>
+    </body>
+</html>
+    

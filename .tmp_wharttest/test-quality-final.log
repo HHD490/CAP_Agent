@@ -1,0 +1,43 @@
+﻿
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mD:/by56_CAP_Agent[39m
+
+ [32m✓[39m tests/unit/demo-actions-workflow.test.ts [2m([22m[2m41 tests[22m[2m)[22m[33m 1949[2mms[22m[39m
+ [32m✓[39m tests/integration/website-journey.test.ts [2m([22m[2m35 tests[22m[2m)[22m[33m 1608[2mms[22m[39m
+ [32m✓[39m tests/unit/state-endpoint.test.ts [2m([22m[2m30 tests[22m[2m)[22m[33m 1516[2mms[22m[39m
+ [32m✓[39m tests/unit/agent-context-and-result.test.ts [2m([22m[2m33 tests[22m[2m)[22m[33m 1459[2mms[22m[39m
+ [32m✓[39m tests/integration/import-xlsx.test.ts [2m([22m[2m17 tests[22m[2m)[22m[33m 1315[2mms[22m[39m
+ [32m✓[39m tests/unit/state-website-coverage.test.ts [2m([22m[2m25 tests[22m[2m)[22m[33m 1095[2mms[22m[39m
+ [32m✓[39m tests/unit/smoke-entry.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 1804[2mms[22m[39m
+   [33m[2m✓[22m[39m SMOKE-ENTRY: discoverable Windows Nitro smoke commands[2m > [22mSMOKE-ENTRY-001: vitest.smoke.config.ts discovers at least two smoke tests [33m 1803[2mms[22m[39m
+ [32m✓[39m tests/unit/outreach-contact.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 544[2mms[22m[39m
+ [32m✓[39m tests/unit/agent-lifecycle.test.ts [2m([22m[2m18 tests[22m[2m)[22m[33m 963[2mms[22m[39m
+ [32m✓[39m tests/integration/nfr-evidence.test.ts [2m([22m[2m16 tests[22m[2m)[22m[33m 1010[2mms[22m[39m
+ [32m✓[39m tests/unit/agent-reply-qualification.test.ts [2m([22m[2m15 tests[22m[2m)[22m[33m 962[2mms[22m[39m
+ [32m✓[39m tests/unit/parse-json-response.test.ts [2m([22m[2m16 tests[22m[2m)[22m[33m 895[2mms[22m[39m
+ [32m✓[39m tests/integration/agent-tasks-endpoint.test.ts [2m([22m[2m19 tests[22m[2m)[22m[33m 875[2mms[22m[39m
+ [32m✓[39m tests/unit/agent-edge-cases.test.ts [2m([22m[2m16 tests[22m[2m)[22m[33m 829[2mms[22m[39m
+ [32m✓[39m tests/integration/demo-action-residual-branches.test.ts [2m([22m[2m17 tests[22m[2m)[22m[33m 721[2mms[22m[39m
+ [32m✓[39m tests/unit/advance-time-reminders.test.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 746[2mms[22m[39m
+ [32m✓[39m tests/unit/db-utils.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 575[2mms[22m[39m
+ [32m✓[39m tests/unit/agent-tasks-edge.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 470[2mms[22m[39m
+ [32m✓[39m tests/unit/website-recommendations.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 451[2mms[22m[39m
+ [32m✓[39m tests/unit/mark-non-accepted-matches-stale.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 367[2mms[22m[39m
+ [32m✓[39m tests/unit/legacy-publish.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 339[2mms[22m[39m
+ [32m✓[39m tests/unit/profile-type.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 342[2mms[22m[39m
+ [32m✓[39m tests/integration/rematch-identity-stale.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 275[2mms[22m[39m
+ [32m✓[39m tests/unit/handoff-legacy.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 346[2mms[22m[39m
+ [32m✓[39m tests/unit/handoff-contract.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 260[2mms[22m[39m
+ [32m✓[39m tests/integration/demo-action-stale.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 203[2mms[22m[39m
+ [32m✓[39m tests/unit/demo-reset.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 171[2mms[22m[39m
+ [32m✓[39m tests/unit/product-publish.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 151[2mms[22m[39m
+ [32m✓[39m tests/unit/agent-evaluation.test.ts [2m([22m[2m14 tests[22m[2m)[22m[32m 29[2mms[22m[39m
+ [32m✓[39m tests/unit/agent-schemas.test.ts [2m([22m[2m87 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tests/unit/use-demo-state.test.ts [2m([22m[2m31 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m tests/unit/opportunity-stages.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 3[2mms[22m[39m
+ [32m✓[39m tests/unit/is-valid-outreach-contact.test.ts [2m([22m[2m20 tests[22m[2m)[22m[32m 3[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m33 passed[39m[22m[90m (33)[39m
+[2m      Tests [22m [1m[32m556 passed[39m[22m[90m (556)[39m
+[2m   Start at [22m 12:21:40
+[2m   Duration [22m 32.68s[2m (transform 379ms, setup 90ms, collect 3.06s, tests 22.30s, environment 4ms, prepare 2.12s)[22m
+

@@ -1,0 +1,1105 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for by56_CAP_Agent/pages/admin/outreach.vue</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">by56_CAP_Agent/pages/admin</a> outreach.vue</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>0/340</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>0/340</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a>
+<a name='L130'></a><a href='#L130'>130</a>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a>
+<a name='L155'></a><a href='#L155'>155</a>
+<a name='L156'></a><a href='#L156'>156</a>
+<a name='L157'></a><a href='#L157'>157</a>
+<a name='L158'></a><a href='#L158'>158</a>
+<a name='L159'></a><a href='#L159'>159</a>
+<a name='L160'></a><a href='#L160'>160</a>
+<a name='L161'></a><a href='#L161'>161</a>
+<a name='L162'></a><a href='#L162'>162</a>
+<a name='L163'></a><a href='#L163'>163</a>
+<a name='L164'></a><a href='#L164'>164</a>
+<a name='L165'></a><a href='#L165'>165</a>
+<a name='L166'></a><a href='#L166'>166</a>
+<a name='L167'></a><a href='#L167'>167</a>
+<a name='L168'></a><a href='#L168'>168</a>
+<a name='L169'></a><a href='#L169'>169</a>
+<a name='L170'></a><a href='#L170'>170</a>
+<a name='L171'></a><a href='#L171'>171</a>
+<a name='L172'></a><a href='#L172'>172</a>
+<a name='L173'></a><a href='#L173'>173</a>
+<a name='L174'></a><a href='#L174'>174</a>
+<a name='L175'></a><a href='#L175'>175</a>
+<a name='L176'></a><a href='#L176'>176</a>
+<a name='L177'></a><a href='#L177'>177</a>
+<a name='L178'></a><a href='#L178'>178</a>
+<a name='L179'></a><a href='#L179'>179</a>
+<a name='L180'></a><a href='#L180'>180</a>
+<a name='L181'></a><a href='#L181'>181</a>
+<a name='L182'></a><a href='#L182'>182</a>
+<a name='L183'></a><a href='#L183'>183</a>
+<a name='L184'></a><a href='#L184'>184</a>
+<a name='L185'></a><a href='#L185'>185</a>
+<a name='L186'></a><a href='#L186'>186</a>
+<a name='L187'></a><a href='#L187'>187</a>
+<a name='L188'></a><a href='#L188'>188</a>
+<a name='L189'></a><a href='#L189'>189</a>
+<a name='L190'></a><a href='#L190'>190</a>
+<a name='L191'></a><a href='#L191'>191</a>
+<a name='L192'></a><a href='#L192'>192</a>
+<a name='L193'></a><a href='#L193'>193</a>
+<a name='L194'></a><a href='#L194'>194</a>
+<a name='L195'></a><a href='#L195'>195</a>
+<a name='L196'></a><a href='#L196'>196</a>
+<a name='L197'></a><a href='#L197'>197</a>
+<a name='L198'></a><a href='#L198'>198</a>
+<a name='L199'></a><a href='#L199'>199</a>
+<a name='L200'></a><a href='#L200'>200</a>
+<a name='L201'></a><a href='#L201'>201</a>
+<a name='L202'></a><a href='#L202'>202</a>
+<a name='L203'></a><a href='#L203'>203</a>
+<a name='L204'></a><a href='#L204'>204</a>
+<a name='L205'></a><a href='#L205'>205</a>
+<a name='L206'></a><a href='#L206'>206</a>
+<a name='L207'></a><a href='#L207'>207</a>
+<a name='L208'></a><a href='#L208'>208</a>
+<a name='L209'></a><a href='#L209'>209</a>
+<a name='L210'></a><a href='#L210'>210</a>
+<a name='L211'></a><a href='#L211'>211</a>
+<a name='L212'></a><a href='#L212'>212</a>
+<a name='L213'></a><a href='#L213'>213</a>
+<a name='L214'></a><a href='#L214'>214</a>
+<a name='L215'></a><a href='#L215'>215</a>
+<a name='L216'></a><a href='#L216'>216</a>
+<a name='L217'></a><a href='#L217'>217</a>
+<a name='L218'></a><a href='#L218'>218</a>
+<a name='L219'></a><a href='#L219'>219</a>
+<a name='L220'></a><a href='#L220'>220</a>
+<a name='L221'></a><a href='#L221'>221</a>
+<a name='L222'></a><a href='#L222'>222</a>
+<a name='L223'></a><a href='#L223'>223</a>
+<a name='L224'></a><a href='#L224'>224</a>
+<a name='L225'></a><a href='#L225'>225</a>
+<a name='L226'></a><a href='#L226'>226</a>
+<a name='L227'></a><a href='#L227'>227</a>
+<a name='L228'></a><a href='#L228'>228</a>
+<a name='L229'></a><a href='#L229'>229</a>
+<a name='L230'></a><a href='#L230'>230</a>
+<a name='L231'></a><a href='#L231'>231</a>
+<a name='L232'></a><a href='#L232'>232</a>
+<a name='L233'></a><a href='#L233'>233</a>
+<a name='L234'></a><a href='#L234'>234</a>
+<a name='L235'></a><a href='#L235'>235</a>
+<a name='L236'></a><a href='#L236'>236</a>
+<a name='L237'></a><a href='#L237'>237</a>
+<a name='L238'></a><a href='#L238'>238</a>
+<a name='L239'></a><a href='#L239'>239</a>
+<a name='L240'></a><a href='#L240'>240</a>
+<a name='L241'></a><a href='#L241'>241</a>
+<a name='L242'></a><a href='#L242'>242</a>
+<a name='L243'></a><a href='#L243'>243</a>
+<a name='L244'></a><a href='#L244'>244</a>
+<a name='L245'></a><a href='#L245'>245</a>
+<a name='L246'></a><a href='#L246'>246</a>
+<a name='L247'></a><a href='#L247'>247</a>
+<a name='L248'></a><a href='#L248'>248</a>
+<a name='L249'></a><a href='#L249'>249</a>
+<a name='L250'></a><a href='#L250'>250</a>
+<a name='L251'></a><a href='#L251'>251</a>
+<a name='L252'></a><a href='#L252'>252</a>
+<a name='L253'></a><a href='#L253'>253</a>
+<a name='L254'></a><a href='#L254'>254</a>
+<a name='L255'></a><a href='#L255'>255</a>
+<a name='L256'></a><a href='#L256'>256</a>
+<a name='L257'></a><a href='#L257'>257</a>
+<a name='L258'></a><a href='#L258'>258</a>
+<a name='L259'></a><a href='#L259'>259</a>
+<a name='L260'></a><a href='#L260'>260</a>
+<a name='L261'></a><a href='#L261'>261</a>
+<a name='L262'></a><a href='#L262'>262</a>
+<a name='L263'></a><a href='#L263'>263</a>
+<a name='L264'></a><a href='#L264'>264</a>
+<a name='L265'></a><a href='#L265'>265</a>
+<a name='L266'></a><a href='#L266'>266</a>
+<a name='L267'></a><a href='#L267'>267</a>
+<a name='L268'></a><a href='#L268'>268</a>
+<a name='L269'></a><a href='#L269'>269</a>
+<a name='L270'></a><a href='#L270'>270</a>
+<a name='L271'></a><a href='#L271'>271</a>
+<a name='L272'></a><a href='#L272'>272</a>
+<a name='L273'></a><a href='#L273'>273</a>
+<a name='L274'></a><a href='#L274'>274</a>
+<a name='L275'></a><a href='#L275'>275</a>
+<a name='L276'></a><a href='#L276'>276</a>
+<a name='L277'></a><a href='#L277'>277</a>
+<a name='L278'></a><a href='#L278'>278</a>
+<a name='L279'></a><a href='#L279'>279</a>
+<a name='L280'></a><a href='#L280'>280</a>
+<a name='L281'></a><a href='#L281'>281</a>
+<a name='L282'></a><a href='#L282'>282</a>
+<a name='L283'></a><a href='#L283'>283</a>
+<a name='L284'></a><a href='#L284'>284</a>
+<a name='L285'></a><a href='#L285'>285</a>
+<a name='L286'></a><a href='#L286'>286</a>
+<a name='L287'></a><a href='#L287'>287</a>
+<a name='L288'></a><a href='#L288'>288</a>
+<a name='L289'></a><a href='#L289'>289</a>
+<a name='L290'></a><a href='#L290'>290</a>
+<a name='L291'></a><a href='#L291'>291</a>
+<a name='L292'></a><a href='#L292'>292</a>
+<a name='L293'></a><a href='#L293'>293</a>
+<a name='L294'></a><a href='#L294'>294</a>
+<a name='L295'></a><a href='#L295'>295</a>
+<a name='L296'></a><a href='#L296'>296</a>
+<a name='L297'></a><a href='#L297'>297</a>
+<a name='L298'></a><a href='#L298'>298</a>
+<a name='L299'></a><a href='#L299'>299</a>
+<a name='L300'></a><a href='#L300'>300</a>
+<a name='L301'></a><a href='#L301'>301</a>
+<a name='L302'></a><a href='#L302'>302</a>
+<a name='L303'></a><a href='#L303'>303</a>
+<a name='L304'></a><a href='#L304'>304</a>
+<a name='L305'></a><a href='#L305'>305</a>
+<a name='L306'></a><a href='#L306'>306</a>
+<a name='L307'></a><a href='#L307'>307</a>
+<a name='L308'></a><a href='#L308'>308</a>
+<a name='L309'></a><a href='#L309'>309</a>
+<a name='L310'></a><a href='#L310'>310</a>
+<a name='L311'></a><a href='#L311'>311</a>
+<a name='L312'></a><a href='#L312'>312</a>
+<a name='L313'></a><a href='#L313'>313</a>
+<a name='L314'></a><a href='#L314'>314</a>
+<a name='L315'></a><a href='#L315'>315</a>
+<a name='L316'></a><a href='#L316'>316</a>
+<a name='L317'></a><a href='#L317'>317</a>
+<a name='L318'></a><a href='#L318'>318</a>
+<a name='L319'></a><a href='#L319'>319</a>
+<a name='L320'></a><a href='#L320'>320</a>
+<a name='L321'></a><a href='#L321'>321</a>
+<a name='L322'></a><a href='#L322'>322</a>
+<a name='L323'></a><a href='#L323'>323</a>
+<a name='L324'></a><a href='#L324'>324</a>
+<a name='L325'></a><a href='#L325'>325</a>
+<a name='L326'></a><a href='#L326'>326</a>
+<a name='L327'></a><a href='#L327'>327</a>
+<a name='L328'></a><a href='#L328'>328</a>
+<a name='L329'></a><a href='#L329'>329</a>
+<a name='L330'></a><a href='#L330'>330</a>
+<a name='L331'></a><a href='#L331'>331</a>
+<a name='L332'></a><a href='#L332'>332</a>
+<a name='L333'></a><a href='#L333'>333</a>
+<a name='L334'></a><a href='#L334'>334</a>
+<a name='L335'></a><a href='#L335'>335</a>
+<a name='L336'></a><a href='#L336'>336</a>
+<a name='L337'></a><a href='#L337'>337</a>
+<a name='L338'></a><a href='#L338'>338</a>
+<a name='L339'></a><a href='#L339'>339</a>
+<a name='L340'></a><a href='#L340'>340</a>
+<a name='L341'></a><a href='#L341'>341</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >&lt;script setup lang="ts"&gt;</span></span></span>
+<span class="cstat-no" title="statement not covered" >import { IconEmail, IconRobot, IconSend } from '@arco-design/web-vue/es/icon'</span>
+<span class="cstat-no" title="statement not covered" >import type { Opportunity, TimelineEvent } from '../../shared/types'</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >definePageMeta({ layout: 'admin' })</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >type ConversationStatus = 'draft' | 'contacted' | 'replied'</span>
+<span class="cstat-no" title="statement not covered" >type Direction = 'inbound' | 'outbound' | 'system'</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >interface ConversationMessage {</span>
+<span class="cstat-no" title="statement not covered" >  id: string</span>
+<span class="cstat-no" title="statement not covered" >  direction: Direction</span>
+<span class="cstat-no" title="statement not covered" >  author: string</span>
+<span class="cstat-no" title="statement not covered" >  body: string</span>
+<span class="cstat-no" title="statement not covered" >  translation?: string</span>
+<span class="cstat-no" title="statement not covered" >  time: string</span>
+<span class="cstat-no" title="statement not covered" >  state?: string</span>
+<span class="cstat-no" title="statement not covered" >  aiGenerated?: boolean</span>
+<span class="cstat-no" title="statement not covered" >}</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >interface ConversationThread {</span>
+<span class="cstat-no" title="statement not covered" >  id: string</span>
+<span class="cstat-no" title="statement not covered" >  opportunityId: string</span>
+<span class="cstat-no" title="statement not covered" >  customerName: string</span>
+<span class="cstat-no" title="statement not covered" >  productName: string</span>
+<span class="cstat-no" title="statement not covered" >  country: string</span>
+<span class="cstat-no" title="statement not covered" >  language: string</span>
+<span class="cstat-no" title="statement not covered" >  languageLabel: string</span>
+<span class="cstat-no" title="statement not covered" >  status: ConversationStatus</span>
+<span class="cstat-no" title="statement not covered" >  statusLabel: string</span>
+<span class="cstat-no" title="statement not covered" >  subject: string</span>
+<span class="cstat-no" title="statement not covered" >  recipient: string</span>
+<span class="cstat-no" title="statement not covered" >  simulated: boolean</span>
+<span class="cstat-no" title="statement not covered" >  messages: ConversationMessage[]</span>
+<span class="cstat-no" title="statement not covered" >  composerBody: string</span>
+<span class="cstat-no" title="statement not covered" >}</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >const route = useRoute()</span>
+<span class="cstat-no" title="statement not covered" >const router = useRouter()</span>
+<span class="cstat-no" title="statement not covered" >const { state, loading } = useDemoState()</span>
+<span class="cstat-no" title="statement not covered" >const keyword = ref('')</span>
+<span class="cstat-no" title="statement not covered" >const language = ref('all')</span>
+<span class="cstat-no" title="statement not covered" >const status = ref('all')</span>
+<span class="cstat-no" title="statement not covered" >const selectedThreadId = ref('')</span>
+<span class="cstat-no" title="statement not covered" >const composerLanguage = ref('zh')</span>
+<span class="cstat-no" title="statement not covered" >const composerBody = ref('')</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >const demoTemplates: ConversationThread[] = [</span>
+<span class="cstat-no" title="statement not covered" >  {</span>
+<span class="cstat-no" title="statement not covered" >    id: 'thread-us', opportunityId: 'opp-01', customerName: 'Atlas 洛杉矶 Logistics', productName: '美国空派标快（含税）',</span>
+<span class="cstat-no" title="statement not covered" >    country: '美国', language: 'en', languageLabel: 'English', status: 'replied', statusLabel: '客户已回复',</span>
+<span class="cstat-no" title="statement not covered" >    subject: 'China–US air freight partnership', recipient: 'alex@demo-forwarder-01.example', simulated: true,</span>
+<span class="cstat-no" title="statement not covered" >    composerBody: 'Hi Alex, thank you for confirming the lane. We can prepare the next-week capacity and partner rate sheet for your review.',</span>
+<span class="cstat-no" title="statement not covered" >    messages: [</span>
+<span class="cstat-no" title="statement not covered" >      { id: 'us-1', direction: 'outbound', author: '我方 · AI 辅助', body: 'Hi Alex, based on your strong final-mile coverage in the United States, we would like to explore cooperation on our China–US priority air freight service.', translation: '您好 Alex，基于贵司在美国本地派送方面的优势，我们希望探讨中国至美国空派标快的合作。', time: '07-16 11:00', state: '邮件已送达', aiGenerated: true },</span>
+<span class="cstat-no" title="statement not covered" >      { id: 'us-2', direction: 'inbound', author: 'Alex · Atlas Logistics', body: 'Thanks for reaching out. Please send your capacity and partner rate sheet for next week. We can schedule a call on Thursday.', translation: '感谢联系。请发送下周舱位和合作价表，我们可以在周四安排电话沟通。', time: '07-17 09:20', state: '客户回复' },</span>
+<span class="cstat-no" title="statement not covered" >      { id: 'us-3', direction: 'system', author: 'Agent', body: '识别为明确意向：客户提出具体资料要求并主动建议会议时间。', time: '07-17 09:21', state: 'AI 意向判断' }</span>
+<span class="cstat-no" title="statement not covered" >    ]</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  {</span>
+<span class="cstat-no" title="statement not covered" >    id: 'thread-de', opportunityId: 'opp-05', customerName: 'SwiftBridge 汉堡 Logistics', productName: '欧洲空派经济包税线',</span>
+<span class="cstat-no" title="statement not covered" >    country: '德国', language: 'de', languageLabel: 'Deutsch', status: 'contacted', statusLabel: '等待回复',</span>
+<span class="cstat-no" title="statement not covered" >    subject: 'Zusammenarbeit für Luftfracht nach Deutschland', recipient: 'partnership@demo-forwarder-05.example', simulated: true,</span>
+<span class="cstat-no" title="statement not covered" >    composerBody: 'Guten Tag, wir möchten gemeinsam eine erste Testsendung für unsere Luftfrachtlinie nach Deutschland planen.',</span>
+<span class="cstat-no" title="statement not covered" >    messages: [</span>
+<span class="cstat-no" title="statement not covered" >      { id: 'de-1', direction: 'outbound', author: '我方 · AI 辅助', body: 'Guten Tag, aufgrund Ihres starken Zollabfertigungs- und Zustellnetzwerks in Deutschland möchten wir eine Zusammenarbeit für unsere Economy-Luftfrachtlinie prüfen.', translation: '您好，考虑到贵司在德国的清关和派送网络，我们希望评估欧洲空派经济包税线的合作机会。', time: '07-17 08:45', state: '邮件已送达', aiGenerated: true },</span>
+<span class="cstat-no" title="statement not covered" >      { id: 'de-2', direction: 'outbound', author: '我方跟进', body: 'Gerne senden wir Ihnen eine kurze Leistungsübersicht und schlagen anschließend einen 20-minütigen Austausch vor.', translation: '我们可以先发送简要能力说明，随后安排一次 20 分钟的沟通。', time: '07-18 10:10', state: '跟进邮件' }</span>
+<span class="cstat-no" title="statement not covered" >    ]</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  {</span>
+<span class="cstat-no" title="statement not covered" >    id: 'thread-jp', opportunityId: 'demo-jp', customerName: 'BlueHarbor 东京 Logistics', productName: '日本空运门到门专线',</span>
+<span class="cstat-no" title="statement not covered" >    country: '日本', language: 'ja', languageLabel: '日本語', status: 'replied', statusLabel: '客户已回复',</span>
+<span class="cstat-no" title="statement not covered" >    subject: '中国発・日本向け航空輸送のご提案', recipient: 'sales@blueharbor-tokyo.example', simulated: true,</span>
+<span class="cstat-no" title="statement not covered" >    composerBody: 'ご返信ありがとうございます。来週火曜日の午後にオンラインミーティングを設定いたします。',</span>
+<span class="cstat-no" title="statement not covered" >    messages: [</span>
+<span class="cstat-no" title="statement not covered" >      { id: 'jp-1', direction: 'outbound', author: '我方 · AI 辅助', body: 'ご担当者様、中国発・日本向け航空輸送について、貴社の通関・配送ネットワークと連携できる可能性をご相談させてください。', translation: '您好，我们希望就中国至日本空运业务，探讨与贵司清关及派送网络合作的可能性。', time: '07-15 14:30', state: 'メール送信済み', aiGenerated: true },</span>
+<span class="cstat-no" title="statement not covered" >      { id: 'jp-2', direction: 'inbound', author: '佐藤様 · BlueHarbor', body: 'ご連絡ありがとうございます。越境EC貨物の月間ボリュームと想定リードタイムを教えてください。来週の打ち合わせも可能です。', translation: '感谢联系。请告知跨境电商货物的月度货量和预计时效，下周也可以安排会议。', time: '07-16 09:05', state: '客户回复' },</span>
+<span class="cstat-no" title="statement not covered" >      { id: 'jp-3', direction: 'system', author: 'Agent', body: '识别为明确意向：客户询问月度货量与时效，并同意安排会议。', time: '07-16 09:06', state: 'AI 意向判断' }</span>
+<span class="cstat-no" title="statement not covered" >    ]</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  {</span>
+<span class="cstat-no" title="statement not covered" >    id: 'thread-es', opportunityId: 'demo-es', customerName: 'CargoVista 巴塞罗那 Logistics', productName: '欧洲海运拼箱协同产品',</span>
+<span class="cstat-no" title="statement not covered" >    country: '西班牙', language: 'es', languageLabel: 'Español', status: 'draft', statusLabel: '待审核',</span>
+<span class="cstat-no" title="statement not covered" >    subject: 'Propuesta de colaboración para carga LCL', recipient: 'maria@cargovista-barcelona.example', simulated: true,</span>
+<span class="cstat-no" title="statement not covered" >    composerBody: 'Hola María, nos gustaría explorar una colaboración para nuestros envíos LCL desde China hacia España y el sur de Europa.',</span>
+<span class="cstat-no" title="statement not covered" >    messages: [</span>
+<span class="cstat-no" title="statement not covered" >      { id: 'es-1', direction: 'outbound', author: 'Agent 草稿', body: 'Hola María, hemos visto la cobertura de CargoVista en Barcelona y creemos que existe una buena oportunidad para colaborar en nuestros envíos LCL desde China.', translation: '您好 María，我们了解到 CargoVista 在巴塞罗那的服务覆盖，希望探讨中国出口海运拼箱方面的合作机会。', time: '07-20 10:15', state: '待人工审核', aiGenerated: true },</span>
+<span class="cstat-no" title="statement not covered" >      { id: 'es-2', direction: 'system', author: 'Agent', body: '已按西班牙语商务邮件习惯完成本地化，并保留单一行动号召。', time: '07-20 10:15', state: '本地化完成' }</span>
+<span class="cstat-no" title="statement not covered" >    ]</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >]</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >function messageFromEvent(event: TimelineEvent): ConversationMessage | null {</span>
+<span class="cstat-no" title="statement not covered" >  if (event.type !== 'reply_received') return null</span>
+<span class="cstat-no" title="statement not covered" >  return { id: event.id, direction: 'inbound', author: '客户联系人', body: event.description, time: shortDate(event.createdAt), state: '客户回复' }</span>
+<span class="cstat-no" title="statement not covered" >}</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >function shortDate(value?: string) {</span>
+<span class="cstat-no" title="statement not covered" >  return value ? value.slice(5, 16).replace('T', ' ') : '—'</span>
+<span class="cstat-no" title="statement not covered" >}</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >function buildActualThread(opportunity: Opportunity): ConversationThread {</span>
+<span class="cstat-no" title="statement not covered" >  const messages: ConversationMessage[] = []</span>
+<span class="cstat-no" title="statement not covered" >  for (const draft of [...(opportunity.drafts || [])].reverse()) {</span>
+<span class="cstat-no" title="statement not covered" >    messages.push({</span>
+<span class="cstat-no" title="statement not covered" >      id: draft.id,</span>
+<span class="cstat-no" title="statement not covered" >      direction: 'outbound',</span>
+<span class="cstat-no" title="statement not covered" >      author: draft.status === 'sent' ? '我方' : 'Agent 草稿',</span>
+<span class="cstat-no" title="statement not covered" >      body: draft.body,</span>
+<span class="cstat-no" title="statement not covered" >      time: shortDate(draft.sentAt || draft.createdAt),</span>
+<span class="cstat-no" title="statement not covered" >      state: draft.status === 'sent' ? '邮件已送达' : '待人工审核',</span>
+<span class="cstat-no" title="statement not covered" >      aiGenerated: draft.status !== 'sent'</span>
+<span class="cstat-no" title="statement not covered" >    })</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >  for (const event of opportunity.events || []) {</span>
+<span class="cstat-no" title="statement not covered" >    const message = messageFromEvent(event)</span>
+<span class="cstat-no" title="statement not covered" >    if (message) messages.push(message)</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >  const latestDraft = opportunity.drafts?.[0]</span>
+<span class="cstat-no" title="statement not covered" >  const hasReply = messages.some(item =&gt; item.direction === 'inbound')</span>
+<span class="cstat-no" title="statement not covered" >  return {</span>
+<span class="cstat-no" title="statement not covered" >    id: `thread-${opportunity.id}`,</span>
+<span class="cstat-no" title="statement not covered" >    opportunityId: opportunity.id,</span>
+<span class="cstat-no" title="statement not covered" >    customerName: opportunity.customer?.name || '未命名客户',</span>
+<span class="cstat-no" title="statement not covered" >    productName: opportunity.product?.name || '待确认产品',</span>
+<span class="cstat-no" title="statement not covered" >    country: opportunity.customer?.country || '未知国家',</span>
+<span class="cstat-no" title="statement not covered" >    language: latestDraft?.language || 'zh',</span>
+<span class="cstat-no" title="statement not covered" >    languageLabel: latestDraft?.language === 'en' ? 'English' : '中文',</span>
+<span class="cstat-no" title="statement not covered" >    status: hasReply ? 'replied' : latestDraft?.status === 'sent' ? 'contacted' : 'draft',</span>
+<span class="cstat-no" title="statement not covered" >    statusLabel: hasReply ? '客户已回复' : latestDraft?.status === 'sent' ? '等待回复' : '待审核',</span>
+<span class="cstat-no" title="statement not covered" >    subject: latestDraft?.subject || '等待 Agent 生成建联主题',</span>
+<span class="cstat-no" title="statement not covered" >    recipient: latestDraft?.recipient || opportunity.contact?.email || '尚未选择联系人',</span>
+<span class="cstat-no" title="statement not covered" >    simulated: true,</span>
+<span class="cstat-no" title="statement not covered" >    messages,</span>
+<span class="cstat-no" title="statement not covered" >    composerBody: latestDraft?.body || 'Agent 尚未生成建联内容。请先补充有效联系人或运行建联内容 Agent。'</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >}</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >const allThreads = computed&lt;ConversationThread[]&gt;(() =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >  const actual = (state.value?.opportunities || []).map(opportunity =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    const template = demoTemplates.find(item =&gt; item.opportunityId === opportunity.id)</span>
+<span class="cstat-no" title="statement not covered" >    if (!template) return buildActualThread(opportunity)</span>
+<span class="cstat-no" title="statement not covered" >    return {</span>
+<span class="cstat-no" title="statement not covered" >      ...template,</span>
+<span class="cstat-no" title="statement not covered" >      customerName: opportunity.customer?.name || template.customerName,</span>
+<span class="cstat-no" title="statement not covered" >      productName: opportunity.product?.name || template.productName,</span>
+<span class="cstat-no" title="statement not covered" >      country: opportunity.customer?.country || template.country</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
+<span class="cstat-no" title="statement not covered" >  })</span>
+<span class="cstat-no" title="statement not covered" >  const actualIds = new Set(actual.map(item =&gt; item.opportunityId))</span>
+<span class="cstat-no" title="statement not covered" >  return [...actual, ...demoTemplates.filter(item =&gt; !actualIds.has(item.opportunityId))]</span>
+<span class="cstat-no" title="statement not covered" >})</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >const threads = computed(() =&gt; allThreads.value.filter(thread =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >  const key = keyword.value.trim().toLowerCase()</span>
+<span class="cstat-no" title="statement not covered" >  const keyHit = !key || [thread.customerName, thread.productName, thread.country, thread.subject].join(' ').toLowerCase().includes(key)</span>
+<span class="cstat-no" title="statement not covered" >  return keyHit &amp;&amp; (language.value === 'all' || thread.language === language.value) &amp;&amp; (status.value === 'all' || thread.status === status.value)</span>
+<span class="cstat-no" title="statement not covered" >}))</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >const selectedThread = computed(() =&gt; allThreads.value.find(item =&gt; item.id === selectedThreadId.value))</span>
+<span class="cstat-no" title="statement not covered" >const isReviewFocus = computed(() =&gt; route.query.focus === 'review' &amp;&amp; route.query.opportunity === selectedThread.value?.opportunityId)</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >watch([allThreads, () =&gt; route.query.opportunity], ([items, opportunityId]) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >  const routeThread = typeof opportunityId === 'string' ? items.find(item =&gt; item.opportunityId === opportunityId) : undefined</span>
+<span class="cstat-no" title="statement not covered" >  if (routeThread) selectedThreadId.value = routeThread.id</span>
+<span class="cstat-no" title="statement not covered" >  else if (!items.some(item =&gt; item.id === selectedThreadId.value)) selectedThreadId.value = items[0]?.id || ''</span>
+<span class="cstat-no" title="statement not covered" >}, { immediate: true })</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >watch(selectedThread, thread =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >  if (!thread) return</span>
+<span class="cstat-no" title="statement not covered" >  composerLanguage.value = thread.language</span>
+<span class="cstat-no" title="statement not covered" >  composerBody.value = thread.composerBody</span>
+<span class="cstat-no" title="statement not covered" >}, { immediate: true })</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >function selectThread(thread: ConversationThread) {</span>
+<span class="cstat-no" title="statement not covered" >  selectedThreadId.value = thread.id</span>
+<span class="cstat-no" title="statement not covered" >  const query = thread.opportunityId.startsWith('demo-') ? {} : { opportunity: thread.opportunityId }</span>
+<span class="cstat-no" title="statement not covered" >  void router.replace({ query })</span>
+<span class="cstat-no" title="statement not covered" >}</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >function statusClass(value: ConversationStatus) {</span>
+<span class="cstat-no" title="statement not covered" >  return value === 'replied' ? 'success' : value === 'contacted' ? 'info' : 'warning'</span>
+<span class="cstat-no" title="statement not covered" >}</span>
+<span class="cstat-no" title="statement not covered" >&lt;/script&gt;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >&lt;template&gt;</span>
+<span class="cstat-no" title="statement not covered" >  &lt;div&gt;</span>
+<span class="cstat-no" title="statement not covered" >    &lt;header class="page-header"&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;div class="page-header__copy"&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;div class="breadcrumbs"&gt;智能获客 / 建联工作台&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;h1&gt;邮件建联会话&lt;/h1&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;p&gt;用聊天方式查看邮件往来；每个气泡仍代表一封真实邮件或 Agent 业务判断&lt;/p&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;div class="page-header__actions"&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;a-button type="primary" @click="navigateTo('/admin/opportunities')"&gt;查看获客机会&lt;/a-button&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >    &lt;/header&gt;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    &lt;main class="page-content"&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;a-alert type="info" class="page-section"&gt;</span>
+<span class="cstat-no" title="statement not covered" >        PoC 已预置中文、英文、德语、日语和西班牙语会话。所有往来均为演示记录，不要求操作者真实发送或模拟回复。</span>
+<span class="cstat-no" title="statement not covered" >      &lt;/a-alert&gt;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >      &lt;section class="card conversation-filters"&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;a-input-search v-model="keyword" allow-clear placeholder="搜索客户、国家、产品或主题" /&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;div class="field-control"&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;span class="field-label"&gt;语言&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;a-select v-model="language"&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;a-option value="all"&gt;全部语言&lt;/a-option&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;a-option value="zh"&gt;中文&lt;/a-option&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;a-option value="en"&gt;English&lt;/a-option&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;a-option value="de"&gt;Deutsch&lt;/a-option&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;a-option value="ja"&gt;日本語&lt;/a-option&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;a-option value="es"&gt;Español&lt;/a-option&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;/a-select&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;div class="field-control"&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;span class="field-label"&gt;会话状态&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;a-select v-model="status"&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;a-option value="all"&gt;全部状态&lt;/a-option&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;a-option value="draft"&gt;待审核&lt;/a-option&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;a-option value="contacted"&gt;等待回复&lt;/a-option&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;a-option value="replied"&gt;客户已回复&lt;/a-option&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;/a-select&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;span class="count-label"&gt;{{ threads.length }} 个邮件会话&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;/section&gt;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >      &lt;section class="card conversation-layout"&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;aside class="thread-list"&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div class="thread-list__title"&gt;&lt;strong&gt;建联邮箱&lt;/strong&gt;&lt;span&gt;{{ threads.length }}&lt;/span&gt;&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;button</span>
+<span class="cstat-no" title="statement not covered" >            v-for="thread in threads"</span>
+<span class="cstat-no" title="statement not covered" >            :key="thread.id"</span>
+<span class="cstat-no" title="statement not covered" >            :class="['thread-item', { active: thread.id === selectedThreadId }]"</span>
+<span class="cstat-no" title="statement not covered" >            @click="selectThread(thread)"</span>
+<span class="cstat-no" title="statement not covered" >          &gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;span class="thread-avatar"&gt;{{ thread.customerName.slice(0, 1) }}&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;span class="thread-copy"&gt;</span>
+<span class="cstat-no" title="statement not covered" >              &lt;span class="thread-copy__top"&gt;&lt;strong&gt;{{ thread.customerName }}&lt;/strong&gt;&lt;small&gt;{{ thread.messages.at(-1)?.time || '待开始' }}&lt;/small&gt;&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >              &lt;span class="thread-product"&gt;{{ thread.productName }}&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >              &lt;span class="thread-preview"&gt;{{ thread.messages.at(-1)?.body || '尚无往来记录' }}&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >              &lt;span class="thread-tags"&gt;&lt;i&gt;{{ thread.country }}&lt;/i&gt;&lt;i&gt;{{ thread.languageLabel }}&lt;/i&gt;&lt;i :class="statusClass(thread.status)"&gt;{{ thread.statusLabel }}&lt;/i&gt;&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;/button&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div v-if="!threads.length &amp;&amp; !loading" class="empty-state"&gt;没有符合筛选条件的会话&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;/aside&gt;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >        &lt;div v-if="selectedThread" class="chat-panel"&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;header class="chat-header"&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;span class="chat-avatar"&gt;{{ selectedThread.customerName.slice(0, 1) }}&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;div&gt;</span>
+<span class="cstat-no" title="statement not covered" >              &lt;h2&gt;{{ selectedThread.customerName }}&lt;/h2&gt;</span>
+<span class="cstat-no" title="statement not covered" >              &lt;p&gt;{{ selectedThread.productName }} · {{ selectedThread.country }}&lt;/p&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;div class="chat-header__meta"&gt;</span>
+<span class="cstat-no" title="statement not covered" >              &lt;span class="semantic-tag neutral"&gt;&lt;IconEmail /&gt; Email Thread&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >              &lt;span class="semantic-tag info"&gt;{{ selectedThread.languageLabel }}&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >              &lt;span :class="['semantic-tag', statusClass(selectedThread.status)]"&gt;{{ selectedThread.statusLabel }}&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;/header&gt;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >          &lt;div class="mail-subject"&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;span&gt;主题&lt;/span&gt;&lt;strong&gt;{{ selectedThread.subject }}&lt;/strong&gt;&lt;small&gt;收件人：{{ selectedThread.recipient }}&lt;/small&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >          &lt;div class="message-stream"&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;div class="date-divider"&gt;&lt;span&gt;演示邮件往来&lt;/span&gt;&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;article</span>
+<span class="cstat-no" title="statement not covered" >              v-for="message in selectedThread.messages"</span>
+<span class="cstat-no" title="statement not covered" >              :key="message.id"</span>
+<span class="cstat-no" title="statement not covered" >              :class="['message-row', `message-row--${message.direction}`]"</span>
+<span class="cstat-no" title="statement not covered" >            &gt;</span>
+<span class="cstat-no" title="statement not covered" >              &lt;span v-if="message.direction !== 'system'" class="message-avatar"&gt;{{ message.direction === 'outbound' ? '我' : selectedThread.customerName.slice(0, 1) }}&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >              &lt;div class="message-bubble"&gt;</span>
+<span class="cstat-no" title="statement not covered" >                &lt;div class="message-bubble__meta"&gt;</span>
+<span class="cstat-no" title="statement not covered" >                  &lt;strong&gt;{{ message.author }}&lt;/strong&gt;</span>
+<span class="cstat-no" title="statement not covered" >                  &lt;span v-if="message.aiGenerated" class="ai-chip"&gt;&lt;IconRobot /&gt; AI 生成&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >                  &lt;time&gt;{{ message.time }}&lt;/time&gt;</span>
+<span class="cstat-no" title="statement not covered" >                &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >                &lt;p&gt;{{ message.body }}&lt;/p&gt;</span>
+<span class="cstat-no" title="statement not covered" >                &lt;div v-if="message.translation" class="message-translation"&gt;&lt;span&gt;AI 中文参考&lt;/span&gt;{{ message.translation }}&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >                &lt;small v-if="message.state" class="message-state"&gt;{{ message.state }}&lt;/small&gt;</span>
+<span class="cstat-no" title="statement not covered" >              &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;/article&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;div v-if="!selectedThread.messages.length" class="empty-state"&gt;尚无邮件记录，等待 Agent 生成首封建联内容。&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >          &lt;section id="review-composer" :class="['review-composer', { 'review-composer--focus': isReviewFocus }]"&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;div class="review-composer__head"&gt;</span>
+<span class="cstat-no" title="statement not covered" >              &lt;div&gt;&lt;span class="ai-kicker"&gt;&lt;IconRobot /&gt; HUMAN IN THE LOOP&lt;/span&gt;&lt;h3&gt;审核并发送建联邮件&lt;/h3&gt;&lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >              &lt;span class="semantic-tag warning"&gt;PoC 仅展示，不实际发送&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;a-alert v-if="isReviewFocus" type="success"&gt;已从智能匹配定位到该机会，可在这里审核 Agent 生成的建联内容。&lt;/a-alert&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;div class="composer-toolbar"&gt;</span>
+<span class="cstat-no" title="statement not covered" >              &lt;div class="field-control"&gt;</span>
+<span class="cstat-no" title="statement not covered" >                &lt;span class="field-label"&gt;发送语言&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >                &lt;a-select v-model="composerLanguage"&gt;</span>
+<span class="cstat-no" title="statement not covered" >                  &lt;a-option value="zh"&gt;中文&lt;/a-option&gt;</span>
+<span class="cstat-no" title="statement not covered" >                  &lt;a-option value="en"&gt;English&lt;/a-option&gt;</span>
+<span class="cstat-no" title="statement not covered" >                  &lt;a-option value="de"&gt;Deutsch&lt;/a-option&gt;</span>
+<span class="cstat-no" title="statement not covered" >                  &lt;a-option value="ja"&gt;日本語&lt;/a-option&gt;</span>
+<span class="cstat-no" title="statement not covered" >                  &lt;a-option value="es"&gt;Español&lt;/a-option&gt;</span>
+<span class="cstat-no" title="statement not covered" >                &lt;/a-select&gt;</span>
+<span class="cstat-no" title="statement not covered" >              &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >              &lt;span&gt;底层渠道：Email · 显示方式：Conversation&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;a-textarea v-model="composerBody" :auto-size="{ minRows: 4, maxRows: 8 }" /&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;div class="composer-actions"&gt;</span>
+<span class="cstat-no" title="statement not covered" >              &lt;span&gt;正式版本可在此接入 SMTP、邮件线程 ID 和真实入站邮箱。&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >              &lt;a-button disabled&gt;&lt;template #icon&gt;&lt;IconSend /&gt;&lt;/template&gt;演示模式不实际发送&lt;/a-button&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;/section&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;/section&gt;</span>
+<span class="cstat-no" title="statement not covered" >    &lt;/main&gt;</span>
+<span class="cstat-no" title="statement not covered" >  &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >&lt;/template&gt;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >&lt;style scoped&gt;</span>
+<span class="cstat-no" title="statement not covered" >.conversation-filters { display: grid; grid-template-columns: 1.4fr .7fr .7fr auto; align-items: end; gap: 16px; padding: 16px; margin-bottom: 16px; }</span>
+<span class="cstat-no" title="statement not covered" >.conversation-layout { min-height: 720px; display: grid; grid-template-columns: 340px minmax(0, 1fr); overflow: hidden; }</span>
+<span class="cstat-no" title="statement not covered" >.thread-list { border-right: 1px solid var(--color-divider); background: var(--color-bg-surface); overflow: auto; }</span>
+<span class="cstat-no" title="statement not covered" >.thread-list__title { height: 54px; padding: 0 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--color-divider); background: #fff; }</span>
+<span class="cstat-no" title="statement not covered" >.thread-list__title span { min-width: 24px; padding: 2px 7px; border-radius: 99px; color: var(--color-primary); background: var(--color-primary-50); text-align: center; }</span>
+<span class="cstat-no" title="statement not covered" >.thread-item { width: 100%; padding: 14px 14px; display: flex; gap: 11px; border: 0; border-bottom: 1px solid var(--color-divider); color: inherit; background: transparent; text-align: left; cursor: pointer; transition: .15s ease; }</span>
+<span class="cstat-no" title="statement not covered" >.thread-item:hover { background: #f4f7fb; }.thread-item.active { box-shadow: inset 3px 0 var(--color-primary); background: #ebf3fd; }</span>
+<span class="cstat-no" title="statement not covered" >.thread-avatar,.chat-avatar,.message-avatar { flex: 0 0 auto; display: grid; place-items: center; border-radius: 10px; color: #fff; background: linear-gradient(135deg, var(--color-primary), var(--color-ai)); }</span>
+<span class="cstat-no" title="statement not covered" >.thread-avatar { width: 38px; height: 38px; }.thread-copy { min-width: 0; flex: 1; display: grid; gap: 4px; }.thread-copy__top { display: flex; gap: 8px; }.thread-copy__top strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }.thread-copy__top small { margin-left: auto; color: var(--color-text-placeholder); white-space: nowrap; }</span>
+<span class="cstat-no" title="statement not covered" >.thread-product,.thread-preview { overflow: hidden; color: var(--color-text-secondary); font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }.thread-preview { color: var(--color-text-placeholder); }.thread-tags { display: flex; flex-wrap: wrap; gap: 4px; }.thread-tags i { padding: 1px 6px; border-radius: 6px; color: var(--color-text-secondary); background: #fff; font-size: 10px; font-style: normal; }.thread-tags i.success { color: var(--color-success); background: var(--color-success-bg); }.thread-tags i.info { color: var(--color-primary); background: var(--color-primary-50); }.thread-tags i.warning { color: var(--color-warning); background: var(--color-warning-bg); }</span>
+<span class="cstat-no" title="statement not covered" >.chat-panel { min-width: 0; display: flex; flex-direction: column; background: #fff; }.chat-header { min-height: 72px; padding: 12px 20px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--color-divider); }.chat-avatar { width: 44px; height: 44px; }.chat-header h2,.chat-header p { margin: 0; }.chat-header p { margin-top: 3px; color: var(--color-text-secondary); font-size: 12px; }.chat-header__meta { margin-left: auto; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }</span>
+<span class="cstat-no" title="statement not covered" >.mail-subject { min-height: 44px; padding: 9px 20px; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 10px; border-bottom: 1px solid var(--color-divider); background: #fafbfd; }.mail-subject span,.mail-subject small { color: var(--color-text-secondary); }.mail-subject small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }</span>
+<span class="cstat-no" title="statement not covered" >.message-stream { min-height: 340px; max-height: 430px; padding: 18px 24px; overflow: auto; background: #f6f8fb; }.date-divider { display: flex; justify-content: center; margin-bottom: 16px; }.date-divider span { padding: 3px 10px; border-radius: 99px; color: var(--color-text-placeholder); background: #e9edf3; font-size: 11px; }</span>
+<span class="cstat-no" title="statement not covered" >.message-row { margin-bottom: 16px; display: flex; align-items: flex-start; gap: 9px; }.message-row--outbound { flex-direction: row-reverse; }.message-row--system { justify-content: center; }.message-avatar { width: 32px; height: 32px; border-radius: 9px; font-size: 12px; }.message-row--inbound .message-avatar { color: var(--color-text-body); background: #e2e8f0; }</span>
+<span class="cstat-no" title="statement not covered" >.message-bubble { max-width: min(72%, 680px); padding: 11px 13px; border: 1px solid var(--color-border); border-radius: 4px 13px 13px 13px; background: #fff; box-shadow: 0 3px 12px rgba(29,52,82,.05); }.message-row--outbound .message-bubble { border-color: rgba(4,110,252,.2); border-radius: 13px 4px 13px 13px; background: #edf5ff; }.message-row--system .message-bubble { max-width: 78%; border-color: rgba(123,79,246,.2); border-radius: 10px; background: var(--color-ai-light); text-align: center; }</span>
+<span class="cstat-no" title="statement not covered" >.message-bubble__meta { display: flex; align-items: center; gap: 7px; color: var(--color-text-secondary); font-size: 11px; }.message-bubble__meta strong { color: var(--color-text-body); }.message-bubble__meta time { margin-left: auto; }.message-bubble p { margin: 7px 0; line-height: 1.7; white-space: pre-wrap; }.ai-chip { display: inline-flex; align-items: center; gap: 3px; color: var(--color-ai); }.message-translation { margin-top: 8px; padding-top: 8px; color: var(--color-text-secondary); border-top: 1px dashed rgba(123,79,246,.22); font-size: 12px; line-height: 1.65; }.message-translation span { margin-right: 7px; color: var(--color-ai); }.message-state { display: block; margin-top: 7px; color: var(--color-text-placeholder); text-align: right; }</span>
+<span class="cstat-no" title="statement not covered" >.review-composer { margin: 16px 20px 20px; padding: 16px; border: 1px solid var(--color-border); border-radius: 10px; background: #fff; transition: .2s ease; }.review-composer--focus { border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(4,110,252,.1); }.review-composer__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }.review-composer__head h3 { margin: 2px 0 12px; }.ai-kicker { color: var(--color-ai); font-size: 10px; letter-spacing: .08em; }.composer-toolbar { margin: 12px 0; display: flex; align-items: flex-end; gap: 16px; }.composer-toolbar .field-control { width: 180px; }.composer-toolbar &gt; span { padding-bottom: 7px; color: var(--color-text-secondary); font-size: 12px; }.composer-actions { margin-top: 10px; display: flex; align-items: center; gap: 12px; }.composer-actions &gt; span { color: var(--color-text-secondary); font-size: 12px; }.composer-actions .arco-btn { margin-left: auto; }</span>
+<span class="cstat-no" title="statement not covered" >@media (max-width: 1100px) { .conversation-filters { grid-template-columns: 1fr 1fr; }.conversation-layout { grid-template-columns: 290px minmax(0,1fr); }.chat-header__meta { display: none; } }</span>
+<span class="cstat-no" title="statement not covered" >@media (max-width: 820px) { .conversation-layout { grid-template-columns: 1fr; }.thread-list { max-height: 320px; border-right: 0; border-bottom: 1px solid var(--color-divider); }.mail-subject { grid-template-columns: 1fr; }.message-bubble { max-width: 86%; }.composer-toolbar,.composer-actions { align-items: stretch; flex-direction: column; }.composer-toolbar .field-control { width: 100%; }.composer-actions .arco-btn { margin-left: 0; } }</span>
+<span class="cstat-no" title="statement not covered" >&lt;/style&gt;</span>
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-08-20T02:03:18.965Z
+            </div>
+        <script src="../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../sorter.js"></script>
+        <script src="../../../block-navigation.js"></script>
+    </body>
+</html>
+    

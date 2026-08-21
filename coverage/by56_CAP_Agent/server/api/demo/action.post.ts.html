@@ -1,0 +1,757 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for by56_CAP_Agent/server/api/demo/action.post.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../../index.html">All files</a> / <a href="index.html">by56_CAP_Agent/server/api/demo</a> action.post.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>201/201</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">93.42% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>142/152</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/0</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>201/201</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line high'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a>
+<a name='L130'></a><a href='#L130'>130</a>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a>
+<a name='L155'></a><a href='#L155'>155</a>
+<a name='L156'></a><a href='#L156'>156</a>
+<a name='L157'></a><a href='#L157'>157</a>
+<a name='L158'></a><a href='#L158'>158</a>
+<a name='L159'></a><a href='#L159'>159</a>
+<a name='L160'></a><a href='#L160'>160</a>
+<a name='L161'></a><a href='#L161'>161</a>
+<a name='L162'></a><a href='#L162'>162</a>
+<a name='L163'></a><a href='#L163'>163</a>
+<a name='L164'></a><a href='#L164'>164</a>
+<a name='L165'></a><a href='#L165'>165</a>
+<a name='L166'></a><a href='#L166'>166</a>
+<a name='L167'></a><a href='#L167'>167</a>
+<a name='L168'></a><a href='#L168'>168</a>
+<a name='L169'></a><a href='#L169'>169</a>
+<a name='L170'></a><a href='#L170'>170</a>
+<a name='L171'></a><a href='#L171'>171</a>
+<a name='L172'></a><a href='#L172'>172</a>
+<a name='L173'></a><a href='#L173'>173</a>
+<a name='L174'></a><a href='#L174'>174</a>
+<a name='L175'></a><a href='#L175'>175</a>
+<a name='L176'></a><a href='#L176'>176</a>
+<a name='L177'></a><a href='#L177'>177</a>
+<a name='L178'></a><a href='#L178'>178</a>
+<a name='L179'></a><a href='#L179'>179</a>
+<a name='L180'></a><a href='#L180'>180</a>
+<a name='L181'></a><a href='#L181'>181</a>
+<a name='L182'></a><a href='#L182'>182</a>
+<a name='L183'></a><a href='#L183'>183</a>
+<a name='L184'></a><a href='#L184'>184</a>
+<a name='L185'></a><a href='#L185'>185</a>
+<a name='L186'></a><a href='#L186'>186</a>
+<a name='L187'></a><a href='#L187'>187</a>
+<a name='L188'></a><a href='#L188'>188</a>
+<a name='L189'></a><a href='#L189'>189</a>
+<a name='L190'></a><a href='#L190'>190</a>
+<a name='L191'></a><a href='#L191'>191</a>
+<a name='L192'></a><a href='#L192'>192</a>
+<a name='L193'></a><a href='#L193'>193</a>
+<a name='L194'></a><a href='#L194'>194</a>
+<a name='L195'></a><a href='#L195'>195</a>
+<a name='L196'></a><a href='#L196'>196</a>
+<a name='L197'></a><a href='#L197'>197</a>
+<a name='L198'></a><a href='#L198'>198</a>
+<a name='L199'></a><a href='#L199'>199</a>
+<a name='L200'></a><a href='#L200'>200</a>
+<a name='L201'></a><a href='#L201'>201</a>
+<a name='L202'></a><a href='#L202'>202</a>
+<a name='L203'></a><a href='#L203'>203</a>
+<a name='L204'></a><a href='#L204'>204</a>
+<a name='L205'></a><a href='#L205'>205</a>
+<a name='L206'></a><a href='#L206'>206</a>
+<a name='L207'></a><a href='#L207'>207</a>
+<a name='L208'></a><a href='#L208'>208</a>
+<a name='L209'></a><a href='#L209'>209</a>
+<a name='L210'></a><a href='#L210'>210</a>
+<a name='L211'></a><a href='#L211'>211</a>
+<a name='L212'></a><a href='#L212'>212</a>
+<a name='L213'></a><a href='#L213'>213</a>
+<a name='L214'></a><a href='#L214'>214</a>
+<a name='L215'></a><a href='#L215'>215</a>
+<a name='L216'></a><a href='#L216'>216</a>
+<a name='L217'></a><a href='#L217'>217</a>
+<a name='L218'></a><a href='#L218'>218</a>
+<a name='L219'></a><a href='#L219'>219</a>
+<a name='L220'></a><a href='#L220'>220</a>
+<a name='L221'></a><a href='#L221'>221</a>
+<a name='L222'></a><a href='#L222'>222</a>
+<a name='L223'></a><a href='#L223'>223</a>
+<a name='L224'></a><a href='#L224'>224</a>
+<a name='L225'></a><a href='#L225'>225</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">172x</span>
+<span class="cline-any cline-yes">172x</span>
+<span class="cline-any cline-yes">172x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">172x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">172x</span>
+<span class="cline-any cline-yes">70x</span>
+<span class="cline-any cline-yes">70x</span>
+<span class="cline-any cline-yes">70x</span>
+<span class="cline-any cline-yes">70x</span>
+<span class="cline-any cline-yes">70x</span>
+<span class="cline-any cline-yes">70x</span>
+<span class="cline-any cline-yes">70x</span>
+<span class="cline-any cline-yes">70x</span>
+<span class="cline-any cline-yes">70x</span>
+<span class="cline-any cline-yes">70x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">70x</span>
+<span class="cline-any cline-yes">44x</span>
+<span class="cline-any cline-yes">44x</span>
+<span class="cline-any cline-yes">44x</span>
+<span class="cline-any cline-yes">44x</span>
+<span class="cline-any cline-yes">67x</span>
+<span class="cline-any cline-yes">70x</span>
+<span class="cline-any cline-yes">70x</span>
+<span class="cline-any cline-yes">70x</span>
+<span class="cline-any cline-yes">70x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">172x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">172x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">172x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">169x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">168x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">168x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">167x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">167x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">167x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">167x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">140x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">132x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import nodemailer from 'nodemailer'
+import { z } from 'zod'
+import { getDb, demoNow, addEvent, newId } from '../../utils/db'
+import { isValidOutreachContact } from '../../utils/contact'
+import { createAgentTask } from '../../utils/agent'
+&nbsp;
+const bodySchema = z.object({
+  action: z.string(),
+  id: z.string().optional().default(''),
+  data: z.record(z.string(), z.any()).optional().default({})
+})
+&nbsp;
+export default defineEventHandler(async (event) =&gt; {
+  const { action, id, data } = bodySchema.parse(await readBody(event))
+  const db = getDb()
+  const now = demoNow(db)
+&nbsp;
+  if (action === 'accept_profile') {
+    const customer = db.prepare('SELECT * FROM customers WHERE id = ?').get(id) as any
+    if (!customer) throw createError({ statusCode: 404, statusMessage: '客户不存在' })
+    const profile = JSON.parse(customer.<span class="branch-0 cbranch-no" title="branch not covered" >ai_profile_json || '{}')</span>
+    const facts = { ...JSON.parse(customer.<span class="branch-0 cbranch-no" title="branch not covered" >facts_json || '{}')</span>, confirmedAiProfile: profile, confirmedAt: now }
+    db.prepare(`UPDATE customers SET facts_json = ?, ai_profile_status = 'confirmed', updated_at = ? WHERE id = ?`).run(JSON.stringify(facts), now, id)
+    addEvent({ customerId: id, type: 'profile_confirmed', title: 'AI 画像已由人工确认', description: '确认后的画像字段已进入标准化事实层。', source: 'human' }, db)
+    return { ok: true }
+  }
+&nbsp;
+  if (action === 'accept_match') {
+    const match = db.prepare('SELECT * FROM match_results WHERE id = ?').get(id) as any
+    if (!match) throw createError({ statusCode: 404, statusMessage: '匹配结果不存在' })
+    const hardBlockers = JSON.parse(match.<span class="branch-0 cbranch-no" title="branch not covered" >blockers_json || '[]')</span>
+    if (hardBlockers.length &amp;&amp; !data.overrideBlockers) throw createError({ statusCode: 400, statusMessage: '存在硬阻断项，请确认后再接受匹配' })
+    const contactId = String(data.contactId || '')
+    const contact = contactId ? db.prepare('SELECT * FROM contacts WHERE id = ? AND customer_id = ?').get(contactId, match.customer_id) as any : null
+    const validContact = isValidOutreachContact(contact)
+    const existing = db.prepare(`SELECT * FROM opportunities WHERE customer_id = ? AND product_id = ? AND status IN ('active', 'handed_off') LIMIT 1`).get(match.customer_id, match.product_id) as any
+    let opportunityId = existing?.id
+    if (!existing) {
+      opportunityId = newId('opp')
+      db.prepare(`INSERT INTO opportunities
+        (id, customer_id, product_id, contact_id, source, stage, status, focus, owner, next_action, due_at, blocker, stale_review,
+         close_reason, ai_summary, created_at, updated_at)
+        VALUES (?, ?, ?, ?, 'active', 4, 'active', 1, '', ?, ?, ?, 0, '', '', ?, ?)`)
+        .run(opportunityId, match.customer_id, match.product_id, validContact ? contactId : '', validContact ? '等待 Agent 生成建联内容' : '补充有效联系人', now,
+          validContact ? '' : '缺少可用于建联的有效联系人', now, now)
+      db.prepare('UPDATE opportunities SET focus = 0 WHERE customer_id = ? AND id &lt;&gt; ?').run(match.customer_id, opportunityId)
+    } else {
+      db.prepare(`UPDATE opportunities SET stage = MAX(stage, 4), contact_id = ?, blocker = ?, next_action = ?, updated_at = ? WHERE id = ?`)
+        .run(validContact ? <span class="branch-0 cbranch-no" title="branch not covered" >contactId : existing.contact_id || '', v</span>alidContact ? <span class="branch-0 cbranch-no" title="branch not covered" >'' : existing.blocker || '缺少可用于建联的有效联系人',</span>
+          validContact ? <span class="branch-0 cbranch-no" title="branch not covered" >'等待 Agent 生成建联内容' : '补充有效联系人', n</span>ow, opportunityId)
+    }
+    db.prepare(`UPDATE match_results SET status = 'accepted', stale = 0, updated_at = ? WHERE id = ?`).run(now, id)
+    addEvent({ opportunityId, customerId: match.customer_id, type: 'match_accepted', title: '人工接受产品匹配', description: validContact ? '获客机会已创建，已自动启动建联内容生成。' : '获客机会已创建，补充有效联系人后才能生成建联内容。', source: 'human', data: { matchId: id } }, db)
+    const task = validContact ? createAgentTask('outreach_drafting', 'opportunity', opportunityId, { language: 'zh', triggeredBy: 'accept_match' }) : null
+    return { ok: true, opportunityId, task }
+  }
+&nbsp;
+  if (action === 'set_contact') {
+    const opportunity = db.prepare('SELECT * FROM opportunities WHERE id = ?').get(id) as any
+    const contact = db.prepare('SELECT * FROM contacts WHERE id = ? AND customer_id = ?').get(String(data.<span class="branch-0 cbranch-no" title="branch not covered" >contactId || '')</span>, opportunity?.customer_id || '') as any
+    if (!opportunity || !contact) throw createError({ statusCode: 404, statusMessage: '机会或联系人不存在' })
+    if (!isValidOutreachContact(contact)) throw createError({ statusCode: 400, statusMessage: '请选择状态为“可联系”且有邮箱的联系人' })
+    db.prepare(`UPDATE opportunities SET contact_id = ?, blocker = '', next_action = '等待 Agent 生成建联内容', updated_at = ? WHERE id = ?`).run(contact.id, now, id)
+    addEvent({ opportunityId: id, customerId: opportunity.customer_id, type: 'contact_selected', title: '已选择建联联系人', description: `${contact.name} · ${contact.email}`, source: 'human' }, db)
+    return { ok: true, task: createAgentTask('outreach_drafting', 'opportunity', id, { language: 'zh', triggeredBy: 'contact_selected' }) }
+  }
+&nbsp;
+  if (action === 'set_focus') {
+    const opportunity = db.prepare('SELECT * FROM opportunities WHERE id = ?').get(id) as any
+    if (!opportunity) throw createError({ statusCode: 404, statusMessage: '机会不存在' })
+    db.prepare('UPDATE opportunities SET focus = 0 WHERE customer_id = ?').run(opportunity.customer_id)
+    db.prepare('UPDATE opportunities SET focus = 1, updated_at = ? WHERE id = ?').run(now, id)
+    return { ok: true }
+  }
+&nbsp;
+  if (action === 'update_customer') {
+    const customer = db.prepare('SELECT * FROM customers WHERE id = ?').get(id) as any
+    if (!customer) throw createError({ statusCode: 404, statusMessage: '客户不存在' })
+    const facts = { ...JSON.parse(customer.<span class="branch-0 cbranch-no" title="branch not covered" >facts_json || '{}')</span>, ...(data.facts || {}), updatedBy: '模拟操作者' }
+    const nextVersion = customer.profile_version + 1
+    db.prepare(`UPDATE customers SET facts_json = ?, profile_version = ?, ai_profile_status = 'pending', updated_at = ?, last_activity_at = ? WHERE id = ?`)
+      .run(JSON.stringify(facts), nextVersion, now, now, id)
+    db.prepare(`UPDATE match_results SET stale = 1, updated_at = ? WHERE customer_id = ? AND customer_version &lt; ? AND status &lt;&gt; ?`)
+      .run(now, id, nextVersion, 'accepted')
+    db.prepare(`UPDATE opportunities SET stale_review = 1, updated_at = ? WHERE customer_id = ? AND status IN ('active', 'handed_off')`).run(now, id)
+    addEvent({ customerId: id, type: 'customer_updated', title: '客户资料已更新', description: `画像版本已更新为 V${nextVersion}，旧匹配已标记待重算。`, source: 'human' }, db)
+    return { ok: true, version: nextVersion }
+  }
+&nbsp;
+  if (action === 'update_product') {
+    const product = db.prepare('SELECT * FROM products WHERE id = ?').get(id) as any
+    if (!product) throw createError({ statusCode: 404, statusMessage: '产品不存在' })
+    const marketing = { ...JSON.parse(product.<span class="branch-0 cbranch-no" title="branch not covered" >marketing_json || '{}')</span>, ...(data.marketing || {}), updatedBy: '模拟操作者' }
+    const nextVersion = product.product_version + 1
+    db.prepare(`UPDATE products SET marketing_json = ?, product_version = ?, updated_at = ? WHERE id = ?`).run(JSON.stringify(marketing), nextVersion, now, id)
+    db.prepare(`UPDATE match_results SET stale = 1, updated_at = ? WHERE product_id = ? AND product_version &lt; ? AND status &lt;&gt; ?`)
+      .run(now, id, nextVersion, 'accepted')
+    db.prepare(`UPDATE opportunities SET stale_review = 1, updated_at = ? WHERE product_id = ? AND status IN ('active', 'handed_off')`).run(now, id)
+    return { ok: true, version: nextVersion }
+  }
+&nbsp;
+  if (action === 'confirm_next_action') {
+    const opportunity = db.prepare('SELECT * FROM opportunities WHERE id = ?').get(id) as any
+    if (!opportunity) throw createError({ statusCode: 404, statusMessage: '机会不存在' })
+    db.prepare('UPDATE opportunities SET next_action = ?, due_at = ?, owner = ?, blocker = ?, updated_at = ? WHERE id = ?')
+      .run(String(data.nextAction || opportunity.next_action), String(data.dueAt || opportunity.due_at), String(data.owner ?? opportunity.owner), String(data.blocker ?? opportunity.blocker), now, id)
+    addEvent({ opportunityId: id, customerId: opportunity.customer_id, type: 'next_action_confirmed', title: '下一步动作已确认', description: String(data.nextAction || opportunity.next_action), source: 'human' }, db)
+    return { ok: true }
+  }
+&nbsp;
+  if (action === 'send_email') {
+    const draft = db.prepare('SELECT * FROM email_drafts WHERE id = ?').get(id) as any
+    if (!draft) throw createError({ statusCode: 404, statusMessage: '邮件草稿不存在' })
+    const opportunity = db.prepare('SELECT * FROM opportunities WHERE id = ?').get(draft.opportunity_id) as any
+    const config = useRuntimeConfig()
+    const recipient = String(data.recipient || draft.<span class="branch-0 cbranch-no" title="branch not covered" >recipient || '')</span>.trim().toLowerCase()
+    const allowlist = String(config.emailAllowlist || '').split(',').map(item =&gt; item.trim().toLowerCase()).filter(Boolean)
+    if (!allowlist.includes(recipient)) throw createError({ statusCode: 400, statusMessage: '收件地址不在 EMAIL_ALLOWLIST 白名单中' })
+    if (!config.smtpHost || !config.smtpUser || !config.smtpPass || !config.smtpFrom) throw createError({ statusCode: 400, statusMessage: 'SMTP 尚未完整配置，本次没有发送或伪造发送记录' })
+    const transport = nodemailer.createTransport({
+      host: String(config.smtpHost), port: Number(config.smtpPort), secure: Boolean(config.smtpSecure),
+      auth: { user: String(config.smtpUser), pass: String(config.smtpPass) }
+    })
+    const info = await transport.sendMail({ from: String(config.smtpFrom), to: recipient, subject: String(data.subject || draft.subject), text: String(data.body || draft.body) })
+    db.prepare(`UPDATE email_drafts SET subject = ?, body = ?, recipient = ?, status = 'sent', sent_at = ? WHERE id = ?`)
+      .run(String(data.subject || draft.subject), String(data.body || draft.body), recipient, now, id)
+    const due = new Date(now)
+    due.setUTCDate(due.getUTCDate() + 3)
+    db.prepare(`UPDATE opportunities SET stage = MAX(stage, 6), next_action = '等待客户回复；到期后人工审核首次跟进', due_at = ?, blocker = '', updated_at = ? WHERE id = ?`)
+      .run(due.toISOString(), now, opportunity.id)
+    addEvent({ opportunityId: opportunity.id, customerId: opportunity.customer_id, type: 'email_sent', title: '建联邮件已发送', description: `已通过白名单 SMTP 发送至 ${recipient}`, source: 'human', data: { messageId: info.messageId } }, db)
+    return { ok: true, messageId: info.messageId }
+  }
+&nbsp;
+  if (action === 'simulate_reply') {
+    const opportunity = db.prepare('SELECT * FROM opportunities WHERE id = ?').get(id) as any
+    if (!opportunity) throw createError({ statusCode: 404, statusMessage: '机会不存在' })
+    const replyText = String(data.replyText || '我们下周有一票货，请提供具体报价并安排电话沟通。').trim()
+    db.prepare(`UPDATE opportunities SET stage = MAX(stage, 7), next_action = '等待 Agent 分析客户回复', blocker = '', updated_at = ? WHERE id = ?`).run(now, id)
+    addEvent({ opportunityId: id, customerId: opportunity.customer_id, type: 'reply_received', title: '收到客户回复（模拟）', description: replyText, source: 'email' }, db)
+    return { ok: true, task: createAgentTask('reply_qualification', 'opportunity', id, { replyText }) }
+  }
+&nbsp;
+  if (action === 'assign_owner') {
+    const opportunity = db.prepare('SELECT * FROM opportunities WHERE id = ?').get(id) as any
+    if (!opportunity) throw createError({ statusCode: 404, statusMessage: '机会不存在' })
+    if (opportunity.stage &lt; 8) throw createError({ statusCode: 400, statusMessage: '只有明确意向机会才能分配负责人' })
+    const owner = String(data.owner || '负责人 A')
+    db.prepare(`UPDATE opportunities SET stage = 9, status = 'handed_off', owner = ?, next_action = '负责人确认首次沟通安排', due_at = ?, blocker = '', updated_at = ? WHERE id = ?`).run(owner, now, now, id)
+    addEvent({ opportunityId: id, customerId: opportunity.customer_id, type: 'owner_assigned', title: '已分配负责人', description: `${owner} 已接手该机会。`, source: 'human' }, db)
+    return { ok: true, task: createAgentTask('handoff_summary', 'opportunity', id, { owner }) }
+  }
+&nbsp;
+  if (action === 'close_opportunity') {
+    const opportunity = db.prepare('SELECT * FROM opportunities WHERE id = ?').get(id) as any
+    const reason = String(data.reason || '').trim()
+    if (!opportunity) throw createError({ statusCode: 404, statusMessage: '机会不存在' })
+    if (!reason) throw createError({ statusCode: 400, statusMessage: '关闭机会必须填写原因' })
+    db.prepare(`UPDATE opportunities SET status = ?, close_reason = ?, next_action = '', due_at = '', updated_at = ? WHERE id = ?`)
+      .run(reason === '暂缓' ? 'paused' : 'closed', reason, now, id)
+    addEvent({ opportunityId: id, customerId: opportunity.customer_id, type: 'opportunity_closed', title: reason === '暂缓' ? '机会已暂停' : '机会已关闭', description: reason, source: 'human' }, db)
+    return { ok: true }
+  }
+&nbsp;
+  if (action === 'reopen_opportunity') {
+    const opportunity = db.prepare('SELECT * FROM opportunities WHERE id = ?').get(id) as any
+    if (!opportunity) throw createError({ statusCode: 404, statusMessage: '机会不存在' })
+    if (opportunity.close_reason === '禁止联系') throw createError({ statusCode: 400, statusMessage: '禁止联系状态不可直接重开' })
+    db.prepare(`UPDATE opportunities SET status = 'active', close_reason = '', next_action = '人工检查最新客户信号', due_at = ?, updated_at = ? WHERE id = ?`).run(now, now, id)
+    addEvent({ opportunityId: id, customerId: opportunity.customer_id, type: 'opportunity_reopened', title: '机会已重新开启', source: 'human' }, db)
+    return { ok: true }
+  }
+&nbsp;
+  if (action === 'manual_customer') {
+    const name = String(data.name || '').trim()
+    const country = String(data.country || '').trim()
+    const city = String(data.city || '').trim()
+    const website = String(data.website || '').trim()
+    const email = String(data.email || '').trim().toLowerCase()
+    if (!name) throw createError({ statusCode: 400, statusMessage: '请填写客户公司名称' })
+    const domain = website.replace(/^https?:\/\//, '').split('/')[0] || email.split('@')[1] || ''
+    const customerId = newId('customer-manual')
+    db.prepare(`INSERT INTO customers
+      (id, name, source, source_ref, country, city, website, domain, customer_type, status, profile_version, raw_json, facts_json,
+       ai_profile_json, ai_profile_status, last_activity_at, created_at, updated_at)
+      VALUES (?, ?, 'manual', '', ?, ?, ?, ?, 'unknown', 'normal', 1, ?, ?, '{}', 'pending', ?, ?, ?)`)
+      .run(customerId, name, country, city, website, domain,
+        JSON.stringify({ enteredBy: '模拟操作者', enteredAt: now }), JSON.stringify({ companyName: name, country, city, website }), now, now, now)
+    if (email) {
+      db.prepare(`INSERT INTO contacts (id, customer_id, name, title, email, email_normalized, status, is_primary, created_at, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?, 'verify', 1, ?, ?)`)
+        .run(newId('contact'), customerId, String(data.contactName || ''), String(data.title || ''), email, email, now, now)
+    }
+    addEvent({ customerId, type: 'manual_created', title: '手工创建客户档案', description: `${name} 已进入统一客户库。`, source: 'human' }, db)
+    return { ok: true, customerId }
+  }
+&nbsp;
+  if (action === 'sync_wca') {
+    const count = Number((db.prepare(`SELECT COUNT(*) count FROM customers WHERE source = 'wca_simulated'`).get() as any).count)
+    const updated = db.prepare(`SELECT id FROM customers WHERE source = 'wca_simulated' ORDER BY id LIMIT 5`).all() as any[]
+    for (const row of updated) db.prepare('UPDATE customers SET last_activity_at = ?, updated_at = ? WHERE id = ?').run(now, now, row.id)
+    let created = 0
+    if (count &lt; 33) {
+      for (let offset = 0; offset &lt; Math.min(3, 33 - count); offset++) {
+        const seq = count + offset + 1
+        const customerId = `customer-wca-sync-${seq}`
+        const domain = `synced-forwarder-${seq}.example`
+        db.prepare(`INSERT INTO customers
+          (id, name, source, source_ref, country, city, website, domain, customer_type, status, profile_version, raw_json, facts_json,
+           ai_profile_json, ai_profile_status, last_activity_at, created_at, updated_at)
+          VALUES (?, ?, 'wca_simulated', ?, '美国', '芝加哥', ?, ?, 'freight_forwarder_partner', 'normal', 1, ?, ?, '{}', 'pending', ?, ?, ?)`)
+          .run(customerId, `Synced Demo Freight ${seq}`, `WCA-SIM-${2000 + seq}`, `https://${domain}`, domain,
+            JSON.stringify({ simulatedDirectoryListing: true, syncBatch: now }), JSON.stringify({ companyNature: '海外货运代理', serviceCapabilities: ['空运', '海运'] }), now, now, now)
+        db.prepare(`INSERT INTO contacts (id, customer_id, name, title, email, email_normalized, status, is_primary, created_at, updated_at)
+          VALUES (?, ?, 'Demo Contact', 'Partnership Manager', ?, ?, 'verify', 1, ?, ?)`)
+          .run(newId('contact'), customerId, `contact@${domain}`, `contact@${domain}`, now, now)
+        created++
+      }
+    }
+    return { ok: true, created, updated: updated.length, note: '这是 PoC 模拟同步，未访问真实 WCA 账号或目录。' }
+  }
+&nbsp;
+  throw createError({ statusCode: 400, statusMessage: `不支持的演示动作：${action}` })
+})
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-08-20T02:03:18.965Z
+            </div>
+        <script src="../../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../../sorter.js"></script>
+        <script src="../../../../block-navigation.js"></script>
+    </body>
+</html>
+    

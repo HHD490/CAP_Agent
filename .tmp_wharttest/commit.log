@@ -1,0 +1,4 @@
+﻿[codex/AHa-testing 7c2bf8b] test(scope): 按 5 skills 流水线补 3 份高价值用例 (+32 条)
+ 7 files changed, 291 insertions(+), 6 deletions(-)
+ create mode 100644 tests/unit/is-valid-outreach-contact.test.ts
+ create mode 100644 tests/unit/opportunity-stages.test.ts

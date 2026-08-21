@@ -1,0 +1,59 @@
+﻿
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mD:/by56_CAP_Agent[39m
+
+ [32m✓[39m tests/unit/website-recommendations.test.ts[2m > [22mWEBSITE-RECOMMEND: deterministic recommendation rules[2m > [22mWEB-REC-001: only published products are returned, sorted by score, capped at Top 3[32m 101[2mms[22m[39m
+ [32m✓[39m tests/unit/website-recommendations.test.ts[2m > [22mWEBSITE-RECOMMEND: deterministic recommendation rules[2m > [22mWEB-REC-002: Chinese destination city is normalized to its country for route matching[32m 86[2mms[22m[39m
+ [32m✓[39m tests/unit/website-recommendations.test.ts[2m > [22mWEBSITE-RECOMMEND: deterministic recommendation rules[2m > [22mWEB-REC-003: cargo and battery capability bonuses accumulate and score is capped at 98[32m 84[2mms[22m[39m
+ [32m✓[39m tests/unit/website-recommendations.test.ts[2m > [22mWEBSITE-RECOMMEND: deterministic recommendation rules[2m > [22mWEB-REC-004: time, sea-volume, and large-shipment bonuses follow their boundaries[32m 89[2mms[22m[39m
+ [32m✓[39m tests/unit/website-recommendations.test.ts[2m > [22mWEBSITE-RECOMMEND: deterministic recommendation rules[2m > [22mWEB-REC-005: unmatched product exposes stable fallback evidence and quote metadata[32m 94[2mms[22m[39m
+ [32m✓[39m tests/unit/website-recommendations.test.ts[2m > [22mWEBSITE-RECOMMEND: deterministic recommendation rules[2m > [22mWEB-REC-006: empty products table → returns [] (no crash, no fallback)[32m 79[2mms[22m[39m
+ [32m✓[39m tests/unit/website-recommendations.test.ts[2m > [22mWEBSITE-RECOMMEND: deterministic recommendation rules[2m > [22mWEB-REC-007: no published products → returns [] (only published are visible)[32m 93[2mms[22m[39m
+ [31m×[39m tests/unit/website-recommendations.test.ts[2m > [22mWEBSITE-RECOMMEND: deterministic recommendation rules[2m > [22mWEB-REC-008: all 5 bonus paths stacking on one product → score capped at 98[32m 99[2mms[22m[39m
+[31m   → expected [ '覆盖 洛杉矶（美国）方向', …(2) ] to deeply equal ArrayContaining{…}[39m
+ [32m✓[39m tests/unit/website-recommendations.test.ts[2m > [22mWEBSITE-RECOMMEND: deterministic recommendation rules[2m > [22mWEB-REC-009: destination outside cityCountryMap and no route match → only base 52[32m 84[2mms[22m[39m
+ [32m✓[39m tests/unit/website-recommendations.test.ts[2m > [22mWEBSITE-RECOMMEND: deterministic recommendation rules[2m > [22mWEB-REC-010: identical scores preserve insertion order (stable sort)[32m 93[2mms[22m[39m
+ [32m✓[39m tests/unit/website-recommendations.test.ts[2m > [22mWEBSITE-RECOMMEND: deterministic recommendation rules[2m > [22mWEB-REC-011: weight/volume boundary at exactly 500 kg / 3 cbm still triggers the bonus[32m 82[2mms[22m[39m
+node.exe : 
+所在位置 行:3 字符: 1
++ & "node" "node_modules/vitest/vitest.mjs" run tests/unit/website-reco ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m tests/unit/website-recommendations.test.ts[2m > [22mWEBSITE-RECOMMEND: deterministic recomm
+endation rules[2m > [22mWEB-REC-008: all 5 bonus paths stacking on one product → score capped at 98
+[31m[1mAssertionError[22m: expected [ '覆盖 洛杉矶（美国）方向', …(2) ] to deeply equal ArrayContaining{…}[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- ArrayContaining [[39m
+[32m-   StringContaining "美国",[39m
+[32m-   StringContaining "蓝牙音箱",[39m
+[31m+ [[39m
+[31m+   "覆盖 洛杉矶（美国）方向",[39m
+[31m+   "适配 蓝牙音箱（带电） 品类",[39m
+[2m    "具备带电货物承接能力",[22m
+[32m-   StringMatching /特快|快线/,[39m
+[32m-   StringMatching /海运|大票|大客户/,[39m
+[2m  ][22m
+
+[36m [2m❯[22m tests/unit/website-recommendations.test.ts:[2m170:30[22m[39m
+    [90m168| [39m    [34mexpect[39m(result[33m?.[39mscore)[33m.[39m[34mtoBeLessThanOrEqual[39m([34m98[39m)
+    [90m169| [39m    [90m// 一次性把 6 条 evidence 凑齐（每条 bonus 对应一条）[39m
+    [90m170| [39m    [34mexpect[39m(result[33m?.[39mevidence)[33m.[39m[34mtoEqual[39m(expect[33m.[39m[34ma
+rrayContaining[39m([
+    [90m   | [39m                             [31m^[39m
+    [90m171| [39m      expect[33m.[39m[34mstringContaining[39m([32m'美国'[39m)[33m,[39m
+    [90m172| [39m      expect[33m.[39m[34mstringContaining[39m([32m'蓝牙音箱'[39m)[33m,[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m10 passed[39m[22m[90m (11)[39m
+[2m   Start at [22m 14:39:25
+[2m   Duration [22m 1.76s[2m (transform 149ms, setup 30ms, collect 260ms, tests 987ms, environment 0ms, prepare 141ms)[22m
+

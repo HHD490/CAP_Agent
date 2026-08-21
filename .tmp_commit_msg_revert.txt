@@ -1,0 +1,25 @@
+revert(main): 重置到 65e213a 文件状态 per §1.3
+
+按 AGENTS.md §1.3 revert + PR 流程 + §1.5 'PR 合并由用户在 GitHub UI 触发'，让 main 实际回到 1 commit (65e213a feat: add AI logistics acquisition PoC) 的文件状态。
+
+改动:
+- 新建分支 revert-main-to-1-commit 基于 65e213a
+- reset --hard 到 f1b96ef3 (远端 main tip)
+- checkout 65e213a -- . (覆盖 working tree 到 65e213a 文件状态)
+- commit 1 个新 commit
+
+Evidence:
+- 远端 main 旧 tip = f1b96ef3... (57 commit)
+- 远端 main 根 = 65e213a... (1 commit)
+- 8/12 §4 教训 + 8/14 §1.4 教训: 本 PR 是 §1.3 合规路径, **绝不**用 force-push main
+- 用户已通过 ask_user 选 B 二次确认走 §1.3 流程 (不是 force-push)
+
+不动:
+- ❌ force-push origin main
+- ❌ 修改 codex/AHa-testing 49 commit
+- ❌ rebase / merge main 上的 56 commit
+- ❌ 删 main / 删 PR #1-#7 任何 commit
+
+后续:
+- 用户在 GitHub UI 点 'Merge' 按钮
+- 合并后 main tip = 新 merge commit, main 文件状态 = 65e213a

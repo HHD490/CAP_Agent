@@ -1,0 +1,8 @@
+﻿git : Pushing to https://github.com/HHD490/CAP_Agent.git
+所在位置 行:9 字符: 1
++ git push origin codex/AHa-testing --verbose 2>&1 | Out-File -FilePath ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Pushing to http...0/CAP_Agent.git:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+fatal: unable to access 'https://github.com/HHD490/CAP_Agent.git/': Recv failure: Connection was reset

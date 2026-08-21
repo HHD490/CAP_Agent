@@ -1,0 +1,43 @@
+test(scope): 按 5 skills 流水线补 4 份高价值用例 (+61 条)
+
+参照 D:/quality_tests_skills/skills 5 个 skill 文档 + GitHub codex/AHa-testing
+分支的测试基线 (374 → 435)，新增 1 份 + 扩展 3 份聚焦单元测试：
+
+1. tests/unit/parse-json-response.test.ts (新文件, 16 条)
+   - 间接契约（通过 setAgentProviderForTests 走全链路）
+   - Markdown 包裹 (```json / ``` / ```JSON 大小写不敏感) 剥离
+   - 前置废话 + JSON → 仍能从第一个 { 提取
+   - 空串 / 纯文本 / 缺 } / 缺 { → 抛 "JSON 对象"
+   - 锁定 call site dead branch：数字/null/数组 content 不走 parseJsonResponse
+     而被 schema 拒绝（避免以后 callModel 改语义时静默回归）
+
+2. tests/unit/agent-schemas.test.ts (65 → 87, +22)
+   - 6 个 customer_type 枚举全量通过 + 与 getAgentCustomerTypes() 同步
+   - 6 类型 × 3 confidence 全量矩阵
+   - fit_score coerce 边界：数字 / 字符串数字 "85" / 浮点 "85.7" / 非法 "abc"
+   - outreach_drafting.language 缺省默认 zh + null/0 走 falsy 退化
+   - reply_qualification 4 intent × 3 confidence 全量矩阵
+
+3. tests/unit/use-demo-state.test.ts (16 → 31, +15)
+   - state 替换 vs 保留（JSON.stringify 完全相等时不替换引用，
+     内部嵌套属性差异时替换——避浮层重渲染打断焦点）
+   - 错误退化链：data.statusMessage → 顶层 statusMessage → 默认
+     （refresh / runAgent / doAction 三条路径分别锁定）
+   - known-task-status 维护：task 出现不触发 Notification；completed↔running
+     来回切换不触发（仅 completed / failed 终态触发）
+
+4. tests/unit/state-endpoint.test.ts (22 → 30, +8)
+   - emailAllowlist 解析边界：undefined / "" / "   " / ",,," / "only@x.com"
+     / 尾随逗号 / 大小写不归一
+   - state 端点与 getDemoState() 工具函数返回一致
+
+文档同步：
+- docs/test-scope.md: §3 范围清单加 2 行 + 单测文件 18 → 19；2026-08-06 更新条目
+- docs/test-tool.md: §4 unit 文件 18 → 19；§8 CI 注释 374 → 435
+- docs/release-regression.md: §9 test:quality 注释 374 → 435
+- docs/agent-evaluation.md: §1 准入条件 374 → 435
+
+测试结果：
+- 全量 27 文件 / 435 用例（374 → 435，+61）/ 60.97s / 0 回归
+- agent-eval 结构护栏 exit 0
+- typecheck (vue-tsc --noEmit) exit 0

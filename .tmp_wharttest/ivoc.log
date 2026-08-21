@@ -1,0 +1,29 @@
+﻿
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mD:/by56_CAP_Agent[39m
+
+ [32m✓[39m tests/unit/is-valid-outreach-contact.test.ts[2m > [22mIS-VALID-OUTREACH-CONTACT: 纯函数合同[2m > [22mnull / undefined 防御[2m > [22mIVOC-001: null → false[32m 2[2mms[22m[39m
+ [32m✓[39m tests/unit/is-valid-outreach-contact.test.ts[2m > [22mIS-VALID-OUTREACH-CONTACT: 纯函数合同[2m > [22mnull / undefined 防御[2m > [22mIVOC-002: undefined → false[32m 0[2mms[22m[39m
+ [32m✓[39m tests/unit/is-valid-outreach-contact.test.ts[2m > [22mIS-VALID-OUTREACH-CONTACT: 纯函数合同[2m > [22mnull / undefined 防御[2m > [22mIVOC-003: 空对象（所有字段 undefined）→ false[32m 0[2mms[22m[39m
+ [32m✓[39m tests/unit/is-valid-outreach-contact.test.ts[2m > [22mIS-VALID-OUTREACH-CONTACT: 纯函数合同[2m > [22mstatus 判定[2m > [22mIVOC-010: contactable + 合法 email → true[32m 0[2mms[22m[39m
+ [32m✓[39m tests/unit/is-valid-outreach-contact.test.ts[2m > [22mIS-VALID-OUTREACH-CONTACT: 纯函数合同[2m > [22mstatus 判定[2m > [22mIVOC-011: 非 contactable 状态（verify）即使 email 合法也 → false[32m 0[2mms[22m[39m
+ [32m✓[39m tests/unit/is-valid-outreach-contact.test.ts[2m > [22mIS-VALID-OUTREACH-CONTACT: 纯函数合同[2m > [22mstatus 判定[2m > [22mIVOC-011: 非 contactable 状态（pending）即使 email 合法也 → false[32m 0[2mms[22m[39m
+ [32m✓[39m tests/unit/is-valid-outreach-contact.test.ts[2m > [22mIS-VALID-OUTREACH-CONTACT: 纯函数合同[2m > [22mstatus 判定[2m > [22mIVOC-011: 非 contactable 状态（bounced）即使 email 合法也 → false[32m 0[2mms[22m[39m
+ [32m✓[39m tests/unit/is-valid-outreach-contact.test.ts[2m > [22mIS-VALID-OUTREACH-CONTACT: 纯函数合同[2m > [22mstatus 判定[2m > [22mIVOC-011: 非 contactable 状态（invalid）即使 email 合法也 → false[32m 0[2mms[22m[39m
+ [32m✓[39m tests/unit/is-valid-outreach-contact.test.ts[2m > [22mIS-VALID-OUTREACH-CONTACT: 纯函数合同[2m > [22mstatus 判定[2m > [22mIVOC-011: 非 contactable 状态（unknown）即使 email 合法也 → false[32m 0[2mms[22m[39m
+ [32m✓[39m tests/unit/is-valid-outreach-contact.test.ts[2m > [22mIS-VALID-OUTREACH-CONTACT: 纯函数合同[2m > [22mstatus 判定[2m > [22mIVOC-011: 非 contactable 状态（archived）即使 email 合法也 → false[32m 0[2mms[22m[39m
+ [32m✓[39m tests/unit/is-valid-outreach-contact.test.ts[2m > [22mIS-VALID-OUTREACH-CONTACT: 纯函数合同[2m > [22mstatus 判定[2m > [22mIVOC-011: 非 contactable 状态（）即使 email 合法也 → false[32m 0[2mms[22m[39m
+ [32m✓[39m tests/unit/is-valid-outreach-contact.test.ts[2m > [22mIS-VALID-OUTREACH-CONTACT: 纯函数合同[2m > [22mstatus 判定[2m > [22mIVOC-012: status 大小写敏感：Contactable → false（必须严格小写）[32m 0[2mms[22m[39m
+ [32m✓[39m tests/unit/is-valid-outreach-contact.test.ts[2m > [22mIS-VALID-OUTREACH-CONTACT: 纯函数合同[2m > [22mstatus 判定[2m > [22mIVOC-013: status 为 null / undefined → false（即使 email 合法）[32m 0[2mms[22m[39m
+ [32m✓[39m tests/unit/is-valid-outreach-contact.test.ts[2m > [22mIS-VALID-OUTREACH-CONTACT: 纯函数合同[2m > [22memail 判定（contactable 状态下）[2m > [22mIVOC-020: contactable + 空串 → false[32m 0[2mms[22m[39m
+ [32m✓[39m tests/unit/is-valid-outreach-contact.test.ts[2m > [22mIS-VALID-OUTREACH-CONTACT: 纯函数合同[2m > [22memail 判定（contactable 状态下）[2m > [22mIVOC-021: contactable + 全空格 → false（trim 防御）[32m 0[2mms[22m[39m
+ [32m✓[39m tests/unit/is-valid-outreach-contact.test.ts[2m > [22mIS-VALID-OUTREACH-CONTACT: 纯函数合同[2m > [22memail 判定（contactable 状态下）[2m > [22mIVOC-022: contactable + tab / 换行 → false（whitespace 集合防御）[32m 0[2mms[22m[39m
+ [32m✓[39m tests/unit/is-valid-outreach-contact.test.ts[2m > [22mIS-VALID-OUTREACH-CONTACT: 纯函数合同[2m > [22memail 判定（contactable 状态下）[2m > [22mIVOC-023: contactable + null email → false[32m 0[2mms[22m[39m
+ [32m✓[39m tests/unit/is-valid-outreach-contact.test.ts[2m > [22mIS-VALID-OUTREACH-CONTACT: 纯函数合同[2m > [22memail 判定（contactable 状态下）[2m > [22mIVOC-024: contactable + undefined email → false[32m 0[2mms[22m[39m
+ [32m✓[39m tests/unit/is-valid-outreach-contact.test.ts[2m > [22mIS-VALID-OUTREACH-CONTACT: 纯函数合同[2m > [22memail 判定（contactable 状态下）[2m > [22mIVOC-025: contactable + 前后空格 + 真实 email → true（trim 不影响真实值）[32m 0[2mms[22m[39m
+ [32m✓[39m tests/unit/is-valid-outreach-contact.test.ts[2m > [22mIS-VALID-OUTREACH-CONTACT: 纯函数合同[2m > [22m组合回归（status 与 email 各自把关）[2m > [22mIVOC-030: 短真值表（status, email）→ 期望结果[32m 1[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m20 passed[39m[22m[90m (20)[39m
+[2m   Start at [22m 14:39:00
+[2m   Duration [22m 745ms[2m (transform 89ms, setup 44ms, collect 70ms, tests 7ms, environment 0ms, prepare 146ms)[22m
+

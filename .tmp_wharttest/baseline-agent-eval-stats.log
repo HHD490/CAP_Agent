@@ -1,0 +1,96 @@
+# Agent 离线评测报告
+
+生成时间：2026-08-14T07:09:52.747Z
+测试集版本：v1.0
+测试集路径：tests/agent-evaluation/core-regression.json
+
+## 总览
+
+- **总用例数**：100
+- **覆盖模式**：5 / 5（customer_profiling, product_matching, outreach_drafting, reply_qualification, handoff_summary）
+- **高风险用例**：60
+- **采样 <3 次的用例**：0
+
+## 各模式覆盖
+
+| Mode | 用例数 | 高风险 | 低风险 | 反例 | 一致性 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| customer_profiling | 20 | 5 | 7 | 1 | 5 |
+| product_matching | 20 | 15 | 4 | 3 | 12 |
+| outreach_drafting | 20 | 13 | 3 | 5 | 8 |
+| reply_qualification | 20 | 14 | 3 | 1 | 13 |
+| handoff_summary | 20 | 13 | 7 | 6 | 7 |
+
+## 通过率阈值（来自 agent-nondeterministic-evaluator skill）
+
+| 维度 | 目标 | 最低 | 说明 |
+| --- | ---: | ---: | --- |
+| 实体抽取准确率 | 98% | 95% | 核心实体必须 100% 命中，缺少字段直接判失败 |
+| 指令遵循/约束满足 | 95% | 85% | evidence 必填，hard_blockers 不允许被掩盖，required 字段缺失直接失败 |
+| 计算正确性 | 100% | 100% | 数值/计算 100% 命中，允许的浮点误差 ≤0.01 |
+| 推荐合理性 | 95% | 90% | 命中规则/候选集合比例 |
+| 输出格式遵循 | 100% | 98% | JSON Schema 100% 通过 |
+| 鲁棒性 | 90% | 85% | 缺省/错别字/噪声输入应被正确处理或友好拒绝 |
+| 一致性差异 | 95% | 90% | 同输入多次采样关键字段差异 ≤5% |
+| 幻觉错误率 | 99% | 95% | 幻觉样本 ≤1%（人工抽检） |
+| 安全拒绝 | 100% | 100% | 对抗/越狱/越权必须 100% 拒绝 |
+
+## 校验结果
+
+✅ 所有结构 / 阈值 / 用例数量校验通过
+
+## 后续动作
+
+1. 在 CI 中运行 `node scripts/agent-eval-report.mjs --check` 作为护栏
+2. 接入真实模型后，每版生成 `tests/agent-evaluation/baselines/<version>.json`
+3. 与基线对比：核心指标恶化 >10% 触发专项评审
+4. 人工抽检 ≥10% 复杂语义用例，结果与自动指标分开记录
+---STATS---
+{
+  "totalCases": 100,
+  "modeStats": {
+    "customer_profiling": {
+      "count": 20,
+      "high": 5,
+      "low": 7,
+      "samples_under_3": 0,
+      "with_rejection": 1,
+      "with_consistency": 5
+    },
+    "product_matching": {
+      "count": 20,
+      "high": 15,
+      "low": 4,
+      "samples_under_3": 0,
+      "with_rejection": 3,
+      "with_consistency": 12
+    },
+    "outreach_drafting": {
+      "count": 20,
+      "high": 13,
+      "low": 3,
+      "samples_under_3": 0,
+      "with_rejection": 5,
+      "with_consistency": 8
+    },
+    "reply_qualification": {
+      "count": 20,
+      "high": 14,
+      "low": 3,
+      "samples_under_3": 0,
+      "with_rejection": 1,
+      "with_consistency": 13
+    },
+    "handoff_summary": {
+      "count": 20,
+      "high": 13,
+      "low": 7,
+      "samples_under_3": 0,
+      "with_rejection": 6,
+      "with_consistency": 7
+    }
+  },
+  "errors": 0,
+  "warnings": 0
+}
+exit=0
