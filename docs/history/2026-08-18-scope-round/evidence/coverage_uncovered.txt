@@ -1,0 +1,89 @@
+D:\by56_CAP_Agent\shared\types.ts
+  stmts 0/0 (0.0%)  branches 1/1 (100.0%)  fns 1/1 (100.0%)
+  uncovered stmts (0): 
+  uncovered branches (0): 
+
+D:\by56_CAP_Agent\composables\useDemoState.ts
+  stmts 61/91 (67.0%)  branches 34/39 (87.2%)  fns 6/6 (100.0%)
+  uncovered stmts (30): L17, L18, L19, L20, L21, L22, L23, L24, L25, L26, L81, L82, L83, L85, L86, L87, L88, L89, L90, L91, L92, L93, L94, L95, L96, L100, L101, L102, L103, L104
+  uncovered branches (5): L80, L80, L16, L35, L37
+
+D:\by56_CAP_Agent\server\utils\agent.ts
+  stmts 460/468 (98.3%)  branches 171/190 (90.0%)  fns 19/19 (100.0%)
+  uncovered stmts (8): L216, L217, L218, L348, L349, L350, L523, L524
+  uncovered branches (19): L203, L205, L215, L240, L241, L242, L279, L280, L285, L286, L287, L291, L253, L254, L255, L347, L351, L475, L522
+
+D:\by56_CAP_Agent\server\api\state.get.ts
+  stmts 2/2 (100.0%)  branches 1/1 (100.0%)  fns 0/0 (0.0%)
+  uncovered stmts (0): 
+  uncovered branches (0): 
+
+D:\by56_CAP_Agent\server\api\agent\tasks.post.ts
+  stmts 12/12 (100.0%)  branches 1/1 (100.0%)  fns 0/0 (0.0%)
+  uncovered stmts (0): 
+  uncovered branches (0): 
+
+D:\by56_CAP_Agent\server\api\agent\tasks\[id]\stop.post.ts
+  stmts 2/2 (100.0%)  branches 2/2 (100.0%)  fns 0/0 (0.0%)
+  uncovered stmts (0): 
+  uncovered branches (0): 
+
+D:\by56_CAP_Agent\server\api\demo\action.post.ts
+  stmts 201/201 (100.0%)  branches 142/152 (93.4%)  fns 0/0 (0.0%)
+  uncovered stmts (0): 
+  uncovered branches (10): L21, L22, L31, L49, L49, L50, L60, L79, L93, L116
+
+D:\by56_CAP_Agent\server\api\demo\advance-time.post.ts
+  stmts 35/35 (100.0%)  branches 12/12 (100.0%)  fns 0/0 (0.0%)
+  uncovered stmts (0): 
+  uncovered branches (0): 
+
+D:\by56_CAP_Agent\server\api\demo\reset.post.ts
+  stmts 6/6 (100.0%)  branches 1/1 (100.0%)  fns 0/0 (0.0%)
+  uncovered stmts (0): 
+  uncovered branches (0): 
+
+D:\by56_CAP_Agent\server\api\import\customers.post.ts
+  stmts 50/50 (100.0%)  branches 52/54 (96.3%)  fns 0/0 (0.0%)
+  uncovered stmts (0): 
+  uncovered branches (2): L18, L20
+
+D:\by56_CAP_Agent\server\api\website\identity.post.ts
+  stmts 64/64 (100.0%)  branches 23/26 (88.5%)  fns 0/0 (0.0%)
+  uncovered stmts (0): 
+  uncovered branches (3): L20, L27, L42
+
+D:\by56_CAP_Agent\server\api\website\quote.post.ts
+  stmts 41/41 (100.0%)  branches 11/11 (100.0%)  fns 0/0 (0.0%)
+  uncovered stmts (0): 
+  uncovered branches (0): 
+
+D:\by56_CAP_Agent\server\api\website\rematch.post.ts
+  stmts 38/38 (100.0%)  branches 5/6 (83.3%)  fns 0/0 (0.0%)
+  uncovered stmts (0): 
+  uncovered branches (1): L31
+
+D:\by56_CAP_Agent\server\utils\contact.ts
+  stmts 5/5 (100.0%)  branches 8/8 (100.0%)  fns 1/1 (100.0%)
+  uncovered stmts (0): 
+  uncovered branches (0): 
+
+D:\by56_CAP_Agent\server\utils\db.ts
+  stmts 317/317 (100.0%)  branches 71/75 (94.7%)  fns 14/14 (100.0%)
+  uncovered stmts (0): 
+  uncovered branches (4): L193, L206, L246, L246
+
+D:\by56_CAP_Agent\server\utils\state.ts
+  stmts 238/238 (100.0%)  branches 53/55 (96.4%)  fns 9/9 (100.0%)
+  uncovered stmts (0): 
+  uncovered branches (2): L5, L98
+
+D:\by56_CAP_Agent\server\utils\website.ts
+  stmts 52/52 (100.0%)  branches 22/26 (84.6%)  fns 1/1 (100.0%)
+  uncovered stmts (0): 
+  uncovered branches (4): L16, L17, L18, L23
+
+D:\by56_CAP_Agent\utils\opportunity.ts
+  stmts 11/11 (100.0%)  branches 0/0 (0.0%)  fns 0/0 (0.0%)
+  uncovered stmts (0): 
+  uncovered branches (0): 

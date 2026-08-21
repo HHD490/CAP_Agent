@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { getDb, demoNow, newId, addEvent } from '../../utils/db'
+import { getDb, demoNow, newId, addEvent, markNonAcceptedMatchesStale } from '../../utils/db'
 import { createAgentTask } from '../../utils/agent'
 
 const schema = z.object({
@@ -17,6 +17,12 @@ export default defineEventHandler(async (event) => {
   const now = demoNow(db)
   const inquiry = db.prepare('SELECT * FROM inquiries WHERE id = ?').get(body.inquiryId) as any
   if (!inquiry) throw createError({ statusCode: 404, statusMessage: 'Visitor Session 或询价记录不存在，请重新提交需求' })
+  const recs = JSON.parse(inquiry.recommendations_json || '[]') as any[]
+  const productId = body.selectedProductId || recs[0]?.productId
+  const isRecommended = recs.some(recommendation => recommendation?.productId === productId)
+  if (!productId || !isRecommended || !db.prepare('SELECT id FROM products WHERE id = ? AND published = 1').get(productId)) {
+    throw createError({ statusCode: 400, statusMessage: '请选择有效的已发布推荐产品' })
+  }
   const email = body.email.trim().toLowerCase()
   const domain = email.split('@')[1] || ''
   let contact = db.prepare('SELECT * FROM contacts WHERE email_normalized = ? ORDER BY created_at LIMIT 1').get(email) as any
@@ -36,7 +42,7 @@ export default defineEventHandler(async (event) => {
     const facts = { ...JSON.parse(customer.facts_json || '{}'), capturedEmail: email, latestInquiryId: inquiry.id }
     db.prepare(`UPDATE customers SET facts_json = ?, profile_version = profile_version + 1, ai_profile_status = 'pending', last_activity_at = ?, updated_at = ? WHERE id = ?`)
       .run(JSON.stringify(facts), now, now, customerId)
-    db.prepare('UPDATE match_results SET stale = 1, updated_at = ? WHERE customer_id = ?').run(now, customerId)
+    markNonAcceptedMatchesStale(customerId, db, now)
     db.prepare(`UPDATE opportunities SET stale_review = 1, updated_at = ? WHERE customer_id = ? AND status IN ('active', 'handed_off')`).run(now, customerId)
   }
   if (!contact) {
@@ -46,9 +52,6 @@ export default defineEventHandler(async (event) => {
       .run(contactId, customerId, body.contactName, email, email, now, now)
     contact = { id: contactId, customer_id: customerId, email, status: 'contactable' }
   }
-  const recs = JSON.parse(inquiry.recommendations_json || '[]') as any[]
-  const productId = body.selectedProductId || recs[0]?.productId
-  if (!productId || !db.prepare('SELECT id FROM products WHERE id = ?').get(productId)) throw createError({ statusCode: 400, statusMessage: '请选择有效的推荐产品' })
   let opportunity = db.prepare(`SELECT * FROM opportunities WHERE customer_id = ? AND product_id = ? AND status IN ('active', 'handed_off') LIMIT 1`).get(customerId, productId) as any
   if (!opportunity) {
     const opportunityId = newId('opp')
